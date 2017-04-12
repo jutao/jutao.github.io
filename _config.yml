@@ -3,9 +3,9 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: jutao's blog
-subtitle: 法外之地
-description: 可能是笔记，可能是摘录
+title: jutao's Note
+subtitle: 记录所得
+description: 荣者自安安,辱者定碌碌
 author: 琚涛
 language: zh-Hans
 timezone:
@@ -71,4 +71,4 @@ deploy:
   type: git
   repo: git@github.com:jutao/jutao.github.io.git
   branch: master
-
+  
