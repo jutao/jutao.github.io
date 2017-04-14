@@ -230,7 +230,7 @@ excerpt_description: true
 # Automatically Excerpt. Not recommend.
 # Please use <!-- more --> in the post to control excerpt accurately.
 auto_excerpt:
-  enable: false
+  enable: true
   length: 150
 
 # Post meta display settings
@@ -312,7 +312,7 @@ disqus:
 #hypercomments_id:
 
 # Gentie productKey
-#gentie_productKey:
+gentie_productKey: d08c52b322f54fbe81f6373c3015986a
 
 # changyan
 changyan:
@@ -355,7 +355,7 @@ changyan:
 #yandex_site_verification:
 
 # CNZZ count
-#cnzz_siteid:
+#  cnzz_siteid: 1261728062
 
 # Application Insights
 # See https://azure.microsoft.com/en-us/services/application-insights/
@@ -426,7 +426,7 @@ busuanzi_count:
 
 
 # Tencent analytics ID
-# tencent_analytics:
+# tencent_analytics: 61698136
 
 # Tencent MTA ID
 # tencent_mta:
@@ -465,7 +465,7 @@ algolia_search:
 
 # Local search
 local_search:
-  enable: false
+  enable: true
 
 # External URL with BASE64 encrypt & decrypt
 # Usage: {% exturl text url "title" %}
@@ -558,3 +558,4 @@ images: images
 
 # Theme version
 version: 5.1.0
+

@@ -1,5 +1,10 @@
 ---
 title: Path 实战
+tags:
+- Path
+- draw
+categories:
+- Android
 ---
 
 # 第一步：绘制蜘蛛网络
@@ -11,7 +16,7 @@ title: Path 实战
 	        mainPaint.setStrokeWidth(1);
 	        mainPaint.setStyle(Paint.Style.STROKE);
 	    }
-	
+
 	    @Override
 	    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 	        radius=Math.min(w,h)/2*0.9f;
@@ -21,12 +26,12 @@ title: Path 实战
 	        postInvalidate();
 	        super.onSizeChanged(w, h, oldw, oldh);
 	    }
-	
+
 	    @Override
 	    protected void onDraw(Canvas canvas) {
 	        drawPolygon(canvas);
 	    }
-	
+
 	    /**
 	     * 绘制多边形
 	     * @param canvas
@@ -57,6 +62,7 @@ title: Path 实战
 	            path.close();
 	            canvas.drawPath(path,mainPaint);
 	        }
+<!-- more -->
 
 绘制蜘蛛网络其实就是绘制指定边数的正多边形，这一步比较简单，比较难的可能就是每个顶点的算法，相关注释我都写了，还有一张来自互联网的图以助于思考，如下：
 
