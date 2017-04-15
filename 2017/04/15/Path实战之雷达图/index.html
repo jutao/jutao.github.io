@@ -89,23 +89,23 @@
 
 
 
-<meta name="description" content="第一步：绘制蜘蛛网络private void init() {     mainPaint=new Paint();     mainPaint.setColor(Color.BLACK);     mainPaint.setAntiAlias(true);     mainPaint.setStrokeWidth(1);     mainPaint.setStyle(Paint.Style.ST">
+<meta name="description" content="准备我们将从0到1一步一步来画一个 web 页面很常见的雷达图">
 <meta name="keywords" content="Path,draw">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Path 实战">
 <meta property="og:url" content="http://yoursite.com/2017/04/15/Path实战之雷达图/index.html">
 <meta property="og:site_name" content="jutao's Note">
-<meta property="og:description" content="第一步：绘制蜘蛛网络private void init() {     mainPaint=new Paint();     mainPaint.setColor(Color.BLACK);     mainPaint.setAntiAlias(true);     mainPaint.setStrokeWidth(1);     mainPaint.setStyle(Paint.Style.ST">
+<meta property="og:description" content="准备我们将从0到1一步一步来画一个 web 页面很常见的雷达图">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-f380ea0f04b8619b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-35a0029632035330.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-e8349daa51b18b38.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-c9132f5ff1404eaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-d62b189d8dce1fac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-50a0b0225608fc7b.gif?imageMogr2/auto-orient/strip">
-<meta property="og:updated_time" content="2017-04-15T03:39:13.886Z">
+<meta property="og:updated_time" content="2017-04-15T16:58:16.813Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Path 实战">
-<meta name="twitter:description" content="第一步：绘制蜘蛛网络private void init() {     mainPaint=new Paint();     mainPaint.setColor(Color.BLACK);     mainPaint.setAntiAlias(true);     mainPaint.setStrokeWidth(1);     mainPaint.setStyle(Paint.Style.ST">
+<meta name="twitter:description" content="准备我们将从0到1一步一步来画一个 web 页面很常见的雷达图">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3054656-f380ea0f04b8619b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -407,181 +407,26 @@
       
 
       
-        <h1 id="第一步：绘制蜘蛛网络"><a href="#第一步：绘制蜘蛛网络" class="headerlink" title="第一步：绘制蜘蛛网络"></a>第一步：绘制蜘蛛网络</h1><pre><code>private void init() {
-    mainPaint=new Paint();
-    mainPaint.setColor(Color.BLACK);
-    mainPaint.setAntiAlias(true);
-    mainPaint.setStrokeWidth(1);
-    mainPaint.setStyle(Paint.Style.STROKE);
-}
-
-@Override
-protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    radius=Math.min(w,h)/2*0.9f;
-    centerX=w/2;
-    centerY=h/2;
-    //一旦size发生改变，重新绘制
-    postInvalidate();
-    super.onSizeChanged(w, h, oldw, oldh);
-}
-
-@Override
-protected void onDraw(Canvas canvas) {
-    drawPolygon(canvas);
-}
-
-/**
- * 绘制多边形
- * @param canvas
- */
-private void drawPolygon(Canvas canvas){
-    Path path=new Path();
-    //1度=1*PI/180   360度=2*PI   那么我们每旋转一次的角度为2*PI/内角个数
-    //中心与相邻两个内角相连的夹角角度
-    angle= (float) (2*Math.PI/count);
-    //每个蛛丝之间的间距
-    float r= radius/(count-1);
-    for (int i = 0; i &lt; count; i++) {
-        //当前半径
-        float curR=r*i;
-        path.reset();
-        for (int j = 0; j &lt; count; j++) {
-            if(j==0){
-                path.moveTo(centerX+curR,centerY);
-            }else {
-                //对于直角三角形sin(x)是对边比斜边，cos(x)是底边比斜边，tan(x)是对边比底边
-                //因此可以推导出:底边(x坐标)=斜边(半径)*cos(夹角角度)
-                //               对边(y坐标)=斜边(半径)*sin(夹角角度)
-                float x = (float) (centerX+curR*Math.cos(angle*j));
-                float y = (float) (centerY+curR*Math.sin(angle*j));
-                path.lineTo(x,y);
-            }
-        }
-        path.close();
-        canvas.drawPath(path,mainPaint);
-    }
-</code></pre><a id="more"></a>
+        <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>我们将从0到1一步一步来画一个 web 页面很常见的雷达图<br><a id="more"></a></p>
+<h1 id="第一步：绘制蜘蛛网络"><a href="#第一步：绘制蜘蛛网络" class="headerlink" title="第一步：绘制蜘蛛网络"></a>第一步：绘制蜘蛛网络</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">    mainPaint=<span class="keyword">new</span> Paint();</div><div class="line">    mainPaint.setColor(Color.BLACK);</div><div class="line">    mainPaint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">    mainPaint.setStrokeWidth(<span class="number">1</span>);</div><div class="line">    mainPaint.setStyle(Paint.Style.STROKE);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">    radius=Math.min(w,h)/<span class="number">2</span>*<span class="number">0.9f</span>;</div><div class="line">    centerX=w/<span class="number">2</span>;</div><div class="line">    centerY=h/<span class="number">2</span>;</div><div class="line">    <span class="comment">//一旦size发生改变，重新绘制</span></div><div class="line">    postInvalidate();</div><div class="line">    <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    drawPolygon(canvas);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 绘制多边形</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPolygon</span><span class="params">(Canvas canvas)</span></span>&#123;</div><div class="line">    Path path=<span class="keyword">new</span> Path();</div><div class="line">    <span class="comment">//1度=1*PI/180   360度=2*PI   那么我们每旋转一次的角度为2*PI/内角个数</span></div><div class="line">    <span class="comment">//中心与相邻两个内角相连的夹角角度</span></div><div class="line">    angle= (<span class="keyword">float</span>) (<span class="number">2</span>*Math.PI/count);</div><div class="line">    <span class="comment">//每个蛛丝之间的间距</span></div><div class="line">    <span class="keyword">float</span> r= radius/(count-<span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="comment">//当前半径</span></div><div class="line">        <span class="keyword">float</span> curR=r*i;</div><div class="line">        path.reset();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; count; j++) &#123;</div><div class="line">            <span class="keyword">if</span>(j==<span class="number">0</span>)&#123;</div><div class="line">                path.moveTo(centerX+curR,centerY);</div><div class="line">            &#125;<span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">//对于直角三角形sin(x)是对边比斜边，cos(x)是底边比斜边，tan(x)是对边比底边</span></div><div class="line">                <span class="comment">//因此可以推导出:底边(x坐标)=斜边(半径)*cos(夹角角度)</span></div><div class="line">                <span class="comment">//               对边(y坐标)=斜边(半径)*sin(夹角角度)</span></div><div class="line">                <span class="keyword">float</span> x = (<span class="keyword">float</span>) (centerX+curR*Math.cos(angle*j));</div><div class="line">                <span class="keyword">float</span> y = (<span class="keyword">float</span>) (centerY+curR*Math.sin(angle*j));</div><div class="line">                path.lineTo(x,y);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        path.close();</div><div class="line">        canvas.drawPath(path,mainPaint);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>绘制蜘蛛网络其实就是绘制指定边数的正多边形，这一步比较简单，比较难的可能就是每个顶点的算法，相关注释我都写了，还有一张来自互联网的图以助于思考，如下：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3054656-f380ea0f04b8619b.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="多边形夹角示意图"></p>
 <p>绘制出的多边形成品如下:</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3054656-35a0029632035330.gif?imageMogr2/auto-orient/strip" alt="多边形效果.gif"></p>
 <p>动画效果只是写了 set 方法，用 handler 实现,代码如下：</p>
-<pre><code>//设置数值种类
-public void setCount(int count) {
-    this.count = count;
-    postInvalidate();
-}
-
-//设置蜘蛛网颜色
-public void setMainPaint(Paint mainPaint) {
-    this.mainPaint = mainPaint;
-    postInvalidate();
-}
-</code></pre><p>调用方法:</p>
-<pre><code>mainPaint=new Paint();
-mainPaint.setAntiAlias(true);
-mainPaint.setStrokeWidth(1);
-mainPaint.setStyle(Paint.Style.STROKE);
-Handler handler=new Handler();
-for (int i = 3; i &lt; 20; i++) {
-final int finalI = i;
-handler.postDelayed(new Runnable() {
-    @Override
-    public void run() {
-        mRdv.setCount(finalI);
-        mainPaint.setStrokeWidth(finalI);
-        mRdv.setMainPaint(mainPaint);
-    }
-},i*300);
-}
-</code></pre><h1 id="第二步：绘制对角线"><a href="#第二步：绘制对角线" class="headerlink" title="第二步：绘制对角线"></a>第二步：绘制对角线</h1><pre><code>/**
- * 绘制直线
- */
-private void drawLines(Canvas canvas){
-    Path path=new Path();
-    for (int i = 0; i &lt; count; i++) {
-        path.reset();
-        path.moveTo(centerX,centerY);
-        float x = (float) (centerX+radius*Math.cos(angle*i));
-        float y = (float) (centerY+radius*Math.sin(angle*i));
-        path.lineTo(x,y);
-        canvas.drawPath(path,mainPaint);
-    }
-}
-</code></pre><p>这一步比较简单，就是将中心点和各个顶点连接起来，效果如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置数值种类</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCount</span><span class="params">(<span class="keyword">int</span> count)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.count = count;</div><div class="line">    postInvalidate();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//设置蜘蛛网颜色</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMainPaint</span><span class="params">(Paint mainPaint)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.mainPaint = mainPaint;</div><div class="line">    postInvalidate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>调用方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mainPaint=<span class="keyword">new</span> Paint();</div><div class="line">mainPaint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">mainPaint.setStrokeWidth(<span class="number">1</span>);</div><div class="line">mainPaint.setStyle(Paint.Style.STROKE);</div><div class="line">Handler handler=<span class="keyword">new</span> Handler();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt; <span class="number">20</span>; i++) &#123;</div><div class="line"><span class="keyword">final</span> <span class="keyword">int</span> finalI = i;</div><div class="line">handler.postDelayed(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        mRdv.setCount(finalI);</div><div class="line">        mainPaint.setStrokeWidth(finalI);</div><div class="line">        mRdv.setMainPaint(mainPaint);</div><div class="line">    &#125;</div><div class="line">&#125;,i*<span class="number">300</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="第二步：绘制对角线"><a href="#第二步：绘制对角线" class="headerlink" title="第二步：绘制对角线"></a>第二步：绘制对角线</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 绘制直线</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawLines</span><span class="params">(Canvas canvas)</span></span>&#123;</div><div class="line">    Path path=<span class="keyword">new</span> Path();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        path.reset();</div><div class="line">        path.moveTo(centerX,centerY);</div><div class="line">        <span class="keyword">float</span> x = (<span class="keyword">float</span>) (centerX+radius*Math.cos(angle*i));</div><div class="line">        <span class="keyword">float</span> y = (<span class="keyword">float</span>) (centerY+radius*Math.sin(angle*i));</div><div class="line">        path.lineTo(x,y);</div><div class="line">        canvas.drawPath(path,mainPaint);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这一步比较简单，就是将中心点和各个顶点连接起来，效果如下:</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3054656-e8349daa51b18b38.gif?imageMogr2/auto-orient/strip" alt="多边形效果.gif"></p>
-<h1 id="第三步：绘制标题文字"><a href="#第三步：绘制标题文字" class="headerlink" title="第三步：绘制标题文字"></a>第三步：绘制标题文字</h1><pre><code>/**
- * 绘制标题文字
- *
- * @param canvas
- */
-private void drawTitle(Canvas canvas) {
-    if (count != titles.size()) {
-        return;
-    }
-    //相关知识点:http://mikewang.blog.51cto.com/3826268/871765/
-    Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();
-    float fontHeight = fontMetrics.descent - fontMetrics.ascent;
-    //绘制文字时不让文字和雷达图形交叉,加大绘制半径
-    float textRadius = radius + fontHeight;
-    double pi = Math.PI;
-    for (int i = 0; i &lt; count; i++) {
-        float x = (float) (centerX + textRadius * Math.cos(angle * i));
-        float y = (float) (centerY + textRadius * Math.sin(angle * i));
-        //当前绘制标题所在顶点角度
-        float degrees = angle * i;
-        //从右下角开始顺时针画起,与真实坐标系相反
-        if (degrees &gt;= 0 &amp;&amp; degrees &lt; pi / 2) {//第四象限
-            float dis=textPaint.measureText(titles.get(i))/(titles.get(i).length()-1);
-            canvas.drawText(titles.get(i), x+dis, y, textPaint);
-        } else if (degrees &gt;= pi / 2 &amp;&amp; degrees &lt; pi) {//第三象限
-            float dis=textPaint.measureText(titles.get(i))/(titles.get(i).length()-1);
-            canvas.drawText(titles.get(i), x-dis, y, textPaint);
-        } else if (degrees &gt;= pi &amp;&amp; degrees &lt; 3 * pi / 2) {//第二象限
-            float dis=textPaint.measureText(titles.get(i))/(titles.get(i).length());
-            canvas.drawText(titles.get(i), x-dis, y, textPaint);
-        } else if (degrees &gt;= 3 * pi / 2 &amp;&amp; degrees &lt;= 2 * pi) {//第一象限
-            canvas.drawText(titles.get(i), x, y, textPaint);
-        }
-
-    }
-
-}
-</code></pre><p>效果如下：</p>
+<h1 id="第三步：绘制标题文字"><a href="#第三步：绘制标题文字" class="headerlink" title="第三步：绘制标题文字"></a>第三步：绘制标题文字</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 绘制标题文字</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawTitle</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (count != titles.size()) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//相关知识点:http://mikewang.blog.51cto.com/3826268/871765/</span></div><div class="line">    Paint.FontMetrics fontMetrics = textPaint.getFontMetrics();</div><div class="line">    <span class="keyword">float</span> fontHeight = fontMetrics.descent - fontMetrics.ascent;</div><div class="line">    <span class="comment">//绘制文字时不让文字和雷达图形交叉,加大绘制半径</span></div><div class="line">    <span class="keyword">float</span> textRadius = radius + fontHeight;</div><div class="line">    <span class="keyword">double</span> pi = Math.PI;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="keyword">float</span> x = (<span class="keyword">float</span>) (centerX + textRadius * Math.cos(angle * i));</div><div class="line">        <span class="keyword">float</span> y = (<span class="keyword">float</span>) (centerY + textRadius * Math.sin(angle * i));</div><div class="line">        <span class="comment">//当前绘制标题所在顶点角度</span></div><div class="line">        <span class="keyword">float</span> degrees = angle * i;</div><div class="line">        <span class="comment">//从右下角开始顺时针画起,与真实坐标系相反</span></div><div class="line">        <span class="keyword">if</span> (degrees &gt;= <span class="number">0</span> &amp;&amp; degrees &lt; pi / <span class="number">2</span>) &#123;<span class="comment">//第四象限</span></div><div class="line">            <span class="keyword">float</span> dis=textPaint.measureText(titles.get(i))/(titles.get(i).length()-<span class="number">1</span>);</div><div class="line">            canvas.drawText(titles.get(i), x+dis, y, textPaint);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (degrees &gt;= pi / <span class="number">2</span> &amp;&amp; degrees &lt; pi) &#123;<span class="comment">//第三象限</span></div><div class="line">            <span class="keyword">float</span> dis=textPaint.measureText(titles.get(i))/(titles.get(i).length()-<span class="number">1</span>);</div><div class="line">            canvas.drawText(titles.get(i), x-dis, y, textPaint);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (degrees &gt;= pi &amp;&amp; degrees &lt; <span class="number">3</span> * pi / <span class="number">2</span>) &#123;<span class="comment">//第二象限</span></div><div class="line">            <span class="keyword">float</span> dis=textPaint.measureText(titles.get(i))/(titles.get(i).length());</div><div class="line">            canvas.drawText(titles.get(i), x-dis, y, textPaint);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (degrees &gt;= <span class="number">3</span> * pi / <span class="number">2</span> &amp;&amp; degrees &lt;= <span class="number">2</span> * pi) &#123;<span class="comment">//第一象限</span></div><div class="line">            canvas.drawText(titles.get(i), x, y, textPaint);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3054656-c9132f5ff1404eaf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<h1 id="第四步：绘制覆盖区域"><a href="#第四步：绘制覆盖区域" class="headerlink" title="第四步：绘制覆盖区域"></a>第四步：绘制覆盖区域</h1><p>要绘制覆盖区域，首先要指定最大值和每个分类的具体数值,有了这些数值之后，就可以绘制了。<br>代码如下：</p>
-<pre><code>/**
- * 绘制覆盖区域
- */
-private void drawRegion(Canvas canvas){
-    valuePaint.setAlpha(255);
-    Path path=new Path();
-    for (int i = 0; i &lt; count; i++) {
-        //计算该数值与最大值比例
-        Double perCenter = data.get(i)/maxValue;
-        //小圆点所在位置距离圆心的距离
-        double perRadius=perCenter*radius;
-        float x = (float) (centerX + perRadius * Math.cos(angle * i));
-        float y = (float) (centerY + perRadius * Math.sin(angle * i));
-        if(i==0){
-            path.moveTo(x,y);
-        }else {
-            path.lineTo(x,y);
-        }
-        //绘制小圆点
-        canvas.drawCircle(x,y,10,valuePaint);
-    }
-    //闭合覆盖区域
-    path.close();
-    valuePaint.setStyle(Paint.Style.STROKE);
-    //绘制覆盖区域外的连线
-    canvas.drawPath(path, valuePaint);
-    //填充覆盖区域
-    valuePaint.setAlpha(128);
-    valuePaint.setStyle(Paint.Style.FILL);
-    canvas.drawPath(path,valuePaint);
-}
-</code></pre><p>看一下效果：</p>
+<h1 id="第四步：绘制覆盖区域"><a href="#第四步：绘制覆盖区域" class="headerlink" title="第四步：绘制覆盖区域"></a>第四步：绘制覆盖区域</h1><p>要绘制覆盖区域，首先要指定最大值和每个分类的具体数值,有了这些数值之后，就可以绘制了。</p>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 绘制覆盖区域</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawRegion</span><span class="params">(Canvas canvas)</span></span>&#123;</div><div class="line">    valuePaint.setAlpha(<span class="number">255</span>);</div><div class="line">    Path path=<span class="keyword">new</span> Path();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="comment">//计算该数值与最大值比例</span></div><div class="line">        Double perCenter = data.get(i)/maxValue;</div><div class="line">        <span class="comment">//小圆点所在位置距离圆心的距离</span></div><div class="line">        <span class="keyword">double</span> perRadius=perCenter*radius;</div><div class="line">        <span class="keyword">float</span> x = (<span class="keyword">float</span>) (centerX + perRadius * Math.cos(angle * i));</div><div class="line">        <span class="keyword">float</span> y = (<span class="keyword">float</span>) (centerY + perRadius * Math.sin(angle * i));</div><div class="line">        <span class="keyword">if</span>(i==<span class="number">0</span>)&#123;</div><div class="line">            path.moveTo(x,y);</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            path.lineTo(x,y);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//绘制小圆点</span></div><div class="line">        canvas.drawCircle(x,y,<span class="number">10</span>,valuePaint);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//闭合覆盖区域</span></div><div class="line">    path.close();</div><div class="line">    valuePaint.setStyle(Paint.Style.STROKE);</div><div class="line">    <span class="comment">//绘制覆盖区域外的连线</span></div><div class="line">    canvas.drawPath(path, valuePaint);</div><div class="line">    <span class="comment">//填充覆盖区域</span></div><div class="line">    valuePaint.setAlpha(<span class="number">128</span>);</div><div class="line">    valuePaint.setStyle(Paint.Style.FILL);</div><div class="line">    canvas.drawPath(path,valuePaint);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看一下效果：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3054656-d62b189d8dce1fac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
 <p>再来看一下动态的效果吧：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/3054656-50a0b0225608fc7b.gif?imageMogr2/auto-orient/strip" alt="多边形效果.gif"></p>
@@ -849,7 +694,7 @@ private void drawRegion(Canvas canvas){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一步：绘制蜘蛛网络"><span class="nav-number">1.</span> <span class="nav-text">第一步：绘制蜘蛛网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二步：绘制对角线"><span class="nav-number">2.</span> <span class="nav-text">第二步：绘制对角线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三步：绘制标题文字"><span class="nav-number">3.</span> <span class="nav-text">第三步：绘制标题文字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四步：绘制覆盖区域"><span class="nav-number">4.</span> <span class="nav-text">第四步：绘制覆盖区域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#准备"><span class="nav-number">1.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一步：绘制蜘蛛网络"><span class="nav-number">2.</span> <span class="nav-text">第一步：绘制蜘蛛网络</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二步：绘制对角线"><span class="nav-number">3.</span> <span class="nav-text">第二步：绘制对角线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三步：绘制标题文字"><span class="nav-number">4.</span> <span class="nav-text">第三步：绘制标题文字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四步：绘制覆盖区域"><span class="nav-number">5.</span> <span class="nav-text">第四步：绘制覆盖区域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

@@ -543,60 +543,7 @@
 
       
         
-          <h1 id="第一步：绘制蜘蛛网络"><a href="#第一步：绘制蜘蛛网络" class="headerlink" title="第一步：绘制蜘蛛网络"></a>第一步：绘制蜘蛛网络</h1><pre><code>private void init() {
-    mainPaint=new Paint();
-    mainPaint.setColor(Color.BLACK);
-    mainPaint.setAntiAlias(true);
-    mainPaint.setStrokeWidth(1);
-    mainPaint.setStyle(Paint.Style.STROKE);
-}
-
-@Override
-protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-    radius=Math.min(w,h)/2*0.9f;
-    centerX=w/2;
-    centerY=h/2;
-    //一旦size发生改变，重新绘制
-    postInvalidate();
-    super.onSizeChanged(w, h, oldw, oldh);
-}
-
-@Override
-protected void onDraw(Canvas canvas) {
-    drawPolygon(canvas);
-}
-
-/**
- * 绘制多边形
- * @param canvas
- */
-private void drawPolygon(Canvas canvas){
-    Path path=new Path();
-    //1度=1*PI/180   360度=2*PI   那么我们每旋转一次的角度为2*PI/内角个数
-    //中心与相邻两个内角相连的夹角角度
-    angle= (float) (2*Math.PI/count);
-    //每个蛛丝之间的间距
-    float r= radius/(count-1);
-    for (int i = 0; i &lt; count; i++) {
-        //当前半径
-        float curR=r*i;
-        path.reset();
-        for (int j = 0; j &lt; count; j++) {
-            if(j==0){
-                path.moveTo(centerX+curR,centerY);
-            }else {
-                //对于直角三角形sin(x)是对边比斜边，cos(x)是底边比斜边，tan(x)是对边比底边
-                //因此可以推导出:底边(x坐标)=斜边(半径)*cos(夹角角度)
-                //               对边(y坐标)=斜边(半径)*sin(夹角角度)
-                float x = (float) (centerX+curR*Math.cos(angle*j));
-                float y = (float) (centerY+curR*Math.sin(angle*j));
-                path.lineTo(x,y);
-            }
-        }
-        path.close();
-        canvas.drawPath(path,mainPaint);
-    }
-</code></pre>
+          <h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>我们将从0到1一步一步来画一个 web 页面很常见的雷达图<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/15/Path实战之雷达图/#more" rel="contents">
