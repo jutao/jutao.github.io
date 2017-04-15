@@ -136,12 +136,11 @@ font:
 #social:
   #LinkLabel: Link
 social:
-  GitHub: https://github.com/your-user-name
-  Twitter: https://twitter.com/your-user-name
-  微博: http://weibo.com/your-user-name
-  豆瓣: http://douban.com/people/your-user-name
-  知乎: http://www.zhihu.com/people/your-user-name
-  简书: http://www.zhihu.com/people/your-user-name
+  GitHub: https://github.com/jutao
+  微博: http://weibo.com/jutaoshigedahaoren
+  豆瓣: https://www.douban.com/people/42701793/
+  知乎: https://www.zhihu.com/people/jutao
+  简书: http://www.jianshu.com/u/d251eadadd37
   
 
 
@@ -155,9 +154,10 @@ social_icons:
   # Icon Mappings.
   # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
   GitHub: github
-  Twitter: twitter
-  Weibo: weibo
-  JianShu: heartbeat
+  微博: weibo
+  简书: heartbeat
+  知乎: flag
+  豆瓣: star
   
 # Sidebar Avatar
 # in theme directory(source/images): /images/avatar.jpg
@@ -279,7 +279,7 @@ custom_logo:
 # Available value:
 #    normal | night | night eighties | night blue | night bright
 # https://github.com/chriskempson/tomorrow-theme
-highlight_theme: normal
+highlight_theme: night eighties
 
 
 # ---------------------------------------------------------------
@@ -297,7 +297,7 @@ mathjax:
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: d63d54d82fdbd26bc0f05a91355caea3
 
 # Duoshuo ShortName
 #duoshuo_shortname:
@@ -402,9 +402,9 @@ vkontakte_api:
 # Show number of visitors to each article.
 # You can visit https://leancloud.cn get AppID and AppKey.
 leancloud_visitors:
-  enable: false
-  app_id: #<app_id>
-  app_key: #<app_key>
+  enable: true
+  app_id: c1gNJkeAaPTVbWAH1nzxru17-gzGzoHsz
+  app_key: hRJNS0I8sj1BsSmaK71MG2xE
 
 # Show PV/UV of the website/page with busuanzi.
 # Get more information on http://ibruce.info/2015/04/04/busuanzi/
@@ -559,3 +559,7 @@ images: images
 # Theme version
 version: 5.1.0
 
+
+reward_comment: 坚持原创技术分享，您的支持将鼓励我继续创作！
+wechatpay: http://7xthjd.com2.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1.png
+alipay: http://7xthjd.com2.z0.glb.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D.png
