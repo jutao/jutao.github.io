@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>jutao&#39;s Note</title>
-  <subtitle>记录所得</subtitle>
+  <subtitle>带三个表贯彻持续学习思想</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-15T16:50:55.430Z</updated>
+  <updated>2017-04-16T03:51:53.602Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,403 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Path 学习笔记之基本操作</title>
+    <link href="http://yoursite.com/2017/04/16/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2017/04/16/Path学习笔记之基本操作/</id>
+    <published>2017-04-16T03:29:27.955Z</published>
+    <updated>2017-04-16T03:51:53.602Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="path-常用方法一览"><a href="#path-常用方法一览" class="headerlink" title="path 常用方法一览"></a>path 常用方法一览</h1><blockquote>
+<p>为了兼容性(<em>偷懒</em>) 本表格中去除了部分API21(即安卓版本5.0)以上才添加的方法。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>相关方法</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>移动起点</td>
+<td>moveTo</td>
+<td>移动下一次操作的起点位置</td>
+</tr>
+<tr>
+<td>设置终点</td>
+<td>setLastPoint</td>
+<td>重置当前path中最后一个点位置，如果在绘制之前调用，效果和moveTo相同</td>
+</tr>
+<tr>
+<td>连接直线</td>
+<td>lineTo</td>
+<td>添加上一个点到当前点之间的直线到Path</td>
+</tr>
+<tr>
+<td>闭合路径</td>
+<td>close</td>
+<td>连接第一个点连接到最后一个点，形成一个闭合区域</td>
+</tr>
+<tr>
+<td>添加内容</td>
+<td>addRect, addRoundRect,  addOval, addCircle,     addPath, addArc, arcTo</td>
+<td>添加(矩形， 圆角矩形， 椭圆， 圆， 路径， 圆弧) 到当前Path (注意addArc和arcTo的区别)</td>
+</tr>
+<tr>
+<td>是否为空</td>
+<td>isEmpty</td>
+<td>判断Path是否为空</td>
+</tr>
+<tr>
+<td>是否为矩形</td>
+<td>isRect</td>
+<td>判断path是否是一个矩形</td>
+</tr>
+<tr>
+<td>替换路径</td>
+<td>set</td>
+<td>用新的路径替换到当前路径所有内容</td>
+</tr>
+<tr>
+<td>偏移路径</td>
+<td>offset</td>
+<td>对当前路径之前的操作进行偏移(不会影响之后的操作)</td>
+</tr>
+<tr>
+<td>贝塞尔曲线</td>
+<td>quadTo, cubicTo</td>
+<td>分别为二次和三次贝塞尔曲线的方法</td>
+</tr>
+<tr>
+<td>rXxx方法</td>
+<td>rMoveTo, rLineTo, rQuadTo, rCubicTo</td>
+<td><strong>不带r的方法是基于原点的坐标系(偏移量)， rXxx方法是基于当前点坐标系(偏移量)</strong></td>
+</tr>
+<tr>
+<td>填充模式</td>
+<td>setFillType, getFillType, isInverseFillType, toggleInverseFillType</td>
+<td>设置,获取,判断和切换填充模式</td>
+</tr>
+<tr>
+<td>提示方法</td>
+<td>incReserve</td>
+<td>提示Path还有多少个点等待加入<strong>(这个方法貌似会让Path优化存储结构)</strong></td>
+</tr>
+<tr>
+<td>布尔操作(API19)</td>
+<td>op</td>
+<td>对两个Path进行布尔运算(即取交集、并集等操作)</td>
+</tr>
+<tr>
+<td>计算边界</td>
+<td>computeBounds</td>
+<td>计算Path的边界</td>
+</tr>
+<tr>
+<td>重置路径</td>
+<td>reset, rewind</td>
+<td>清除Path中的内容<br> <strong>reset不保留内部数据结构，但会保留FillType.</strong><br> <strong>rewind会保留内部的数据结构，但不保留FillType</strong></td>
+</tr>
+<tr>
+<td>矩阵操作</td>
+<td>transform</td>
+<td>矩阵变换</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Path含义"><a href="#Path含义" class="headerlink" title="Path含义"></a>Path含义</h1><p>Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径。你能用Canvas中的drawPath来把这条路径画出来(同样支持Paint的不同绘制模式)，也可以用于剪裁画布和根据路径绘制文字。我们有时会用Path来描述一个图像的轮廓，所以也会称为轮廓线(轮廓线仅是Path的一种使用方法，两者并不等价)</p>
+<h1 id="直线与点的操作"><a href="#直线与点的操作" class="headerlink" title="直线与点的操作"></a>直线与点的操作</h1><h2 id="lineTo"><a href="#lineTo" class="headerlink" title="lineTo"></a>lineTo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一条从原点到坐标(300,300)的直线</span></div><div class="line">mPath.lineTo(<span class="number">500</span>,<span class="number">500</span>);</div><div class="line"></div><div class="line"><span class="comment">//创建从(500,500)到(100,200)的一条直线</span></div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">200</span>);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-9fa8ff91af3e6ca6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="lineTo效果.png"></p>
+<p>所以可知 lineTo 方法的连接的起点是由lineTo方法上一个Path操作决定的。</p>
+<h2 id="moveTo"><a href="#moveTo" class="headerlink" title="moveTo"></a>moveTo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这样改写的话是画一条从(500,500)到(100,200)的线</span></div><div class="line">mPath.moveTo(<span class="number">500</span>,<span class="number">500</span>);</div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">200</span>);</div></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-2a235e192504b31f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="moveTo效果.png"></p>
+<p>所以可知 moveTo 方法的作用为将下次画路径起点移动到(x,y)</p>
+<h2 id="setLastPoint"><a href="#setLastPoint" class="headerlink" title="setLastPoint"></a>setLastPoint</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">300</span>);</div><div class="line">mPath.setLastPoint(<span class="number">200</span>,<span class="number">200</span>);</div><div class="line">mPath.lineTo(<span class="number">200</span>,<span class="number">400</span>);</div></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-0ac7b2790c36c336.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="setLastPoint效果.png"></p>
+<p>所以可知 setLastPoint 的作用为改变上一次操作路径的结束坐标点。</p>
+<p>因此我们可以总结出 moveTo 和 lineTo 的区别为：</p>
+<ul>
+<li>moveTo 影响上一次操作不影响上一次</li>
+<li>setLastPoint上一次和下一次操作都影响</li>
+</ul>
+<h2 id="close"><a href="#close" class="headerlink" title="close"></a>close</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">300</span>);</div><div class="line">mPath.setLastPoint(<span class="number">200</span>,<span class="number">200</span>);</div><div class="line">mPath.lineTo(<span class="number">200</span>,<span class="number">400</span>);</div><div class="line">mPath.close();</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-76e5e3e3aa79e2fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="close效果.png"></p>
+<p>观察可知 close 的效果为用线段连接起始点和终点，除非起始点等于终点。</p>
+<h1 id="基本形状"><a href="#基本形状" class="headerlink" title="基本形状"></a>基本形状</h1><h2 id="addRect（矩形）"><a href="#addRect（矩形）" class="headerlink" title="addRect（矩形）"></a>addRect（矩形）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">50</span>,<span class="number">150</span>,<span class="number">150</span>,Direction.CW);</div><div class="line"></div><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">250</span>,<span class="number">150</span>,<span class="number">350</span>,Direction.CCW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-a63df17a624ec167.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="矩形.png"></p>
+<p>上下两个方法画出来的一模一样，那他们有什么区别呢？我们试着用一下刚学的 setLastPoint 看效果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">50</span>,<span class="number">150</span>,<span class="number">150</span>,Direction.CW);</div><div class="line"><span class="comment">//改变最后一笔的位置</span></div><div class="line">mPath.setLastPoint(<span class="number">50</span>,<span class="number">100</span>);</div><div class="line"></div><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">250</span>,<span class="number">150</span>,<span class="number">350</span>,Direction.CCW);</div><div class="line">mPath.setLastPoint(<span class="number">150</span>,<span class="number">300</span>);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-0cde63a4201a51d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="矩形顺时逆时对比.png"></p>
+<p>所以我们可以看出 Direction.CW 的最后一笔是左下角，Direction.CCW 的最后一笔是右上角，而且 Android 源码中给 Direction.CW 的注释为 clockwise(顺时针),Direction.CCW 的注释为 counter-clockwise(逆时针),通过这些我们可以很清楚的知道以上两种矩形画法的区别。</p>
+<p>而矩形的另外一种画法 public void addRect(RectF rect, Direction dir) 和上面的方法其实一样，只是把坐标封装到了 RectF 对象中而已。</p>
+<h2 id="addCircle（圆形）"><a href="#addCircle（圆形）" class="headerlink" title="addCircle（圆形）"></a>addCircle（圆形）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mPath.addCircle(<span class="number">210</span>,<span class="number">210</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line"></div><div class="line">mPath.addCircle(<span class="number">800</span>,<span class="number">800</span>,<span class="number">200</span>, Path.Direction.CCW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-f25c8134566cb3d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圆形.png"></p>
+<p>画圆非常简单，x，y 代表圆心坐标，radius 代表半径，dir 和矩形一样，代表顺时针或者逆时针。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mPath.addCircle(<span class="number">210</span>,<span class="number">210</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">mPath.setLastPoint(<span class="number">210</span>,<span class="number">210</span>);</div><div class="line"></div><div class="line">mPath.addCircle(<span class="number">800</span>,<span class="number">800</span>,<span class="number">200</span>, Path.Direction.CCW);</div><div class="line">mPath.setLastPoint(<span class="number">800</span>,<span class="number">800</span>);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-b24fe1e1da6d757f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="addRoundRect（圆角矩形）"><a href="#addRoundRect（圆角矩形）" class="headerlink" title="addRoundRect（圆角矩形）"></a>addRoundRect（圆角矩形）</h2><p>圆角矩形主要有两种画法，一种是圆角弧度统一，第二种是定制每一个圆角的弧度。用法如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRoundRect(rect1,<span class="number">100</span>,<span class="number">100</span>, Path.Direction.CW);</div><div class="line"></div><div class="line">RectF rect2=<span class="keyword">new</span> RectF(<span class="number">100</span>,<span class="number">600</span>,<span class="number">800</span>,<span class="number">1000</span>);</div><div class="line"></div><div class="line"><span class="comment">/*必须传入8个数值，分四组，分别对应每个角所使用的椭圆的横轴半径和纵轴半径，</span></div><div class="line"> 如｛x1,y1,x2,y2,x3,y3,x4,y4｝，其中，x1,y1对应第一个角的（左上角）用来产</div><div class="line"> 生圆角的椭圆的横轴半径和纵轴半径，其它类推……*/</div><div class="line"><span class="keyword">float</span>[] radii=&#123;<span class="number">100</span>,<span class="number">100</span>,<span class="number">150</span>,<span class="number">150</span>,<span class="number">200</span>,<span class="number">200</span>,<span class="number">300</span>,<span class="number">200</span>&#125;;</div><div class="line">mPath.addRoundRect(rect2,radii,Path.Direction.CCW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-7b6e69e14822fa9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圆角矩形"></p>
+<p>我标了一下每个圆角半径，很丑：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-571ad0c63463d64d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圆角半径"></p>
+<h2 id="addOval（椭圆）"><a href="#addOval（椭圆）" class="headerlink" title="addOval（椭圆）"></a>addOval（椭圆）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addOval(rect, Path.Direction.CW);</div><div class="line"><span class="comment">//将矩形变为正方形看效果</span></div><div class="line">rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">600</span>, <span class="number">300</span>, <span class="number">800</span>);</div><div class="line">mPath.addOval(rect, Path.Direction.CW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-8305a07ea17626a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="椭圆"></p>
+<h2 id="addArc与arcTo（圆弧）"><a href="#addArc与arcTo（圆弧）" class="headerlink" title="addArc与arcTo（圆弧）"></a>addArc与arcTo（圆弧）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line"><span class="comment">//开始的角度</span></div><div class="line"><span class="keyword">float</span> startAngle=<span class="number">90</span>;</div><div class="line"><span class="comment">//扫过的角度</span></div><div class="line"><span class="keyword">float</span> sweepAngle=<span class="number">180</span>;</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addArc(rect,startAngle,sweepAngle);</div></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-014416205f8d730e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="弧"></p>
+<p>关于起始角度以及扫过的角度这些是怎么来的，我理解的是实际上我们是在指定矩形内画一个内切椭圆，通过指定角度在这个椭圆上截取一部分，这一部分就是我们所画的弧。示意图如下，不要嫌丑：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-2f1bf4d694f95e7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="弧"></p>
+<p>知道了addArc的用法之后，我们来看一下arcTo这个方法，这个方法也是用来画圆弧的，但是与addArc有些不同:</p>
+<ul>
+<li>addArc    直接添加一段圆弧</li>
+<li>arcTo      添加一段圆弧，如果圆弧的起点与上一次Path操作的终点不一样的话，就会在这两个点连成一条直线</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line"><span class="comment">//开始的角度</span></div><div class="line"><span class="keyword">float</span> startAngle=<span class="number">90</span>;</div><div class="line"><span class="comment">//扫过的角度</span></div><div class="line"><span class="keyword">float</span> sweepAngle=<span class="number">180</span>;</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">100</span>);</div><div class="line">mPath.arcTo(rect,startAngle,sweepAngle);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-785a72beeca6dac4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>可以看到，圆弧的起点并不是直线的终点，于是他们连接在了一起。如果你不想让他们连接怎么办？</p>
+<pre><code>mPath.arcTo(rect,startAngle,sweepAngle,true);
+</code></pre><p>arcTo 最后一个属性填 true 就可以了。效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-255b070700818d89.png" alt="image.png"></p>
+<h2 id="addPath（添加Path）"><a href="#addPath（添加Path）" class="headerlink" title="addPath（添加Path）"></a>addPath（添加Path）</h2><p>先看最普通的 public void addPath (Path src)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Path circle=<span class="keyword">new</span> Path();</div><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRect(rect, Path.Direction.CW);</div><div class="line">circle.addCircle(<span class="number">450</span>,<span class="number">300</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">mPath.addPath(circle);</div></pre></td></tr></table></figure>
+<p>它将两个path合并在了一起，效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-2d0a81593436197c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>addPath的第二个方法的 dx 和 dy 两个参数是什么意思呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mPath.addPath(circle,<span class="number">350</span>,-<span class="number">100</span>);</div></pre></td></tr></table></figure>
+<p>其实它们是代表添加path后的位移值</p>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-4d28b8f8a6b14b86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h1 id="设置方法"><a href="#设置方法" class="headerlink" title="设置方法"></a>设置方法</h1><h2 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Path circle=<span class="keyword">new</span> Path();</div><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRect(rect, Path.Direction.CW);</div><div class="line">circle.addCircle(<span class="number">450</span>,<span class="number">300</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">mPath.set(circle);</div></pre></td></tr></table></figure>
+<p>这个方法就是将path之前的矩形变成圆形。</p>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-546c79bf325f031e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="offset"><a href="#offset" class="headerlink" title="offset()"></a>offset()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRect(rect, Path.Direction.CW);</div><div class="line">mPath.offset(<span class="number">150</span>,<span class="number">150</span>);</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-55ae6162b44b82ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>它的作用就是将path进行平移</p>
+<p>offset() 还有一个参数 dst 是起什么作用呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">mPath.addCircle(<span class="number">50</span>,<span class="number">50</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">Path temp=<span class="keyword">new</span> Path();</div><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">temp.addRect(rect, Path.Direction.CW);</div><div class="line"><span class="comment">//相当于用set方法将 temp set 给了mPath，覆盖 mPath 原有的图案</span></div><div class="line">temp.offset(<span class="number">150</span>,<span class="number">150</span>,mPath);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-55ae6162b44b82ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>可以看到 mPath 之前画的圆已经被覆盖</p>
+<h2 id="reset"><a href="#reset" class="headerlink" title="reset()"></a>reset()</h2><p>这个方法很简单，就是将path的所有操作都清空掉。</p>
+<h1 id="判断方法"><a href="#判断方法" class="headerlink" title="判断方法"></a>判断方法</h1><h2 id="isConvex-（这个方法在API21之后才有）"><a href="#isConvex-（这个方法在API21之后才有）" class="headerlink" title="isConvex()（这个方法在API21之后才有）"></a>isConvex()（这个方法在API21之后才有）</h2><p>判断path是否为凸多边形，如果是就为true，反之为false。</p>
+<p>要理解这个方法首先，我们要知道什么是凸多边形。</p>
+<p>凸多边形的概念:</p>
+<ol>
+<li>每个内角小于180度</li>
+<li>任何两个顶点间的线段位于多边形的内部或边界上。</li>
+</ol>
+<p>也就是说矩形，三角形，直线都是凸多边形，但是五角星那种形状就不是。现在我们用代码验证一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">mPath.moveTo(<span class="number">100</span>,<span class="number">100</span>);</div><div class="line">mPath.lineTo(<span class="number">200</span>,<span class="number">200</span>);</div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">400</span>);</div><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">50</span>);</div><div class="line">mPath.close();</div><div class="line">System.out.println(mPath.isConvex());</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-b99b4c9a0f651743.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>很明显，这不是一个凸多边形，查看输出：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">I/System.out: <span class="keyword">false</span></div></pre></td></tr></table></figure></p>
+<h2 id="isEmpty"><a href="#isEmpty" class="headerlink" title="isEmpty"></a>isEmpty</h2><p>这个方法依然很简单，就是判断 path 中是否包含内容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">System.out.println(mPath.isEmpty());</div><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">50</span>);</div><div class="line">System.out.println(mPath.isEmpty());</div></pre></td></tr></table></figure>
+<p>查看输出：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">I/System.out: <span class="keyword">true</span></div><div class="line">I/System.out: <span class="keyword">false</span></div></pre></td></tr></table></figure></p>
+<h2 id="isRect"><a href="#isRect" class="headerlink" title="isRect"></a>isRect</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">RectF rect=<span class="keyword">new</span> RectF();</div><div class="line">mPath.addRect(<span class="number">100</span>,<span class="number">100</span>,<span class="number">50</span>,<span class="number">50</span>,Path.Direction.CW);</div><div class="line">System.out.println(mPath.isRect(rect));</div><div class="line">System.out.println(rect);</div></pre></td></tr></table></figure>
+<p>  判断path是否是一个矩形，如果是一个矩形的话，将矩形的信息存到参数rect中。</p>
+<p>  输出如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">I/System.out: <span class="keyword">true</span></div><div class="line">I/System.out: RectF(<span class="number">50.0</span>, <span class="number">50.0</span>, <span class="number">100.0</span>, <span class="number">100.0</span>)</div></pre></td></tr></table></figure>
+<h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><p>如果想练习一下 Path知识，可以看一下下面的 blog：</p>
+<p><a href="https://github.com/jutao/AndroidNode/blob/master/2017/2017.3/Path%E5%AE%9E%E6%88%98%E4%B9%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE.md" target="_blank" rel="external">Path实战之雷达图</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;path-常用方法一览&quot;&gt;&lt;a href=&quot;#path-常用方法一览&quot; class=&quot;headerlink&quot; title=&quot;path 常用方法一览&quot;&gt;&lt;/a&gt;path 常用方法一览&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;为了兼容性(&lt;em&gt;偷懒&lt;/em&gt;) 本表
+    
+    </summary>
+    
+      <category term="Android" scheme="http://yoursite.com/categories/Android/"/>
+    
+    
+      <category term="Path" scheme="http://yoursite.com/tags/Path/"/>
+    
+      <category term="draw" scheme="http://yoursite.com/tags/draw/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Path 学习笔记之基本操作</title>
+    <link href="http://yoursite.com/2017/04/16/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBezier/"/>
+    <id>http://yoursite.com/2017/04/16/Path学习笔记之Bezier/</id>
+    <published>2017-04-16T03:28:56.397Z</published>
+    <updated>2017-04-16T03:43:38.106Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="贝塞尔曲线能干什么？"><a href="#贝塞尔曲线能干什么？" class="headerlink" title="贝塞尔曲线能干什么？"></a>贝塞尔曲线能干什么？</h1><p>贝塞尔曲线的运用是十分广泛的，可以说<strong>贝塞尔曲线奠定了计算机绘图的基础(<em>因为它可以将任何复杂的图形用精确的数学语言进行描述</em>)</strong>，在你不经意间就已经使用过它了。</p>
+<p>你会使用Photoshop的话，你可能会注意到里面有一个<strong>钢笔工具</strong>，这个钢笔工具核心就是贝塞尔曲线。</p>
+<p>你说你不会PS？ 没关系，你如果看过前面的文章或者用过2D绘图，肯定绘制过圆，圆弧，圆角矩形等这些东西。这里面的圆弧部分全部都是贝塞尔曲线的运用。</p>
+<p>贝塞尔曲线作用十分广泛，简单举几个的栗子:</p>
+<blockquote>
+<ul>
+<li>QQ小红点拖拽效果</li>
+<li>一些炫酷的下拉刷新控件</li>
+<li>阅读软件的翻书效果</li>
+<li>一些平滑的折线图的制作</li>
+<li>很多炫酷的动画效果</li>
+</ul>
+</blockquote>
+<h1 id="贝塞尔曲线的原理"><a href="#贝塞尔曲线的原理" class="headerlink" title="贝塞尔曲线的原理"></a>贝塞尔曲线的原理</h1><p>贝塞尔曲线是用一系列点来控制曲线状态的，我将这些点简单分为两类：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据点</td>
+<td>确定曲线的起始和结束位置</td>
+</tr>
+<tr>
+<td>控制点</td>
+<td>确定曲线的弯曲程度</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>此处暂时仅作了解概念，接下来就会讲解其中详细的含义。</p>
+</blockquote>
+<h2 id="一阶曲线原理"><a href="#一阶曲线原理" class="headerlink" title="一阶曲线原理"></a>一阶曲线原理</h2><p>一阶曲线是没有控制点的，仅有两个数据点(A 和 B)，最终效果一个线段。</p>
+<p><img src="http://ww1.sinaimg.cn/large/005Xtdi2jw1f35of045w8j308c0dwq2z.jpg" alt=""></p>
+<blockquote>
+<p><strong>上图表示的是一阶曲线生成过程中的某一个阶段，动态过程可以参照下图(本文中贝塞尔曲线相关的动态演示图片来自维基百科)。</strong></p>
+</blockquote>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/0/00/B%C3%A9zier_1_big.gif" alt=""></p>
+<blockquote>
+<p><strong>PS：一阶曲线其实就是 Path 的 lineTo 方法。</strong></p>
+</blockquote>
+<h2 id="二阶曲线原理"><a href="#二阶曲线原理" class="headerlink" title="二阶曲线原理"></a>二阶曲线原理</h2><p>二阶曲线由两个数据点(A 和 C)，一个控制点(B)来描述曲线状态，大致如下：</p>
+<p><img src="http://ww3.sinaimg.cn/large/005Xtdi2jw1f35p4913k7j308c0dw74d.jpg" alt=""></p>
+<p>上图中红色曲线部分就是传说中的二阶贝塞尔曲线，那么这条红色曲线是如何生成的呢？接下来我们就以其中的一个状态分析一下：</p>
+<p><img src="http://ww4.sinaimg.cn/large/005Xtdi2jw1f361bjqj2vj308c0dwwem.jpg" alt=""></p>
+<p>连接AB BC，并在AB上取点D，BC上取点E，使其满足条件：<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cfrac%7BAD%7D%7BAB%7D%20%3D%20%5Cfrac%7BBE%7D%7BBC%7D" style="border:none;"></p>
+<p><img src="http://ww2.sinaimg.cn/large/005Xtdi2jw1f361oje6h1j308c0dwdg0.jpg" alt=""></p>
+<p>连接DE，取点F，使得:<br><img src="http://chart.googleapis.com/chart?cht=tx&chl=%5Cfrac%7BAD%7D%7BAB%7D%20%3D%20%5Cfrac%7BBE%7D%7BBC%7D%20%3D%20%5Cfrac%7BDF%7D%7BDE%7D" style="border:none;"></p>
+<p>这样获取到的点F就是贝塞尔曲线上的一个点，动态过程如下：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/B%C3%A9zier_2_big.gif" alt=""></p>
+<blockquote>
+<p><strong>PS: 二阶曲线对应的方法是quadTo</strong></p>
+</blockquote>
+<h2 id="三阶曲线原理"><a href="#三阶曲线原理" class="headerlink" title="三阶曲线原理"></a>三阶曲线原理</h2><p>三阶曲线由两个数据点(A 和 D)，两个控制点(B 和 C)来描述曲线状态，如下：</p>
+<p><img src="http://ww2.sinaimg.cn/large/005Xtdi2gw1f36myeqcu5j308c0dwdg2.jpg" alt=""></p>
+<p>三阶曲线计算过程与二阶类似，具体可以见下图动态效果：</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/db/B%C3%A9zier_3_big.gif" alt=""></p>
+<blockquote>
+<p><strong>PS: 三阶曲线对应的方法是cubicTo</strong></p>
+</blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><blockquote>
+<p><strong> <a href="https://github.com/GcsSloop/AndroidNote/blob/master/QuickChart/Bezier.md" target="_blank" rel="external">贝塞尔曲线速查表</a></strong></p>
+<p><strong> 强烈推荐<a href="http://bezier.method.ac/" target="_blank" rel="external">点击这里</a>练习贝塞尔曲线，可以加深对贝塞尔曲线的理解程度。</strong></p>
+</blockquote>
+<h1 id="贝塞尔曲线基本用法"><a href="#贝塞尔曲线基本用法" class="headerlink" title="贝塞尔曲线基本用法"></a>贝塞尔曲线基本用法</h1><h2 id="一阶曲线"><a href="#一阶曲线" class="headerlink" title="一阶曲线"></a>一阶曲线</h2><p>一阶曲线是一条线段，非常简单，可以参见上一篇文章<br><a href="https://github.com/jutao/AndroidNode/blob/master/2017/2017.3/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C.md" target="_blank" rel="external">Path之基本操作</a>，此处就不详细讲解了。</p>
+<h2 id="二阶曲线"><a href="#二阶曲线" class="headerlink" title="二阶曲线"></a>二阶曲线</h2><p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bezier</span> <span class="keyword">extends</span> <span class="title">View</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Paint mPaint;</div><div class="line">    <span class="keyword">private</span> PointF start,end,control;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> centerX,centerY;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bezier</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context,<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bezier</span><span class="params">(Context context, @Nullable AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, attrs,<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bezier</span><span class="params">(Context context, @Nullable AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        start=<span class="keyword">new</span> PointF(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">        end=<span class="keyword">new</span> PointF(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">        control=<span class="keyword">new</span> PointF(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line"></div><div class="line">        mPaint=<span class="keyword">new</span> Paint();</div><div class="line">        mPaint.setStyle(Paint.Style.STROKE);</div><div class="line">        mPaint.setColor(Color.BLACK);</div><div class="line">        mPaint.setStrokeWidth(<span class="number">8</span>);</div><div class="line">        mPaint.setTextSize(<span class="number">60</span>);</div><div class="line">        mPaint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line"></div><div class="line">        centerX=w/<span class="number">2</span>;</div><div class="line">        centerY=h/<span class="number">2</span>;</div><div class="line"></div><div class="line">        start.x=centerX-<span class="number">200</span>;</div><div class="line">        start.y=centerY;</div><div class="line"></div><div class="line">        end.x=centerX+<span class="number">200</span>;</div><div class="line">        end.y=centerY;</div><div class="line"></div><div class="line">        control.x=centerX;</div><div class="line">        control.y=centerY-<span class="number">100</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">        drawPoint(canvas);</div><div class="line">        drawAuxiliaryLine(canvas);</div><div class="line">        drawBezierPath(canvas);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 绘制数据点和控制点</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPoint</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        mPaint.setColor(Color.GRAY);</div><div class="line">        canvas.drawCircle(start.x,start.y,<span class="number">4</span>,mPaint);</div><div class="line">        canvas.drawCircle(end.x,end.y,<span class="number">4</span>,mPaint);</div><div class="line">        canvas.drawCircle(control.x,control.y,<span class="number">4</span>,mPaint);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 绘制辅助线</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawAuxiliaryLine</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        mPaint.setStrokeWidth(<span class="number">4</span>);</div><div class="line">        canvas.drawLine(start.x,start.y,control.x,control.y,mPaint);</div><div class="line">        canvas.drawLine(end.x,end.y,control.x,control.y,mPaint);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 绘制二阶曲线</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawBezierPath</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        mPaint.setColor(Color.RED);</div><div class="line">        mPaint.setStrokeWidth(<span class="number">8</span>);</div><div class="line">        Path path=<span class="keyword">new</span> Path();</div><div class="line">        path.moveTo(start.x,start.y);</div><div class="line">        path.quadTo(control.x,control.y,end.x,end.y);</div><div class="line">        canvas.drawPath(path,mPaint);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        control.x=event.getX();</div><div class="line">        control.y=event.getY();</div><div class="line">        postInvalidate();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-a7f7504b98e1a36b.gif?imageMogr2/auto-orient/strip" alt="Bezier.gif"></p>
+<h2 id="三阶曲线"><a href="#三阶曲线" class="headerlink" title="三阶曲线"></a>三阶曲线</h2><p>代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Bezier2</span> <span class="keyword">extends</span> <span class="title">View</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> Paint mPaint;</div><div class="line">    <span class="keyword">private</span> PointF start,end,control1,control2;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> centerX,centerY;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isControl1=<span class="keyword">true</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bezier2</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context,<span class="keyword">null</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bezier2</span><span class="params">(Context context, @Nullable AttributeSet attrs)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>(context, attrs,<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Bezier2</span><span class="params">(Context context, @Nullable AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        start=<span class="keyword">new</span> PointF(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">        end=<span class="keyword">new</span> PointF(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">        control1=<span class="keyword">new</span> PointF(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">        control2=<span class="keyword">new</span> PointF(<span class="number">0</span>,<span class="number">0</span>);</div><div class="line"></div><div class="line">        mPaint=<span class="keyword">new</span> Paint();</div><div class="line">        mPaint.setStyle(Paint.Style.STROKE);</div><div class="line">        mPaint.setColor(Color.BLACK);</div><div class="line">        mPaint.setStrokeWidth(<span class="number">8</span>);</div><div class="line">        mPaint.setTextSize(<span class="number">60</span>);</div><div class="line">        mPaint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line"></div><div class="line">        centerX=w/<span class="number">2</span>;</div><div class="line">        centerY=h/<span class="number">2</span>;</div><div class="line"></div><div class="line">        start.x=centerX-<span class="number">300</span>;</div><div class="line">        start.y=centerY;</div><div class="line"></div><div class="line">        end.x=centerX+<span class="number">300</span>;</div><div class="line">        end.y=centerY;</div><div class="line"></div><div class="line">        control1.x=centerX-<span class="number">100</span>;</div><div class="line">        control1.y=centerY-<span class="number">200</span>;</div><div class="line"></div><div class="line">        control2.x=centerX+<span class="number">100</span>;</div><div class="line">        control2.y=centerY-<span class="number">200</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">        drawPoint(canvas);</div><div class="line">        drawAuxiliaryLine(canvas);</div><div class="line">        drawBezierPath(canvas);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 绘制数据点和控制点</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPoint</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        mPaint.setColor(Color.GRAY);</div><div class="line">        canvas.drawCircle(start.x,start.y,<span class="number">4</span>,mPaint);</div><div class="line">        canvas.drawCircle(end.x,end.y,<span class="number">4</span>,mPaint);</div><div class="line">        canvas.drawCircle(control1.x,control1.y,<span class="number">4</span>,mPaint);</div><div class="line">        canvas.drawCircle(control2.x,control2.y,<span class="number">4</span>,mPaint);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 绘制辅助线</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawAuxiliaryLine</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        mPaint.setStrokeWidth(<span class="number">4</span>);</div><div class="line">        canvas.drawLine(start.x,start.y,control1.x,control1.y,mPaint);</div><div class="line">        canvas.drawLine(end.x,end.y,control2.x,control2.y,mPaint);</div><div class="line">        canvas.drawLine(control1.x,control1.y,control2.x,control2.y,mPaint);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 绘制三阶曲线</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawBezierPath</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        mPaint.setColor(Color.RED);</div><div class="line">        mPaint.setStrokeWidth(<span class="number">8</span>);</div><div class="line">        Path path=<span class="keyword">new</span> Path();</div><div class="line">        path.moveTo(start.x,start.y);</div><div class="line">        path.cubicTo(control1.x,control1.y,control2.x,control2.y,end.x,end.y);</div><div class="line">        canvas.drawPath(path,mPaint);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(isControl1)&#123;</div><div class="line">            control1.x=event.getX();</div><div class="line">            control1.y=event.getY();</div><div class="line">        &#125;<span class="keyword">else</span> &#123;</div><div class="line">            control2.x=event.getX();</div><div class="line">            control2.y=event.getY();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        postInvalidate();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">isControl1</span><span class="params">(<span class="keyword">boolean</span> control1)</span> </span>&#123;</div><div class="line">        isControl1 = control1;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>主要的区别就是多了一个控制点，效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-0e9407c333224757.gif?imageMogr2/auto-orient/strip" alt="Bezier.gif"></p>
+<h2 id="降阶与升阶"><a href="#降阶与升阶" class="headerlink" title="降阶与升阶"></a>降阶与升阶</h2><blockquote>
+<p>三阶曲线相比于二阶曲线可以制作更加复杂的形状，但是对于高阶的曲线，用低阶的曲线组合也可达到相同的效果，就是传说中的<strong>降阶</strong>。因此我们对贝塞尔曲线的封装方法一般最高只到三阶曲线。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>释义</th>
+<th>变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>降阶</td>
+<td>在保持曲线形状与方向不变的情况下，减少控制点数量，即降低曲线阶数</td>
+<td>方法变得简单，数据点变多，控制点可能减少，灵活性变弱</td>
+</tr>
+<tr>
+<td>升阶</td>
+<td>在保持曲线形状与方向不变的情况下，增加控制点数量，即升高曲线阶数</td>
+<td>方法更加复杂，数据点不变，控制点增加，灵活性变强</td>
+</tr>
+</tbody>
+</table>
+<h1 id="贝塞尔曲线使用实例"><a href="#贝塞尔曲线使用实例" class="headerlink" title="贝塞尔曲线使用实例"></a>贝塞尔曲线使用实例</h1><p>在制作这个实例之前，首先要明确一个内容，就是在什么情况下需要使用贝塞尔曲线？</p>
+<blockquote>
+<p>需要绘制不规则图形时？ 当然不是！目前来说，使用贝塞尔曲线主要有以下几个方面(摘抄)</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>内容</th>
+<th>用例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>事先不知道曲线状态，需要实时计算时</td>
+<td>天气预报气温变化的平滑折线图</td>
+</tr>
+<tr>
+<td>2</td>
+<td>显示状态会根据用户操作改变时</td>
+<td>QQ小红点，仿真翻书效果</td>
+</tr>
+<tr>
+<td>3</td>
+<td>一些比较复杂的运动状态(配合PathMeasure使用)</td>
+<td>复杂运动状态的动画效果</td>
+</tr>
+</tbody>
+</table>
+<p>至于只需要一个静态的曲线图形的情况，用图片岂不是更好，大量的计算会很不划算。</p>
+<p>如果是显示SVG矢量图的话，已经有相关的解析工具了(内部依旧运用的有贝塞尔曲线)，不需要手动计算。</p>
+<p><strong>贝塞尔曲线的主要优点是可以实时控制曲线状态，并可以通过改变控制点的状态实时让曲线进行平滑的状态变化。</strong></p>
+<p>我们要实现的效果是使一个圆渐变为心形</p>
+<p>代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BezierHeartView</span> <span class="keyword">extends</span> <span class="title">View</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">// 一个常量，用来计算绘制圆形贝塞尔曲线控制点的位置</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> C = <span class="number">0.551915024494f</span>;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">int</span> mCenterX;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">int</span> mCenterY;</div><div class="line">  <span class="comment">//圆的半径</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span> mCircleRadius = <span class="number">200</span>;</div><div class="line">  <span class="comment">// 圆形的控制点与数据点的差值</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span> mDifference = mCircleRadius * C;</div><div class="line">  <span class="keyword">private</span> Paint mPaint;</div><div class="line"></div><div class="line">  <span class="comment">// 顺时针记录绘制圆形的四个数据点</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span>[] mData = <span class="keyword">new</span> <span class="keyword">float</span>[<span class="number">8</span>];</div><div class="line"></div><div class="line">  <span class="comment">// 顺时针记录绘制圆形的八个控制点</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span>[] mCtrl = <span class="keyword">new</span> <span class="keyword">float</span>[<span class="number">16</span>];</div><div class="line">  <span class="keyword">private</span> Paint mFuZhuPaint;</div><div class="line"></div><div class="line">  <span class="comment">// 变化总时长</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span> mDuration = <span class="number">1000</span>;</div><div class="line">  <span class="comment">// 当前已进行时长</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span> mCurrent = <span class="number">0</span>;</div><div class="line">  <span class="comment">// 将时长总共划分多少份</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span> mCount = <span class="number">100</span>;</div><div class="line">  <span class="comment">// 每一份的时长</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">float</span> mPiece = mDuration / mCount;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">BezierHeartView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, <span class="keyword">null</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">BezierHeartView</span><span class="params">(Context context, @Nullable AttributeSet attrs)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">BezierHeartView</span><span class="params">(Context context, @Nullable AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">    init();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">    mPaint = <span class="keyword">new</span> Paint();</div><div class="line">    mPaint.setColor(Color.BLACK);</div><div class="line">    mPaint.setStrokeWidth(<span class="number">8</span>);</div><div class="line">    mPaint.setStyle(Paint.Style.STROKE);</div><div class="line">    mPaint.setTextSize(<span class="number">60</span>);</div><div class="line"></div><div class="line">    mFuZhuPaint = <span class="keyword">new</span> Paint();</div><div class="line">    mFuZhuPaint.setStrokeWidth(<span class="number">5</span>);</div><div class="line">    mFuZhuPaint.setColor(Color.RED);</div><div class="line">    mFuZhuPaint.setStyle(Paint.Style.STROKE);</div><div class="line"></div><div class="line">    <span class="comment">//初始化数据点</span></div><div class="line">    mData[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">    mData[<span class="number">1</span>] = mCircleRadius;</div><div class="line"></div><div class="line">    mData[<span class="number">2</span>] = mCircleRadius;</div><div class="line">    mData[<span class="number">3</span>] = <span class="number">0</span>;</div><div class="line"></div><div class="line">    mData[<span class="number">4</span>] = <span class="number">0</span>;</div><div class="line">    mData[<span class="number">5</span>] = -mCircleRadius;</div><div class="line"></div><div class="line">    mData[<span class="number">6</span>] = -mCircleRadius;</div><div class="line">    mData[<span class="number">7</span>] = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="comment">//初始化控制点</span></div><div class="line">    mCtrl[<span class="number">0</span>] = mData[<span class="number">0</span>] + mDifference;</div><div class="line">    mCtrl[<span class="number">1</span>] = mData[<span class="number">1</span>];</div><div class="line"></div><div class="line">    mCtrl[<span class="number">2</span>] = mData[<span class="number">2</span>];</div><div class="line">    mCtrl[<span class="number">3</span>] = mData[<span class="number">3</span>] + mDifference;</div><div class="line"></div><div class="line">    mCtrl[<span class="number">4</span>] = mData[<span class="number">2</span>];</div><div class="line">    mCtrl[<span class="number">5</span>] = mData[<span class="number">3</span>] - mDifference;</div><div class="line"></div><div class="line">    mCtrl[<span class="number">6</span>] = mData[<span class="number">4</span>] + mDifference;</div><div class="line">    mCtrl[<span class="number">7</span>] = mData[<span class="number">5</span>];</div><div class="line"></div><div class="line">    mCtrl[<span class="number">8</span>] = mData[<span class="number">4</span>] - mDifference;</div><div class="line">    mCtrl[<span class="number">9</span>] = mData[<span class="number">5</span>];</div><div class="line"></div><div class="line">    mCtrl[<span class="number">10</span>] = mData[<span class="number">6</span>];</div><div class="line">    mCtrl[<span class="number">11</span>] = mData[<span class="number">7</span>] - mDifference;</div><div class="line"></div><div class="line">    mCtrl[<span class="number">12</span>] = mData[<span class="number">6</span>];</div><div class="line">    mCtrl[<span class="number">13</span>] = mData[<span class="number">7</span>] + mDifference;</div><div class="line"></div><div class="line">    mCtrl[<span class="number">14</span>] = mData[<span class="number">0</span>] - mDifference;</div><div class="line">    mCtrl[<span class="number">15</span>] = mData[<span class="number">1</span>];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line">    mCenterX = w / <span class="number">2</span>;</div><div class="line">    mCenterY = h / <span class="number">2</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">    <span class="comment">// 绘制坐标系</span></div><div class="line">    drawCoordinateSystem(canvas);</div><div class="line">    <span class="comment">//绘制辅助线</span></div><div class="line">    drawAuxiliaryLine(canvas);</div><div class="line">    <span class="comment">// 绘制贝塞尔曲线</span></div><div class="line">    drawBezier(canvas);</div><div class="line">    <span class="comment">//幻化为心</span></div><div class="line">    changeBezier(canvas);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">changeBezier</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    mCurrent+=mPiece;</div><div class="line">    <span class="keyword">if</span>(mCurrent&lt;=mDuration)&#123;</div><div class="line">      mData[<span class="number">1</span>]+=<span class="number">120</span>/mCount;</div><div class="line">      mData[<span class="number">5</span>]+=<span class="number">150</span>/mCount;</div><div class="line"></div><div class="line">      mCtrl[<span class="number">0</span>]-=<span class="number">80</span>/mCount;</div><div class="line">      mCtrl[<span class="number">14</span>]+=<span class="number">80</span>/mCount;</div><div class="line"></div><div class="line">      mCtrl[<span class="number">4</span>]-=<span class="number">20</span>/mCount;</div><div class="line">      mCtrl[<span class="number">10</span>]+=<span class="number">20</span>/mCount;</div><div class="line"></div><div class="line">      postInvalidateDelayed((<span class="keyword">long</span>) mPiece);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawBezier</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    mPaint.setColor(Color.RED);</div><div class="line">    mPaint.setStrokeWidth(<span class="number">8</span>);</div><div class="line">    mPaint.setStyle(Paint.Style.STROKE);</div><div class="line">    Path path = <span class="keyword">new</span> Path();</div><div class="line">    path.moveTo(mData[<span class="number">0</span>], mData[<span class="number">1</span>]);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>, j = <span class="number">0</span>; j &lt; mCtrl.length; i += <span class="number">2</span>, j += <span class="number">4</span>) &#123;</div><div class="line">      path.cubicTo(mCtrl[j], mCtrl[j + <span class="number">1</span>], mCtrl[j + <span class="number">2</span>], mCtrl[j + <span class="number">3</span>], mData[i % mData.length],</div><div class="line">          mData[(i + <span class="number">1</span>) % mData.length]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    canvas.drawPath(path, mPaint);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawAuxiliaryLine</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    mPaint.setColor(Color.GRAY);</div><div class="line">    mPaint.setStrokeWidth(<span class="number">2</span>);</div><div class="line">    mPaint.setStyle(Paint.Style.FILL);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; mData.length; i += <span class="number">2</span>, j += <span class="number">4</span>) &#123;</div><div class="line">      canvas.drawCircle(mData[i], mData[i + <span class="number">1</span>], <span class="number">4</span>, mPaint);</div><div class="line">      canvas.drawCircle(mCtrl[j], mCtrl[j + <span class="number">1</span>], <span class="number">4</span>, mPaint);</div><div class="line">      canvas.drawCircle(mCtrl[j + <span class="number">2</span>], mCtrl[j + <span class="number">3</span>], <span class="number">4</span>, mPaint);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; j &lt; mCtrl.length; i += <span class="number">2</span>, j += <span class="number">4</span>) &#123;</div><div class="line">      canvas.drawLine(mData[i], mData[i + <span class="number">1</span>], mCtrl[j], mCtrl[j + <span class="number">1</span>], mPaint);</div><div class="line">      canvas.drawLine(mCtrl[j], mCtrl[j + <span class="number">1</span>], mCtrl[j + <span class="number">2</span>], mCtrl[j + <span class="number">3</span>], mPaint);</div><div class="line">      canvas.drawLine(mCtrl[j + <span class="number">2</span>], mCtrl[j + <span class="number">3</span>], mData[(i + <span class="number">2</span>) % mData.length],</div><div class="line">          mData[(i + <span class="number">3</span>) % mData.length], mPaint);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawCoordinateSystem</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    canvas.drawLine(<span class="number">0</span>, mCenterY, mCenterX * <span class="number">2</span>, mCenterY, mFuZhuPaint);</div><div class="line">    canvas.drawLine(mCenterX, <span class="number">0</span>, mCenterX, mCenterY * <span class="number">2</span>, mFuZhuPaint);</div><div class="line">    canvas.translate(mCenterX, mCenterY);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>预览效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-6126e83d6fb071f6.gif?imageMogr2/auto-orient/strip" alt="贝塞尔.gif"></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://github.com/GcsSloop/AndroidNote/blob/master/CustomView/Advance/%5B06%5DPath_Bezier.md" target="_blank" rel="external">Path之贝塞尔曲线</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;贝塞尔曲线能干什么？&quot;&gt;&lt;a href=&quot;#贝塞尔曲线能干什么？&quot; class=&quot;headerlink&quot; title=&quot;贝塞尔曲线能干什么？&quot;&gt;&lt;/a&gt;贝塞尔曲线能干什么？&lt;/h1&gt;&lt;p&gt;贝塞尔曲线的运用是十分广泛的，可以说&lt;strong&gt;贝塞尔曲线奠定了计算机绘
+    
+    </summary>
+    
+      <category term="Android" scheme="http://yoursite.com/categories/Android/"/>
+    
+    
+      <category term="Path" scheme="http://yoursite.com/tags/Path/"/>
+    
+      <category term="draw" scheme="http://yoursite.com/tags/draw/"/>
+    
+      <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>设计模式-策略模式</title>

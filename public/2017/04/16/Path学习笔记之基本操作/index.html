@@ -1,0 +1,1320 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Path,draw,学习笔记," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jutao's Note" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="path 常用方法一览 为了兼容性(偷懒) 本表格中去除了部分API21(即安卓版本5.0)以上才添加的方法。     作用 相关方法 备注     移动起点 moveTo 移动下一次操作的起点位置   设置终点 setLastPoint 重置当前path中最后一个点位置，如果在绘制之前调用，效果和moveTo相同   连接直线 lineTo 添加上一个点到当前点之间的直线到Path   闭合路径">
+<meta name="keywords" content="Path,draw,学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Path 学习笔记之基本操作">
+<meta property="og:url" content="http://yoursite.com/2017/04/16/Path学习笔记之基本操作/index.html">
+<meta property="og:site_name" content="jutao's Note">
+<meta property="og:description" content="path 常用方法一览 为了兼容性(偷懒) 本表格中去除了部分API21(即安卓版本5.0)以上才添加的方法。     作用 相关方法 备注     移动起点 moveTo 移动下一次操作的起点位置   设置终点 setLastPoint 重置当前path中最后一个点位置，如果在绘制之前调用，效果和moveTo相同   连接直线 lineTo 添加上一个点到当前点之间的直线到Path   闭合路径">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-9fa8ff91af3e6ca6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-2a235e192504b31f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-0ac7b2790c36c336.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-76e5e3e3aa79e2fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-a63df17a624ec167.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-0cde63a4201a51d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-f25c8134566cb3d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-b24fe1e1da6d757f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-7b6e69e14822fa9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-571ad0c63463d64d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-8305a07ea17626a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-014416205f8d730e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-2f1bf4d694f95e7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-785a72beeca6dac4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-255b070700818d89.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-2d0a81593436197c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-4d28b8f8a6b14b86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-546c79bf325f031e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-55ae6162b44b82ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-55ae6162b44b82ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-b99b4c9a0f651743.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-16T03:51:53.602Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Path 学习笔记之基本操作">
+<meta name="twitter:description" content="path 常用方法一览 为了兼容性(偷懒) 本表格中去除了部分API21(即安卓版本5.0)以上才添加的方法。     作用 相关方法 备注     移动起点 moveTo 移动下一次操作的起点位置   设置终点 setLastPoint 重置当前path中最后一个点位置，如果在绘制之前调用，效果和moveTo相同   连接直线 lineTo 添加上一个点到当前点之间的直线到Path   闭合路径">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3054656-9fa8ff91af3e6ca6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/16/Path学习笔记之基本操作/"/>
+
+
+
+
+
+  <title> Path 学习笔记之基本操作 | jutao's Note </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d63d54d82fdbd26bc0f05a91355caea3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jutao's Note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">带三个表贯彻持续学习思想</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/16/Path学习笔记之基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="琚涛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xthjd.com2.z0.glb.clouddn.com/20150512_235412_142.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jutao's Note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Path 学习笔记之基本操作
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-16T11:29:27+08:00">
+                2017-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/04/16/Path学习笔记之基本操作/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/16/Path学习笔记之基本操作/" class="leancloud_visitors" data-flag-title="Path 学习笔记之基本操作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="path-常用方法一览"><a href="#path-常用方法一览" class="headerlink" title="path 常用方法一览"></a>path 常用方法一览</h1><blockquote>
+<p>为了兼容性(<em>偷懒</em>) 本表格中去除了部分API21(即安卓版本5.0)以上才添加的方法。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>作用</th>
+<th>相关方法</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>移动起点</td>
+<td>moveTo</td>
+<td>移动下一次操作的起点位置</td>
+</tr>
+<tr>
+<td>设置终点</td>
+<td>setLastPoint</td>
+<td>重置当前path中最后一个点位置，如果在绘制之前调用，效果和moveTo相同</td>
+</tr>
+<tr>
+<td>连接直线</td>
+<td>lineTo</td>
+<td>添加上一个点到当前点之间的直线到Path</td>
+</tr>
+<tr>
+<td>闭合路径</td>
+<td>close</td>
+<td>连接第一个点连接到最后一个点，形成一个闭合区域</td>
+</tr>
+<tr>
+<td>添加内容</td>
+<td>addRect, addRoundRect,  addOval, addCircle,     addPath, addArc, arcTo</td>
+<td>添加(矩形， 圆角矩形， 椭圆， 圆， 路径， 圆弧) 到当前Path (注意addArc和arcTo的区别)</td>
+</tr>
+<tr>
+<td>是否为空</td>
+<td>isEmpty</td>
+<td>判断Path是否为空</td>
+</tr>
+<tr>
+<td>是否为矩形</td>
+<td>isRect</td>
+<td>判断path是否是一个矩形</td>
+</tr>
+<tr>
+<td>替换路径</td>
+<td>set</td>
+<td>用新的路径替换到当前路径所有内容</td>
+</tr>
+<tr>
+<td>偏移路径</td>
+<td>offset</td>
+<td>对当前路径之前的操作进行偏移(不会影响之后的操作)</td>
+</tr>
+<tr>
+<td>贝塞尔曲线</td>
+<td>quadTo, cubicTo</td>
+<td>分别为二次和三次贝塞尔曲线的方法</td>
+</tr>
+<tr>
+<td>rXxx方法</td>
+<td>rMoveTo, rLineTo, rQuadTo, rCubicTo</td>
+<td><strong>不带r的方法是基于原点的坐标系(偏移量)， rXxx方法是基于当前点坐标系(偏移量)</strong></td>
+</tr>
+<tr>
+<td>填充模式</td>
+<td>setFillType, getFillType, isInverseFillType, toggleInverseFillType</td>
+<td>设置,获取,判断和切换填充模式</td>
+</tr>
+<tr>
+<td>提示方法</td>
+<td>incReserve</td>
+<td>提示Path还有多少个点等待加入<strong>(这个方法貌似会让Path优化存储结构)</strong></td>
+</tr>
+<tr>
+<td>布尔操作(API19)</td>
+<td>op</td>
+<td>对两个Path进行布尔运算(即取交集、并集等操作)</td>
+</tr>
+<tr>
+<td>计算边界</td>
+<td>computeBounds</td>
+<td>计算Path的边界</td>
+</tr>
+<tr>
+<td>重置路径</td>
+<td>reset, rewind</td>
+<td>清除Path中的内容<br> <strong>reset不保留内部数据结构，但会保留FillType.</strong><br> <strong>rewind会保留内部的数据结构，但不保留FillType</strong></td>
+</tr>
+<tr>
+<td>矩阵操作</td>
+<td>transform</td>
+<td>矩阵变换</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Path含义"><a href="#Path含义" class="headerlink" title="Path含义"></a>Path含义</h1><p>Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径。你能用Canvas中的drawPath来把这条路径画出来(同样支持Paint的不同绘制模式)，也可以用于剪裁画布和根据路径绘制文字。我们有时会用Path来描述一个图像的轮廓，所以也会称为轮廓线(轮廓线仅是Path的一种使用方法，两者并不等价)</p>
+<h1 id="直线与点的操作"><a href="#直线与点的操作" class="headerlink" title="直线与点的操作"></a>直线与点的操作</h1><h2 id="lineTo"><a href="#lineTo" class="headerlink" title="lineTo"></a>lineTo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建一条从原点到坐标(300,300)的直线</span></div><div class="line">mPath.lineTo(<span class="number">500</span>,<span class="number">500</span>);</div><div class="line"></div><div class="line"><span class="comment">//创建从(500,500)到(100,200)的一条直线</span></div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">200</span>);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-9fa8ff91af3e6ca6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="lineTo效果.png"></p>
+<p>所以可知 lineTo 方法的连接的起点是由lineTo方法上一个Path操作决定的。</p>
+<h2 id="moveTo"><a href="#moveTo" class="headerlink" title="moveTo"></a>moveTo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//这样改写的话是画一条从(500,500)到(100,200)的线</span></div><div class="line">mPath.moveTo(<span class="number">500</span>,<span class="number">500</span>);</div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">200</span>);</div></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-2a235e192504b31f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="moveTo效果.png"></p>
+<p>所以可知 moveTo 方法的作用为将下次画路径起点移动到(x,y)</p>
+<h2 id="setLastPoint"><a href="#setLastPoint" class="headerlink" title="setLastPoint"></a>setLastPoint</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">300</span>);</div><div class="line">mPath.setLastPoint(<span class="number">200</span>,<span class="number">200</span>);</div><div class="line">mPath.lineTo(<span class="number">200</span>,<span class="number">400</span>);</div></pre></td></tr></table></figure>
+<p>效果如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-0ac7b2790c36c336.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="setLastPoint效果.png"></p>
+<p>所以可知 setLastPoint 的作用为改变上一次操作路径的结束坐标点。</p>
+<p>因此我们可以总结出 moveTo 和 lineTo 的区别为：</p>
+<ul>
+<li>moveTo 影响上一次操作不影响上一次</li>
+<li>setLastPoint上一次和下一次操作都影响</li>
+</ul>
+<h2 id="close"><a href="#close" class="headerlink" title="close"></a>close</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">300</span>);</div><div class="line">mPath.setLastPoint(<span class="number">200</span>,<span class="number">200</span>);</div><div class="line">mPath.lineTo(<span class="number">200</span>,<span class="number">400</span>);</div><div class="line">mPath.close();</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-76e5e3e3aa79e2fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="close效果.png"></p>
+<p>观察可知 close 的效果为用线段连接起始点和终点，除非起始点等于终点。</p>
+<h1 id="基本形状"><a href="#基本形状" class="headerlink" title="基本形状"></a>基本形状</h1><h2 id="addRect（矩形）"><a href="#addRect（矩形）" class="headerlink" title="addRect（矩形）"></a>addRect（矩形）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">50</span>,<span class="number">150</span>,<span class="number">150</span>,Direction.CW);</div><div class="line"></div><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">250</span>,<span class="number">150</span>,<span class="number">350</span>,Direction.CCW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-a63df17a624ec167.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="矩形.png"></p>
+<p>上下两个方法画出来的一模一样，那他们有什么区别呢？我们试着用一下刚学的 setLastPoint 看效果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">50</span>,<span class="number">150</span>,<span class="number">150</span>,Direction.CW);</div><div class="line"><span class="comment">//改变最后一笔的位置</span></div><div class="line">mPath.setLastPoint(<span class="number">50</span>,<span class="number">100</span>);</div><div class="line"></div><div class="line">mPath.addRect(<span class="number">50</span>,<span class="number">250</span>,<span class="number">150</span>,<span class="number">350</span>,Direction.CCW);</div><div class="line">mPath.setLastPoint(<span class="number">150</span>,<span class="number">300</span>);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-0cde63a4201a51d7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="矩形顺时逆时对比.png"></p>
+<p>所以我们可以看出 Direction.CW 的最后一笔是左下角，Direction.CCW 的最后一笔是右上角，而且 Android 源码中给 Direction.CW 的注释为 clockwise(顺时针),Direction.CCW 的注释为 counter-clockwise(逆时针),通过这些我们可以很清楚的知道以上两种矩形画法的区别。</p>
+<p>而矩形的另外一种画法 public void addRect(RectF rect, Direction dir) 和上面的方法其实一样，只是把坐标封装到了 RectF 对象中而已。</p>
+<h2 id="addCircle（圆形）"><a href="#addCircle（圆形）" class="headerlink" title="addCircle（圆形）"></a>addCircle（圆形）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mPath.addCircle(<span class="number">210</span>,<span class="number">210</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line"></div><div class="line">mPath.addCircle(<span class="number">800</span>,<span class="number">800</span>,<span class="number">200</span>, Path.Direction.CCW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-f25c8134566cb3d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圆形.png"></p>
+<p>画圆非常简单，x，y 代表圆心坐标，radius 代表半径，dir 和矩形一样，代表顺时针或者逆时针。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mPath.addCircle(<span class="number">210</span>,<span class="number">210</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">mPath.setLastPoint(<span class="number">210</span>,<span class="number">210</span>);</div><div class="line"></div><div class="line">mPath.addCircle(<span class="number">800</span>,<span class="number">800</span>,<span class="number">200</span>, Path.Direction.CCW);</div><div class="line">mPath.setLastPoint(<span class="number">800</span>,<span class="number">800</span>);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-b24fe1e1da6d757f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="addRoundRect（圆角矩形）"><a href="#addRoundRect（圆角矩形）" class="headerlink" title="addRoundRect（圆角矩形）"></a>addRoundRect（圆角矩形）</h2><p>圆角矩形主要有两种画法，一种是圆角弧度统一，第二种是定制每一个圆角的弧度。用法如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRoundRect(rect1,<span class="number">100</span>,<span class="number">100</span>, Path.Direction.CW);</div><div class="line"></div><div class="line">RectF rect2=<span class="keyword">new</span> RectF(<span class="number">100</span>,<span class="number">600</span>,<span class="number">800</span>,<span class="number">1000</span>);</div><div class="line"></div><div class="line"><span class="comment">/*必须传入8个数值，分四组，分别对应每个角所使用的椭圆的横轴半径和纵轴半径，</span></div><div class="line"> 如｛x1,y1,x2,y2,x3,y3,x4,y4｝，其中，x1,y1对应第一个角的（左上角）用来产</div><div class="line"> 生圆角的椭圆的横轴半径和纵轴半径，其它类推……*/</div><div class="line"><span class="keyword">float</span>[] radii=&#123;<span class="number">100</span>,<span class="number">100</span>,<span class="number">150</span>,<span class="number">150</span>,<span class="number">200</span>,<span class="number">200</span>,<span class="number">300</span>,<span class="number">200</span>&#125;;</div><div class="line">mPath.addRoundRect(rect2,radii,Path.Direction.CCW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-7b6e69e14822fa9d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圆角矩形"></p>
+<p>我标了一下每个圆角半径，很丑：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-571ad0c63463d64d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="圆角半径"></p>
+<h2 id="addOval（椭圆）"><a href="#addOval（椭圆）" class="headerlink" title="addOval（椭圆）"></a>addOval（椭圆）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addOval(rect, Path.Direction.CW);</div><div class="line"><span class="comment">//将矩形变为正方形看效果</span></div><div class="line">rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">600</span>, <span class="number">300</span>, <span class="number">800</span>);</div><div class="line">mPath.addOval(rect, Path.Direction.CW);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-8305a07ea17626a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="椭圆"></p>
+<h2 id="addArc与arcTo（圆弧）"><a href="#addArc与arcTo（圆弧）" class="headerlink" title="addArc与arcTo（圆弧）"></a>addArc与arcTo（圆弧）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line"><span class="comment">//开始的角度</span></div><div class="line"><span class="keyword">float</span> startAngle=<span class="number">90</span>;</div><div class="line"><span class="comment">//扫过的角度</span></div><div class="line"><span class="keyword">float</span> sweepAngle=<span class="number">180</span>;</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addArc(rect,startAngle,sweepAngle);</div></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-014416205f8d730e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="弧"></p>
+<p>关于起始角度以及扫过的角度这些是怎么来的，我理解的是实际上我们是在指定矩形内画一个内切椭圆，通过指定角度在这个椭圆上截取一部分，这一部分就是我们所画的弧。示意图如下，不要嫌丑：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-2f1bf4d694f95e7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="弧"></p>
+<p>知道了addArc的用法之后，我们来看一下arcTo这个方法，这个方法也是用来画圆弧的，但是与addArc有些不同:</p>
+<ul>
+<li>addArc    直接添加一段圆弧</li>
+<li>arcTo      添加一段圆弧，如果圆弧的起点与上一次Path操作的终点不一样的话，就会在这两个点连成一条直线</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line"><span class="comment">//开始的角度</span></div><div class="line"><span class="keyword">float</span> startAngle=<span class="number">90</span>;</div><div class="line"><span class="comment">//扫过的角度</span></div><div class="line"><span class="keyword">float</span> sweepAngle=<span class="number">180</span>;</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">100</span>);</div><div class="line">mPath.arcTo(rect,startAngle,sweepAngle);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-785a72beeca6dac4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>可以看到，圆弧的起点并不是直线的终点，于是他们连接在了一起。如果你不想让他们连接怎么办？</p>
+<pre><code>mPath.arcTo(rect,startAngle,sweepAngle,true);
+</code></pre><p>arcTo 最后一个属性填 true 就可以了。效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-255b070700818d89.png" alt="image.png"></p>
+<h2 id="addPath（添加Path）"><a href="#addPath（添加Path）" class="headerlink" title="addPath（添加Path）"></a>addPath（添加Path）</h2><p>先看最普通的 public void addPath (Path src)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Path circle=<span class="keyword">new</span> Path();</div><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRect(rect, Path.Direction.CW);</div><div class="line">circle.addCircle(<span class="number">450</span>,<span class="number">300</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">mPath.addPath(circle);</div></pre></td></tr></table></figure>
+<p>它将两个path合并在了一起，效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-2d0a81593436197c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>addPath的第二个方法的 dx 和 dy 两个参数是什么意思呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mPath.addPath(circle,<span class="number">350</span>,-<span class="number">100</span>);</div></pre></td></tr></table></figure>
+<p>其实它们是代表添加path后的位移值</p>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-4d28b8f8a6b14b86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h1 id="设置方法"><a href="#设置方法" class="headerlink" title="设置方法"></a>设置方法</h1><h2 id="set"><a href="#set" class="headerlink" title="set()"></a>set()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Path circle=<span class="keyword">new</span> Path();</div><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRect(rect, Path.Direction.CW);</div><div class="line">circle.addCircle(<span class="number">450</span>,<span class="number">300</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">mPath.set(circle);</div></pre></td></tr></table></figure>
+<p>这个方法就是将path之前的矩形变成圆形。</p>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-546c79bf325f031e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<h2 id="offset"><a href="#offset" class="headerlink" title="offset()"></a>offset()</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">mPath = <span class="keyword">new</span> Path();</div><div class="line">mPath.addRect(rect, Path.Direction.CW);</div><div class="line">mPath.offset(<span class="number">150</span>,<span class="number">150</span>);</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-55ae6162b44b82ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>它的作用就是将path进行平移</p>
+<p>offset() 还有一个参数 dst 是起什么作用呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">mPath.addCircle(<span class="number">50</span>,<span class="number">50</span>,<span class="number">200</span>, Path.Direction.CW);</div><div class="line">Path temp=<span class="keyword">new</span> Path();</div><div class="line">RectF rect = <span class="keyword">new</span> RectF(<span class="number">100</span>, <span class="number">100</span>, <span class="number">800</span>, <span class="number">500</span>);</div><div class="line">temp.addRect(rect, Path.Direction.CW);</div><div class="line"><span class="comment">//相当于用set方法将 temp set 给了mPath，覆盖 mPath 原有的图案</span></div><div class="line">temp.offset(<span class="number">150</span>,<span class="number">150</span>,mPath);</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-55ae6162b44b82ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>可以看到 mPath 之前画的圆已经被覆盖</p>
+<h2 id="reset"><a href="#reset" class="headerlink" title="reset()"></a>reset()</h2><p>这个方法很简单，就是将path的所有操作都清空掉。</p>
+<h1 id="判断方法"><a href="#判断方法" class="headerlink" title="判断方法"></a>判断方法</h1><h2 id="isConvex-（这个方法在API21之后才有）"><a href="#isConvex-（这个方法在API21之后才有）" class="headerlink" title="isConvex()（这个方法在API21之后才有）"></a>isConvex()（这个方法在API21之后才有）</h2><p>判断path是否为凸多边形，如果是就为true，反之为false。</p>
+<p>要理解这个方法首先，我们要知道什么是凸多边形。</p>
+<p>凸多边形的概念:</p>
+<ol>
+<li>每个内角小于180度</li>
+<li>任何两个顶点间的线段位于多边形的内部或边界上。</li>
+</ol>
+<p>也就是说矩形，三角形，直线都是凸多边形，但是五角星那种形状就不是。现在我们用代码验证一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">mPath.moveTo(<span class="number">100</span>,<span class="number">100</span>);</div><div class="line">mPath.lineTo(<span class="number">200</span>,<span class="number">200</span>);</div><div class="line">mPath.lineTo(<span class="number">100</span>,<span class="number">400</span>);</div><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">50</span>);</div><div class="line">mPath.close();</div><div class="line">System.out.println(mPath.isConvex());</div></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-b99b4c9a0f651743.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>很明显，这不是一个凸多边形，查看输出：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">I/System.out: <span class="keyword">false</span></div></pre></td></tr></table></figure></p>
+<h2 id="isEmpty"><a href="#isEmpty" class="headerlink" title="isEmpty"></a>isEmpty</h2><p>这个方法依然很简单，就是判断 path 中是否包含内容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">System.out.println(mPath.isEmpty());</div><div class="line">mPath.lineTo(<span class="number">300</span>,<span class="number">50</span>);</div><div class="line">System.out.println(mPath.isEmpty());</div></pre></td></tr></table></figure>
+<p>查看输出：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">I/System.out: <span class="keyword">true</span></div><div class="line">I/System.out: <span class="keyword">false</span></div></pre></td></tr></table></figure></p>
+<h2 id="isRect"><a href="#isRect" class="headerlink" title="isRect"></a>isRect</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mPath=<span class="keyword">new</span> Path();</div><div class="line">RectF rect=<span class="keyword">new</span> RectF();</div><div class="line">mPath.addRect(<span class="number">100</span>,<span class="number">100</span>,<span class="number">50</span>,<span class="number">50</span>,Path.Direction.CW);</div><div class="line">System.out.println(mPath.isRect(rect));</div><div class="line">System.out.println(rect);</div></pre></td></tr></table></figure>
+<p>  判断path是否是一个矩形，如果是一个矩形的话，将矩形的信息存到参数rect中。</p>
+<p>  输出如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">I/System.out: <span class="keyword">true</span></div><div class="line">I/System.out: RectF(<span class="number">50.0</span>, <span class="number">50.0</span>, <span class="number">100.0</span>, <span class="number">100.0</span>)</div></pre></td></tr></table></figure>
+<h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><p>如果想练习一下 Path知识，可以看一下下面的 blog：</p>
+<p><a href="https://github.com/jutao/AndroidNode/blob/master/2017/2017.3/Path%E5%AE%9E%E6%88%98%E4%B9%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE.md" target="_blank" rel="external">Path实战之雷达图</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xthjd.com2.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1.png" alt="琚涛 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xthjd.com2.z0.glb.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D.png" alt="琚涛 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Path/" rel="tag"># Path</a>
+          
+            <a href="/tags/draw/" rel="tag"># draw</a>
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/16/Path学习笔记之Bezier/" rel="prev" title="Path 学习笔记之基本操作">
+                Path 学习笔记之基本操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xthjd.com2.z0.glb.clouddn.com/20150512_235412_142.jpg"
+               alt="琚涛" />
+          <p class="site-author-name" itemprop="name">琚涛</p>
+           
+              <p class="site-description motion-element" itemprop="description">我觉得自己会永远生猛下去，什么也锤不了我</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jutao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jutaoshigedahaoren" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/42701793/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-star"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jutao" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-flag"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/d251eadadd37" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#path-常用方法一览"><span class="nav-number">1.</span> <span class="nav-text">path 常用方法一览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Path含义"><span class="nav-number">2.</span> <span class="nav-text">Path含义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#直线与点的操作"><span class="nav-number">3.</span> <span class="nav-text">直线与点的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lineTo"><span class="nav-number">3.1.</span> <span class="nav-text">lineTo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#moveTo"><span class="nav-number">3.2.</span> <span class="nav-text">moveTo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setLastPoint"><span class="nav-number">3.3.</span> <span class="nav-text">setLastPoint</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#close"><span class="nav-number">3.4.</span> <span class="nav-text">close</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本形状"><span class="nav-number">4.</span> <span class="nav-text">基本形状</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#addRect（矩形）"><span class="nav-number">4.1.</span> <span class="nav-text">addRect（矩形）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#addCircle（圆形）"><span class="nav-number">4.2.</span> <span class="nav-text">addCircle（圆形）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#addRoundRect（圆角矩形）"><span class="nav-number">4.3.</span> <span class="nav-text">addRoundRect（圆角矩形）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#addOval（椭圆）"><span class="nav-number">4.4.</span> <span class="nav-text">addOval（椭圆）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#addArc与arcTo（圆弧）"><span class="nav-number">4.5.</span> <span class="nav-text">addArc与arcTo（圆弧）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#addPath（添加Path）"><span class="nav-number">4.6.</span> <span class="nav-text">addPath（添加Path）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置方法"><span class="nav-number">5.</span> <span class="nav-text">设置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#set"><span class="nav-number">5.1.</span> <span class="nav-text">set()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#offset"><span class="nav-number">5.2.</span> <span class="nav-text">offset()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reset"><span class="nav-number">5.3.</span> <span class="nav-text">reset()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#判断方法"><span class="nav-number">6.</span> <span class="nav-text">判断方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#isConvex-（这个方法在API21之后才有）"><span class="nav-number">6.1.</span> <span class="nav-text">isConvex()（这个方法在API21之后才有）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isEmpty"><span class="nav-number">6.2.</span> <span class="nav-text">isEmpty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isRect"><span class="nav-number">6.3.</span> <span class="nav-text">isRect</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最佳实践"><span class="nav-number">7.</span> <span class="nav-text">最佳实践</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">琚涛</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "d08c52b322f54fbe81f6373c3015986a",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("c1gNJkeAaPTVbWAH1nzxru17-gzGzoHsz", "hRJNS0I8sj1BsSmaK71MG2xE");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
