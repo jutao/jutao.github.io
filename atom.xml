@@ -347,11 +347,11 @@
   </entry>
   
   <entry>
-    <title>Path 学习笔记之基本操作</title>
+    <title>Path学习笔记之Bezier</title>
     <link href="http://yoursite.com/2017/04/16/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBezier/"/>
     <id>http://yoursite.com/2017/04/16/Path学习笔记之Bezier/</id>
     <published>2017-04-16T03:28:56.397Z</published>
-    <updated>2017-04-16T03:43:38.106Z</updated>
+    <updated>2017-04-18T13:33:15.318Z</updated>
     
     <content type="html"><![CDATA[<h1 id="贝塞尔曲线能干什么？"><a href="#贝塞尔曲线能干什么？" class="headerlink" title="贝塞尔曲线能干什么？"></a>贝塞尔曲线能干什么？</h1><p>贝塞尔曲线的运用是十分广泛的，可以说<strong>贝塞尔曲线奠定了计算机绘图的基础(<em>因为它可以将任何复杂的图形用精确的数学语言进行描述</em>)</strong>，在你不经意间就已经使用过它了。</p>
 <p>你会使用Photoshop的话，你可能会注意到里面有一个<strong>钢笔工具</strong>，这个钢笔工具核心就是贝塞尔曲线。</p>
