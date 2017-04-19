@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-04-16T03:51:53.602Z</updated>
+  <updated>2017-04-17T09:19:40.605Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>Path 学习笔记之基本操作</title>
-    <link href="http://yoursite.com/2017/04/16/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2017/04/16/Path学习笔记之基本操作/</id>
-    <published>2017-04-16T03:29:27.955Z</published>
-    <updated>2017-04-16T03:51:53.602Z</updated>
+    <link href="http://yoursite.com/2017/04/17/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2017/04/17/Path学习笔记之基本操作/</id>
+    <published>2017-04-17T09:19:40.605Z</published>
+    <updated>2017-04-17T09:19:40.605Z</updated>
     
     <content type="html"><![CDATA[<h1 id="path-常用方法一览"><a href="#path-常用方法一览" class="headerlink" title="path 常用方法一览"></a>path 常用方法一览</h1><blockquote>
 <p>为了兼容性(<em>偷懒</em>) 本表格中去除了部分API21(即安卓版本5.0)以上才添加的方法。</p>
@@ -249,11 +249,11 @@
   </entry>
   
   <entry>
-    <title>Path 学习笔记之基本操作</title>
-    <link href="http://yoursite.com/2017/04/16/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBezier/"/>
-    <id>http://yoursite.com/2017/04/16/Path学习笔记之Bezier/</id>
-    <published>2017-04-16T03:28:56.397Z</published>
-    <updated>2017-04-16T03:43:38.106Z</updated>
+    <title>Path学习笔记之Bezier</title>
+    <link href="http://yoursite.com/2017/04/17/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBezier/"/>
+    <id>http://yoursite.com/2017/04/17/Path学习笔记之Bezier/</id>
+    <published>2017-04-17T09:19:40.603Z</published>
+    <updated>2017-04-17T09:23:14.157Z</updated>
     
     <content type="html"><![CDATA[<h1 id="贝塞尔曲线能干什么？"><a href="#贝塞尔曲线能干什么？" class="headerlink" title="贝塞尔曲线能干什么？"></a>贝塞尔曲线能干什么？</h1><p>贝塞尔曲线的运用是十分广泛的，可以说<strong>贝塞尔曲线奠定了计算机绘图的基础(<em>因为它可以将任何复杂的图形用精确的数学语言进行描述</em>)</strong>，在你不经意间就已经使用过它了。</p>
 <p>你会使用Photoshop的话，你可能会注意到里面有一个<strong>钢笔工具</strong>，这个钢笔工具核心就是贝塞尔曲线。</p>
@@ -414,10 +414,10 @@
   
   <entry>
     <title>设计模式-策略模式</title>
-    <link href="http://yoursite.com/2017/04/16/%5BAndroid%5D%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/04/16/[Android] 设计模式-策略模式/</id>
-    <published>2017-04-15T16:12:16.087Z</published>
-    <updated>2017-04-15T16:50:55.430Z</updated>
+    <link href="http://yoursite.com/2017/04/14/%5BAndroid%5D%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2017/04/14/[Android] 设计模式-策略模式/</id>
+    <published>2017-04-14T03:48:01.514Z</published>
+    <updated>2017-04-17T09:19:40.612Z</updated>
     
     <content type="html"><![CDATA[<h1 id="最简单的商场收银软件"><a href="#最简单的商场收银软件" class="headerlink" title="最简单的商场收银软件"></a>最简单的商场收银软件</h1><p>如果要做一款收银软件，营业员根据客户所购买商品单价和数量向客户收费，这非常容易。</p>
 <p>Demo 如下：</p>
@@ -476,10 +476,10 @@
   
   <entry>
     <title>Path 实战</title>
-    <link href="http://yoursite.com/2017/04/15/Path%E5%AE%9E%E6%88%98%E4%B9%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE/"/>
-    <id>http://yoursite.com/2017/04/15/Path实战之雷达图/</id>
-    <published>2017-04-15T03:39:13.886Z</published>
-    <updated>2017-04-15T16:58:16.813Z</updated>
+    <link href="http://yoursite.com/2017/04/10/Path%E5%AE%9E%E6%88%98%E4%B9%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE/"/>
+    <id>http://yoursite.com/2017/04/10/Path实战之雷达图/</id>
+    <published>2017-04-10T07:31:25.208Z</published>
+    <updated>2017-04-17T09:19:40.609Z</updated>
     
     <content type="html"><![CDATA[<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>我们将从0到1一步一步来画一个 web 页面很常见的雷达图<br><a id="more"></a></p>
 <h1 id="第一步：绘制蜘蛛网络"><a href="#第一步：绘制蜘蛛网络" class="headerlink" title="第一步：绘制蜘蛛网络"></a>第一步：绘制蜘蛛网络</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">    mainPaint=<span class="keyword">new</span> Paint();</div><div class="line">    mainPaint.setColor(Color.BLACK);</div><div class="line">    mainPaint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">    mainPaint.setStrokeWidth(<span class="number">1</span>);</div><div class="line">    mainPaint.setStyle(Paint.Style.STROKE);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">    radius=Math.min(w,h)/<span class="number">2</span>*<span class="number">0.9f</span>;</div><div class="line">    centerX=w/<span class="number">2</span>;</div><div class="line">    centerY=h/<span class="number">2</span>;</div><div class="line">    <span class="comment">//一旦size发生改变，重新绘制</span></div><div class="line">    postInvalidate();</div><div class="line">    <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    drawPolygon(canvas);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 绘制多边形</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPolygon</span><span class="params">(Canvas canvas)</span></span>&#123;</div><div class="line">    Path path=<span class="keyword">new</span> Path();</div><div class="line">    <span class="comment">//1度=1*PI/180   360度=2*PI   那么我们每旋转一次的角度为2*PI/内角个数</span></div><div class="line">    <span class="comment">//中心与相邻两个内角相连的夹角角度</span></div><div class="line">    angle= (<span class="keyword">float</span>) (<span class="number">2</span>*Math.PI/count);</div><div class="line">    <span class="comment">//每个蛛丝之间的间距</span></div><div class="line">    <span class="keyword">float</span> r= radius/(count-<span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="comment">//当前半径</span></div><div class="line">        <span class="keyword">float</span> curR=r*i;</div><div class="line">        path.reset();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; count; j++) &#123;</div><div class="line">            <span class="keyword">if</span>(j==<span class="number">0</span>)&#123;</div><div class="line">                path.moveTo(centerX+curR,centerY);</div><div class="line">            &#125;<span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">//对于直角三角形sin(x)是对边比斜边，cos(x)是底边比斜边，tan(x)是对边比底边</span></div><div class="line">                <span class="comment">//因此可以推导出:底边(x坐标)=斜边(半径)*cos(夹角角度)</span></div><div class="line">                <span class="comment">//               对边(y坐标)=斜边(半径)*sin(夹角角度)</span></div><div class="line">                <span class="keyword">float</span> x = (<span class="keyword">float</span>) (centerX+curR*Math.cos(angle*j));</div><div class="line">                <span class="keyword">float</span> y = (<span class="keyword">float</span>) (centerY+curR*Math.sin(angle*j));</div><div class="line">                path.lineTo(x,y);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        path.close();</div><div class="line">        canvas.drawPath(path,mainPaint);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
