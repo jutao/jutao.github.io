@@ -2,7 +2,7 @@
 title: Path 学习笔记之基本操作
 tags:
 - Path
-- draw
+- 自定义控件
 - 学习笔记
 categories:
 - Android

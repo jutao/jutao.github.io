@@ -2,7 +2,8 @@
 title: Path 实战
 tags:
 - Path
-- draw
+- 自定义控件
+- 动画
 categories:
 - Android
 ---
