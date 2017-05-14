@@ -2,8 +2,9 @@
 title: Path学习笔记之Bezier
 tags:
 - Path
-- draw
+- 自定义控件
 - 学习笔记
+- 动画
 categories:
 - Android
 ---
