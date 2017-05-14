@@ -1,6 +1,7 @@
 ---
 title: 设计模式-策略模式
 tags:
+  - 学习笔记
   - 设计模式
 categories:
   - Android

@@ -1,5 +1,5 @@
 ---
-title: Path 学习笔记之基本操作
+title: Path学习笔记之Bezier
 tags:
 - Path
 - draw
