@@ -1,0 +1,1154 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="学习笔记,注解," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jutao's Note" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="什么是注解注解（也被称为元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻方便地使用这些数据。注解可以提供用来完整地描述程序所需的信息，而这些信息是无法用Java来表达的。 注解的作用及好处 使我们能够以将由编译器来测试和验证的格式，存储有关程序的额外信息。 注解可以用来生成描述符文件，甚至是新的类定义，并且有助于减轻编写“样板”代码的负担。 通过使用注解，我们可以将这">
+<meta name="keywords" content="学习笔记,注解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="了解注解">
+<meta property="og:url" content="http://yoursite.com/2017/05/14/了解注解/index.html">
+<meta property="og:site_name" content="jutao's Note">
+<meta property="og:description" content="什么是注解注解（也被称为元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻方便地使用这些数据。注解可以提供用来完整地描述程序所需的信息，而这些信息是无法用Java来表达的。 注解的作用及好处 使我们能够以将由编译器来测试和验证的格式，存储有关程序的额外信息。 注解可以用来生成描述符文件，甚至是新的类定义，并且有助于减轻编写“样板”代码的负担。 通过使用注解，我们可以将这">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-d8f07f9703c165b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-05-14T12:20:54.533Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="了解注解">
+<meta name="twitter:description" content="什么是注解注解（也被称为元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻方便地使用这些数据。注解可以提供用来完整地描述程序所需的信息，而这些信息是无法用Java来表达的。 注解的作用及好处 使我们能够以将由编译器来测试和验证的格式，存储有关程序的额外信息。 注解可以用来生成描述符文件，甚至是新的类定义，并且有助于减轻编写“样板”代码的负担。 通过使用注解，我们可以将这">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3054656-d8f07f9703c165b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/14/了解注解/"/>
+
+
+
+
+
+  <title> 了解注解 | jutao's Note </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d63d54d82fdbd26bc0f05a91355caea3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jutao's Note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">带三个表贯彻持续学习思想</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/14/了解注解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="琚涛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xthjd.com2.z0.glb.clouddn.com/20150512_235412_142.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jutao's Note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                了解注解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T20:16:34+08:00">
+                2017-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java 基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/05/14/了解注解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/14/了解注解/" class="leancloud_visitors" data-flag-title="了解注解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="什么是注解"><a href="#什么是注解" class="headerlink" title="什么是注解"></a>什么是注解</h1><p><strong>注解</strong>（也被称为元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻方便地使用这些数据。<br>注解可以提供用来完整地描述程序所需的信息，而这些信息是无法用Java来表达的。</p>
+<h2 id="注解的作用及好处"><a href="#注解的作用及好处" class="headerlink" title="注解的作用及好处"></a>注解的作用及好处</h2><ul>
+<li>使我们能够以将由编译器来测试和验证的格式，存储有关程序的额外信息。</li>
+<li>注解可以用来生成描述符文件，甚至是新的类定义，并且有助于减轻编写“样板”代码的负担。</li>
+<li>通过使用注解，我们可以将这些元数据保存在 Java 源代码中，并利用 annotation API 为自己的注解构造处理工具。</li>
+<li>更加干净易读的代码以及编译期类型检查。</li>
+</ul>
+<h1 id="注解的基本语法"><a href="#注解的基本语法" class="headerlink" title="注解的基本语法"></a>注解的基本语法</h1><p>注解的语法比较简单，除了 @ 符号的使用之外，他基本与 Java 固有的语法一致。<br>Java SE5 内置了三种，定义在 java.lang 中的注解：@Override 、@Deprecated、@SuppressWarnings。</p>
+<h2 id="基本示例"><a href="#基本示例" class="headerlink" title="基本示例"></a>基本示例</h2><p>在下面的例子中，使用 @Test 对 testExecute() 方法进行注解。该注解本身并不做任何事情，但是编译器要确保在其构造路径上必须有 @Test 注解的定义。</p>
+<p>定义注解：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.METHOD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Test &#123;&#125;</div></pre></td></tr></table></figure></p>
+<p>以上代码就是 @Test 注解的定义，与接口的定义非常类似，事实上，注解与接口一样，也会编译成 class文件。<br>除了 @ 符号以外，@ Test 的定义很像一个空的接口。定义注解时，会需要一些元注解（meta-annotation）,如 @Target 和 @Retention。@Target 用来定义你的注解将应用于什么地方（例如一个方法或者是一个域）。@Rectetion 用来定义该注解在哪一个级别可用，在源代码中（SOURCE）、类文件(CLASS)中或者运行时(RUNTIME)。<br>在注解中，一般都会包含一些元素以表达某些值，当分析处理注解时，程序或工具可以利用这些值。注解元素看起来就像接口的方法，唯一的区别就是你可以为其指定默认值。<br>没有元素的注解称为标记注解(marker annotation)，例如上例中的 @Test。</p>
+<p>给方法加注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Testable</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>&#123;</div><div class="line">      System.out.println(<span class="string">"Executing.."</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="meta">@Test</span> <span class="function"><span class="keyword">void</span> <span class="title">testExecute</span><span class="params">()</span></span>&#123;execute();&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>被注解的方法与其他方法没有区别。这个例子中，注解 @Test可以与任何修饰符共同作用于方法，从语法角度看，注解的使用方式几乎和修饰符的使用一模一样。</p>
+<h1 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h1><p>Java 目前内置了三种标准注解（@Override、@Deprecated、@SuppressWarnings），以及四种元注解，元注解专职负责注解其他的注解：</p>
+<hr>
+<ul>
+<li>@Target表示该注解可以作用于什么地方。可能的 ElementType 参数包括：<ul>
+<li>CONSTRUCTOR:构造器的声明</li>
+<li>FIELD:域（即成员变量）声明（包括enum实例）</li>
+<li>LOCAL_VARIABLE:局部变量声明</li>
+<li>METHOD:方法声明</li>
+<li>PACKAGE:包声明</li>
+<li>PARAMTETER:参数声明</li>
+<li>TYPE:类、接口（包括注解类型）或enum声明</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>@Retention表示需要什么级别保存该注解信息。。可选的 RetentionPolicy 参数包括：<ul>
+<li>SOURCE:注解将被编译器丢弃</li>
+<li>CLASS:注解在 class 文件中可用，但会被 VM 丢弃</li>
+<li>RUNTIME:VM 将在运行期也保留注解，因此可通过反射机制读取注解信息</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>@Documented ：将此注解包含在 Javadoc中</li>
+</ul>
+<hr>
+<ul>
+<li>@Inherited：允许子类继承父类中的注解</li>
+</ul>
+<hr>
+<h1 id="简单注解处理器"><a href="#简单注解处理器" class="headerlink" title="简单注解处理器"></a>简单注解处理器</h1><p>我们有时需要根据注解来做一些统计，来掌控项目进展。下面我们做一个小 Demo，来统计已实现的需求和未实现的需求。</p>
+<p>首先定义注解，用 id 来区分方法，description 来存储一些方法说明，这一项不填即为默认值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.METHOD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> UseCase &#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">id</span><span class="params">()</span></span>;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">description</span><span class="params">()</span> <span class="keyword">default</span> "no description"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来写一个待检查的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PassWordUtils</span> </span>&#123;</div><div class="line">	<span class="meta">@UseCase</span>(id=<span class="number">47</span>,description=</div><div class="line">			<span class="string">"密码最起码要有一个数字吧"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">validatePassword</span><span class="params">(String password)</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> (password.matches(<span class="string">"\\w\\d\\w*"</span>));</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@UseCase</span>(id=<span class="number">48</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">encryptPassword</span><span class="params">(String password)</span></span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="keyword">new</span> StringBuilder(password).reverse().toString();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="meta">@UseCase</span>(id=<span class="number">49</span>,description=</div><div class="line">			<span class="string">"新密码不能和老密码这么像吧"</span>)</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkForNewPassword</span><span class="params">(</span></span></div><div class="line">			List&lt;String&gt; prevPasswords,String password)&#123;</div><div class="line">		<span class="keyword">return</span> !prevPasswords.contains(password);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后编写注解处理器，用来统计我们已经实现的方法和还未实现的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UseCaseTracker</span> </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">trackUseCases</span><span class="params">(List&lt;Integer&gt; useCases, Class&lt;?&gt; cl)</span> </span>&#123;</div><div class="line">		<span class="comment">//遍历该类的所有方法</span></div><div class="line">		<span class="keyword">for</span>(Method m:cl.getDeclaredMethods())&#123;</div><div class="line">			<span class="comment">//获取加在方法上的UseCase注解</span></div><div class="line">			UseCase uc=m.getAnnotation(UseCase.class);</div><div class="line">			<span class="keyword">if</span>(uc!=<span class="keyword">null</span>)&#123;<span class="comment">//如果方法上确实有UseCase注解</span></div><div class="line">				System.out.println(<span class="string">"找到了用例:"</span>+uc.id()+<span class="string">" "</span>+uc.description());</div><div class="line">				useCases.remove(<span class="keyword">new</span> Integer(uc.id()));</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i:useCases)&#123;</div><div class="line">			System.out.println(<span class="string">"警告：丢失用例:"</span>+i);</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">		List&lt;Integer&gt; useCases=<span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">		Collections.addAll(useCases, <span class="number">47</span>,<span class="number">48</span>,<span class="number">49</span>,<span class="number">50</span>,<span class="number">51</span>);</div><div class="line">		trackUseCases(useCases, PassWordUtils.class);</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后输出结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-d8f07f9703c165b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="输出结果"></p>
+<h1 id="注解处理器最佳实践"><a href="#注解处理器最佳实践" class="headerlink" title="注解处理器最佳实践"></a>注解处理器最佳实践</h1><p>下面我们通过注解要实现的需求是：通过在 JavaBean 上加注解，生成对应的 SQL 语句。这类似于 JavaWeb 的某些框架，虽然是个十分简单的功能，但是却是这些框架的基本原理。<br>下面先定义一个注解，这个注解用来告诉注解处理器，你需要为我生成的数据库表名叫什么：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.TYPE)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> DBTable &#123;</div><div class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来是数据库中的各个字段，你需要告诉处理器你的字段名、类型、是否为主键、是否唯一等等。<br>首先定义一个注解，用来告诉处理器你的字段约束。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.FIELD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Constraints &#123;</div><div class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">primaryKey</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</div><div class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">allowNull</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">true</span></span>;</div><div class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">unique</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>接下来是字段类型，我们只选两个代表，String 和 Int。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Target</span>(ElementType.FIELD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SQLString &#123;</div><div class="line">	<span class="function"><span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;</div><div class="line">	<span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line">	<span class="function">Constraints <span class="title">constraints</span><span class="params">()</span> <span class="keyword">default</span> @Constraints</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Target</span>(ElementType.FIELD)</div><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SQLInteger &#123;</div><div class="line">	<span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</div><div class="line">	<span class="function">Constraints <span class="title">constraints</span><span class="params">()</span> <span class="keyword">default</span> @Constraints</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>下面是一个简单 Bean 的定义,用到了以上的注解：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@DBTable</span>(name = <span class="string">"STUDENT"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</div><div class="line">    <span class="meta">@SQLString</span>(value = <span class="number">30</span>, name = <span class="string">"studentname"</span>, constraints = <span class="meta">@Constraints</span>(allowNull = <span class="keyword">false</span>))</div><div class="line">    String name;</div><div class="line"></div><div class="line">    <span class="meta">@SQLString</span>(value = <span class="number">50</span>, constraints = <span class="meta">@Constraints</span>(unique = <span class="keyword">true</span>))</div><div class="line">    String enjoy;</div><div class="line"></div><div class="line">    <span class="meta">@SQLInteger</span>(constraints = <span class="meta">@Constraints</span>(allowNull = <span class="keyword">false</span>))</div><div class="line">    Integer age;</div><div class="line"></div><div class="line">    <span class="meta">@SQLString</span>(value = <span class="number">30</span>, constraints = <span class="meta">@Constraints</span>(primaryKey = <span class="keyword">true</span>))</div><div class="line">    String teacherName;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>最后是注解处理器，它将读取一个类文件，检查其上的数据库注解，并生成用来创建数据库的 SQL 命令：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TableCreator</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            Class cl=Student.class;</div><div class="line">            DBTable dbTable = (DBTable) cl.getAnnotation(DBTable.class);</div><div class="line">            <span class="keyword">if</span> (dbTable == <span class="keyword">null</span>) &#123;</div><div class="line">                System.out.println(cl.getSimpleName() + <span class="string">"类不能生成一个数据库表格"</span>);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            String tableName = dbTable.name();</div><div class="line">            <span class="keyword">if</span> (tableName.length() &lt; <span class="number">1</span>) &#123;</div><div class="line">                tableName = cl.getSimpleName().toUpperCase();</div><div class="line">            &#125;</div><div class="line">            List&lt;String&gt; columnDefs = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="keyword">for</span> (Field field : cl.getDeclaredFields()) &#123;</div><div class="line">                Annotation[] ans = field.getDeclaredAnnotations();</div><div class="line">                <span class="keyword">if</span> (ans.length &lt; <span class="number">1</span>) <span class="keyword">continue</span>;</div><div class="line">                String columnName = <span class="keyword">null</span>;</div><div class="line">                <span class="keyword">if</span> (ans[<span class="number">0</span>] <span class="keyword">instanceof</span> SQLInteger) &#123;</div><div class="line">                    SQLInteger sInt = (SQLInteger) ans[<span class="number">0</span>];</div><div class="line">                    <span class="keyword">if</span> (sInt.name().length() &lt; <span class="number">1</span>) &#123;</div><div class="line">                        columnName = field.getName().toUpperCase();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        columnName = sInt.name().toUpperCase();</div><div class="line">                    &#125;</div><div class="line">                    columnDefs.add(columnName + <span class="string">" INT "</span> + getConstraints(sInt.constraints()));</div><div class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (ans[<span class="number">0</span>] <span class="keyword">instanceof</span> SQLString) &#123;</div><div class="line">                    SQLString sString = (SQLString) ans[<span class="number">0</span>];</div><div class="line">                    <span class="keyword">if</span> (sString.name().length() &lt; <span class="number">1</span>) &#123;</div><div class="line">                        columnName = field.getName().toUpperCase();</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        columnName = sString.name().toUpperCase();</div><div class="line">                    &#125;</div><div class="line">                    columnDefs.add(columnName + <span class="string">" VARCHAR("</span> + sString.value() + <span class="string">") "</span> + getConstraints(sString.constraints()));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            StringBuilder createCommand = <span class="keyword">new</span> StringBuilder(</div><div class="line">                    <span class="string">"CREATE TABLE "</span> + tableName + <span class="string">"("</span></div><div class="line">            );</div><div class="line">            <span class="keyword">for</span> (String columnDef : columnDefs) &#123;</div><div class="line">                createCommand.append(<span class="string">"\n    "</span> + columnDef + <span class="string">","</span>);</div><div class="line">            &#125;</div><div class="line">            String tableCreate=createCommand.substring(<span class="number">0</span>,createCommand.length()-<span class="number">1</span>)+<span class="string">");"</span>;</div><div class="line">            System.out.println(<span class="string">"根据"</span> + cl.getName() + <span class="string">"创建数据库：\n"</span> + tableCreate);</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getConstraints</span><span class="params">(Constraints con)</span> </span>&#123;</div><div class="line">        String constraints = <span class="string">""</span>;</div><div class="line">        <span class="keyword">if</span> (!con.allowNull()) &#123;</div><div class="line">            constraints += <span class="string">" NOT NULL "</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (con.primaryKey()) &#123;</div><div class="line">            constraints += <span class="string">" PRIMARY KEY "</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (con.unique()) &#123;</div><div class="line">            constraints += <span class="string">" UNIQUE "</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> constraints;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我们实现的功能还很低级，如果你要改任何属性或者参数，都要重新编译 Java 代码，现在的很多框架都会生成 XML 文件，而不是 SQL 语句，但基本原理都是这样的。</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>本篇文章只是 《Java 编程思想》的学习笔记，看了网上的很多资料，觉得还是这本书讲的最好。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xthjd.com2.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1.png" alt="琚涛 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xthjd.com2.z0.glb.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D.png" alt="琚涛 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/注解/" rel="tag"># 注解</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/17/Handler原理梳理/" rel="prev" title="Hanler 原理梳理">
+                Hanler 原理梳理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xthjd.com2.z0.glb.clouddn.com/20150512_235412_142.jpg"
+               alt="琚涛" />
+          <p class="site-author-name" itemprop="name">琚涛</p>
+           
+              <p class="site-description motion-element" itemprop="description">我觉得自己会永远生猛下去，什么也锤不了我</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jutao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jutaoshigedahaoren" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/42701793/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-star"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jutao" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-flag"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/d251eadadd37" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是注解"><span class="nav-number">1.</span> <span class="nav-text">什么是注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注解的作用及好处"><span class="nav-number">1.1.</span> <span class="nav-text">注解的作用及好处</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解的基本语法"><span class="nav-number">2.</span> <span class="nav-text">注解的基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本示例"><span class="nav-number">2.1.</span> <span class="nav-text">基本示例</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#元注解"><span class="nav-number">3.</span> <span class="nav-text">元注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单注解处理器"><span class="nav-number">4.</span> <span class="nav-text">简单注解处理器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解处理器最佳实践"><span class="nav-number">5.</span> <span class="nav-text">注解处理器最佳实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">琚涛</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "d08c52b322f54fbe81f6373c3015986a",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("c1gNJkeAaPTVbWAH1nzxru17-gzGzoHsz", "hRJNS0I8sj1BsSmaK71MG2xE");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
