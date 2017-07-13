@@ -20,7 +20,7 @@ categories:
     或许对于背压，有些小伙伴们还不是特别理解，这里简单说一下。大概就是指在异步场景中，被观察者发送事件的速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略。感兴趣的小伙伴可以模拟这种情况，在差距太大的时候，我们的内存会猛增，直到OOM。而我们的 Flowable 一定意义上可以解决这样的问题。
 
 ## Single/Completable/Maybe
-  其实这三者都差不多，Single 顾名思义，只能发送一个事件，和 Observable 接受可变参数完全不同。而Completable 侧重于观察结果，而Maybe 是上面两种的结合体。也就是说，当你只想要某个事件的结果（true or false）的时候，你可以使用这种观察者模式。    
+  其实这三者都差不多，Single 顾名思义，只能发送一个事件，和 Observable 接受可变参数完全不同。而Completable 侧重于观察结果，而Maybe 是上面两种的结合体。也就是说，当你只想要某个事件的结果（true or false）的时候，你可以使用这种观察者模式。
 
 ## 线程调度相关
 这一块基本没什么改动，但细心的小伙伴一定会发现，RxJava 2.x 中已经没有了Schedulers.immediate() 这个线程环境，还有Schedulers.test()。
@@ -513,3 +513,157 @@ Observable.just(1,2,3).subscribe(new Consumer<Integer>() {
 运行结果如下：
 
 ![Paste_Image.png](http://upload-images.jianshu.io/upload_images/3054656-ab51266eb1c2bfe1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+# 最佳实战
+## 采用 map 操作符进行网络数据解析
+想必大家都知道，很多时候我们在使用 RxJava 的时候总是和 Retrofit 进行结合使用，而为了方便演示，这里我们就暂且采用 OkHttp3 进行演示，配合 map，doOnNext ，线程切换进行简单的网络请求:
+1. 通过 Observable.create() 方法，调用 OkHttp 网络请求;
+2. 通过 map 操作符集合 gson，将 Response 转换为 bean 类;
+3. 通过 doOnNext() 方法，解析 bean 中的数据，并进行数据库存储等操作;
+4. 调度线程，在子线程中进行耗时操作任务,在主线程中更新 UI ;
+5. 通过 subscribe(),根据请求成功或者失败来更新 UI
+```Java
+Observable.create(new ObservableOnSubscribe<Response>() {
+    @Override
+    public void subscribe(@NonNull ObservableEmitter<Response> e) throws Exception {
+        Request.Builder builder = new Request.Builder().url(
+                "http://api.avatardata" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + "" + ""
+                        + ".cn/MobilePlace/LookUp?key=ec47b85086be4dc8b5d941f5abd37a4e&mobileNumber" +
+                        "=13021671512")
+                                                       .get();
+        Request request = builder.build();
+        Call call = new OkHttpClient().newCall(request);
+        Response response = call.execute();
+        e.onNext(response);
+    }
+})
+                 .map(new Function<Response, MobileAddress>() {
+                     @Override
+                     public MobileAddress apply(@NonNull Response response) throws Exception {
+                         if (response.isSuccessful()) {
+                             ResponseBody body = response.body();
+                             if (body != null) {
+                                 return new Gson().fromJson(body.string(), MobileAddress.class);
+                             }
+                         }
+                         return null;
+                     }
+                 })
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .doOnNext(new Consumer<MobileAddress>() {
+                     @Override
+                     public void accept(@NonNull MobileAddress mobileAddress) throws Exception {
+                         Log.e(TAG, "save successful:" + mobileAddress.toString() + "\n");
+                     }
+                 })
+                 .subscribeOn(Schedulers.io())
+                 .observeOn(AndroidSchedulers.mainThread())
+                 .subscribe(new Consumer<MobileAddress>() {
+                     @Override
+                     public void accept(@NonNull MobileAddress mobileAddress) throws Exception {
+                         Log.e(TAG, "成功:" + mobileAddress.toString() + "\n");
+                     }
+                 }, new Consumer<Throwable>() {
+                     @Override
+                     public void accept(@NonNull Throwable throwable) throws Exception {
+                         Log.e(TAG, "失败：" + throwable.getMessage() + "\n");
+                     }
+               });
+```
+## concat请求网络
+concat 可以做到不交错的发射两个甚至多个 Observable 的发射事件，并且只有前一个 Observable 终止(onComplete) 后才会订阅下一个 Observable。
+采用 concat 操作符先读取缓存再通过网络请求获取数据
+想必在实际应用中，很多时候（对数据操作不敏感时）都需要我们先读取缓存的数据，如果缓存没有数据，再通过网络请求获取，随后在主线程更新我们的UI。
+concat 操作符简直就是为我们这种需求量身定做。
+利用 concat 的必须调用 onComplete 后才能订阅下一个 Observable 的特性，我们就可以先读取缓存数据，倘若获取到的缓存数据不是我们想要的，再调用 onComplete() 以执行获取网络数据的Observable，如果缓存数据能应我们所需，则直接调用 onNext()，防止过度的网络请求，浪费用户的流量。
+```Java
+Observable.concat(cacheObservable(), netObservable()).subscribe(new Consumer<Food>() {
+    @Override
+    public void accept(@NonNull Food o) throws Exception {
+        Log.e(TAG, "subscribe 成功:" + Thread.currentThread().getName());
+        if (isFromNet) {
+            SPUtils.getInstance().put(CACHE_KEY, new Gson().toJson(o));
+            Log.e(TAG, "accept : 网络获取数据设置缓存: \n" + o.getTngou().size());
+        }
+
+        Log.e(TAG, "accept: 读取数据成功:" + o.getTotal());
+    }
+});
+private Observable cacheObservable() {
+     return Observable.create(new ObservableOnSubscribe<Food>() {
+         @Override
+         public void subscribe(@NonNull ObservableEmitter<Food> e) throws Exception {
+             String data = SPUtils.getInstance().getString(CACHE_KEY);
+             if (TextUtils.isEmpty(data)) {
+                 isFromNet = true;
+                 e.onComplete();
+             } else {
+                 //如果有缓存，就直接将缓存转化成对应的bean，并且去执行onnext
+                 isFromNet = false;
+                 Food food = new Gson().fromJson(data, Food.class);
+                 e.onNext(food);
+             }
+         }
+     });
+ }
+
+ private Observable netObservable() {
+     return Observable.create(new ObservableOnSubscribe<Food>() {
+         @Override
+         public void subscribe(@NonNull final ObservableEmitter<Food> e) throws Exception {
+             Request.Builder builder = new Request.Builder().url("http://www.tngou.net/api/food/list").get();
+             Request request = builder.build();
+             new OkHttpClient().newCall(request).enqueue(new Callback() {
+                 @Override
+                 public void onFailure(Call call, IOException e) {
+
+                 }
+
+                 @Override
+                 public void onResponse(Call call, Response response) throws IOException {
+                     Food food = new Gson().fromJson(response.body().string(), Food.class);
+                     e.onNext(food);
+                 }
+             });
+
+         }
+     });
+ }
+```
+有时候我们的缓存可能还会分为 memory 和 disk ，实际上都差不多，无非是多写点 Observable ，然后通过 concat 合并即可。
+
+## flatMap 实现多个网络请求依次依赖
+想必这种情况也在实际情况中比比皆是，例如用户注册成功后需要自动登录，我们只需要先通过注册接口注册用户信息，注册成功后马上调用登录接口进行自动登录即可。
+我们的 flatMap 恰好解决了这种应用场景，flatMap 操作符可以将一个发射数据的 Observable 变换为多个 Observables ，然后将它们发射的数据合并后放到一个单独的 Observable，利用这个特性，我们很轻松地达到了我们的需求。
+```Java
+private void flatMap() {
+    Observable.create(new ObservableOnSubscribe<Response>() {
+        @Override
+        public void subscribe(@NonNull ObservableEmitter<Response> e) throws Exception {
+            Request.Builder builder = new Request.Builder().url("http://www.tngou.net/api/food/list").get();
+            Request request = builder.build();
+            Call call = new OkHttpClient().newCall(request);
+            Response response = call.execute();
+            e.onNext(response);
+        }
+    })
+              .subscribeOn(Schedulers.io())
+              .flatMap(new Function<Response, ObservableSource<Food.TngouBean>>() {
+
+                  @Override
+                  public ObservableSource<Food.TngouBean> apply(@NonNull Response response) throws Exception {
+                      Food food = new Gson().fromJson(response.body().string(), Food.class);
+                      return Observable.fromIterable(food.getTngou());
+                  }
+              })
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribe(new Consumer<Food.TngouBean>() {
+
+                  @Override
+                  public void accept(@NonNull Food.TngouBean tngouBean) throws Exception {
+                      Log.e(TAG, tngouBean.getDescription());
+                  }
+              });
+}
+```
