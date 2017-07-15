@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-07-13T10:48:48.282Z</updated>
+  <updated>2017-07-15T15:37:23.552Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,50 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>旋转字符串</title>
+    <link href="http://yoursite.com/2017/07/12/%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <id>http://yoursite.com/2017/07/12/旋转字符串/</id>
+    <published>2017-07-12T14:17:21.344Z</published>
+    <updated>2017-07-15T15:37:23.552Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>给定一个字符串，要求把字符串前面的若干个字符移动到字符串的尾部，如把字符串“abcdef”前面的2个字符’a’和’b’移动到字符串的尾部，使得原字符串变成字符串“cdefab”。请写一个函数完成此功能，要求对长度为n的字符串操作的时间复杂度为 O(n)，空间复杂度为 O(1)。</p>
+<h1 id="分析与解法"><a href="#分析与解法" class="headerlink" title="分析与解法"></a>分析与解法</h1><h2 id="解法一：暴力移位法"><a href="#解法一：暴力移位法" class="headerlink" title="解法一：暴力移位法"></a>解法一：暴力移位法</h2><p>初看此题，可能最先想到的方法是按照题目所要求的，把需要移动的字符一个一个地移动到字符串的尾部，如此我们可以实现一个函数LeftShiftOne(char[] chars, int n) ，以完成移动一个字符到字符串尾部的功能，代码如下所示：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">leftRotateString</span><span class="params">(chars: <span class="type">CharArray</span>, n: <span class="type">Int</span>, m: <span class="type">Int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">var</span> m = m</div><div class="line">    <span class="keyword">while</span> (m-- != <span class="number">0</span>) &#123;</div><div class="line">        leftShiftOne(chars, n)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">leftShiftOne</span><span class="params">(chars: <span class="type">CharArray</span>, n: <span class="type">Int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">val</span> t = chars[<span class="number">0</span>]</div><div class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span>.n - <span class="number">1</span>) &#123;</div><div class="line">        chars[i - <span class="number">1</span>] = chars[i]</div><div class="line">    &#125;</div><div class="line">    chars[n - <span class="number">1</span>] = t</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面，我们来分析一下这种方法的时间复杂度和空间复杂度。</p>
+<p>针对长度为n的字符串来说，假设需要移动m个字符到字符串的尾部，那么总共需要 m<em>n 次操作，同时设立一个变量保存第一个字符，如此，时间复杂度为O(m </em> n)，空间复杂度为O(1)，空间复杂度符合题目要求，但时间复杂度不符合，所以，我们得需要寻找其他更好的办法来降低时间复杂度。</p>
+<h2 id="解法二：三步反转法"><a href="#解法二：三步反转法" class="headerlink" title="解法二：三步反转法"></a>解法二：三步反转法</h2><p>对于这个问题，换一个角度思考一下。</p>
+<p>将一个字符串分成X和Y两个部分，在每部分字符串上定义反转操作，如X^T，即把X的所有字符反转（如，X=”abc”，那么X^T=”cba”），那么就得到下面的结论：(X^TY^T)^T=YX，显然就解决了字符串的反转问题。</p>
+<p>例如，字符串 abcdef ，若要让def翻转到abc的前头，只要按照下述3个步骤操作即可：</p>
+<p>首先将原字符串分为两个部分，即X:abc，Y:def；<br>将X反转，X-&gt;X^T，即得：abc-&gt;cba；将Y反转，Y-&gt;Y^T，即得：def-&gt;fed。<br>反转上述步骤得到的结果字符串X^TY^T，即反转字符串cbafed的两部分（cba和fed）给予反转，cbafed得到defabc，形式化表示为(X^TY^T)^T=YX，这就实现了整个反转。<br>如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-aa22aec968215599.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>代码则可以这么写：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 将长度为n的字符串s的前m个字符移动到字符串尾部</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">leftRotateString</span><span class="params">(chars: <span class="type">CharArray</span>, n: <span class="type">Int</span>, m: <span class="type">Int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">var</span> m = m</div><div class="line">    <span class="comment">//        若要左移动大于n位，那么和%n 是等价的</span></div><div class="line">    m %= n</div><div class="line">    reverseString(chars, <span class="number">0</span>, m - <span class="number">1</span>)</div><div class="line">    reverseString(chars, m, n - <span class="number">1</span>)</div><div class="line">    reverseString(chars, <span class="number">0</span>, n - <span class="number">1</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 翻转字符数组from-to之间的字符串</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">fun</span> <span class="title">reverseString</span><span class="params">(chars: <span class="type">CharArray</span>, from: <span class="type">Int</span>, to: <span class="type">Int</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">var</span> from = from</div><div class="line">    <span class="keyword">var</span> to = to</div><div class="line">    <span class="keyword">while</span> (from &lt; to) &#123;</div><div class="line">        <span class="keyword">val</span> c = chars[from]</div><div class="line">        chars[from++] = chars[to]</div><div class="line">        chars[to--] = c</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这就是把字符串分为两个部分，先各自反转再整体反转的方法，时间复杂度为O(n)，空间复杂度为O(1)，达到了题目的要求。</p>
+<h1 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h1><p>1、链表翻转。给出一个链表和一个数k，比如，链表为1→2→3→4→5→6，k=2，则翻转后2→1→6→5→4→3，若k=3，翻转后3→2→1→6→5→4，若k=4，翻转后4→3→2→1→6→5，用程序实现。</p>
+<p>2、编写程序，在原字符串中把字符串尾部的m个字符移动到字符串的头部，要求：长度为n的字符串操作时间复杂度为O(n)，空间复杂度为O(1)。 例如，原字符串为”Ilovebaofeng”，m=7，输出结果为：”baofengIlove”。</p>
+<p>3、单词翻转。输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变，句子中单词以空格符隔开。为简单起见，标点符号和普通字母一样处理。例如，输入“I am a student.”，则输出“student. a am I”。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h1&gt;&lt;p&gt;给定一个字符串，要求把字符串前面的若干个字符移动到字符串的尾部，如把字符串“abcdef”前面的2个字符’a’和’b’移动到
+    
+    </summary>
+    
+      <category term="算法练习" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/"/>
+    
+      <category term="kotlin" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/kotlin/"/>
+    
+    
+      <category term="基础练习" scheme="http://yoursite.com/tags/%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>RxJava2 入门</title>
-    <link href="http://yoursite.com/2017/07/13/RxJava2%E5%85%A5%E9%97%A8/"/>
-    <id>http://yoursite.com/2017/07/13/RxJava2入门/</id>
-    <published>2017-07-13T10:24:17.089Z</published>
-    <updated>2017-07-13T10:48:48.282Z</updated>
+    <link href="http://yoursite.com/2017/07/08/RxJava2%E5%85%A5%E9%97%A8/"/>
+    <id>http://yoursite.com/2017/07/08/RxJava2入门/</id>
+    <published>2017-07-08T10:56:40.326Z</published>
+    <updated>2017-07-15T15:42:02.540Z</updated>
     
     <content type="html"><![CDATA[<h1 id="与RxJava-1-x-的差异"><a href="#与RxJava-1-x-的差异" class="headerlink" title="与RxJava 1.x 的差异"></a>与RxJava 1.x 的差异</h1><p>以前用过 RxJava 1.x ,出了 2 之后一直没有系统的看过，今天花点时间仔细看看。RxJava 2.x 是按照 Reactive-Streams specification 规范完全的重写的，是完全独立于RxJava 1.x 而存在，它改变了以往RxJava的用法。所以还是有必要重新看一下的。先看一下 RxJava 1.x 和 2.x 的差异吧。</p>
 <h2 id="Nulls"><a href="#Nulls" class="headerlink" title="Nulls"></a>Nulls</h2><p> 这是一个很大的变化，熟悉RxJava 1.x 的童鞋一定都知道，1.x 是允许我们在发射事件的时候传入 null 值的，但现在我们的 2.x 不支持了，不信你试试？ 大大的 NullPointerException 教你做人。这意味着 Observable<void> 不再发射任何值，而是正常结束或者抛出空指针。</void></p>
@@ -143,55 +182,18 @@
       <category term="Android 第三方" scheme="http://yoursite.com/categories/Java-%E5%9F%BA%E7%A1%80/Android-%E7%AC%AC%E4%B8%89%E6%96%B9/"/>
     
     
-      <category term="响应式编程" scheme="http://yoursite.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
       <category term="学习笔记" scheme="http://yoursite.com/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
-  </entry>
-  
-  <entry>
-    <title>旋转字符串</title>
-    <link href="http://yoursite.com/2017/07/12/%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>http://yoursite.com/2017/07/12/旋转字符串/</id>
-    <published>2017-07-12T05:50:57.879Z</published>
-    <updated>2017-07-12T05:50:42.390Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>给定一个字符串，要求把字符串前面的若干个字符移动到字符串的尾部，如把字符串“abcdef”前面的2个字符’a’和’b’移动到字符串的尾部，使得原字符串变成字符串“cdefab”。请写一个函数完成此功能，要求对长度为n的字符串操作的时间复杂度为 O(n)，空间复杂度为 O(1)。</p>
-<h1 id="分析与解法"><a href="#分析与解法" class="headerlink" title="分析与解法"></a>分析与解法</h1><h2 id="解法一：暴力移位法"><a href="#解法一：暴力移位法" class="headerlink" title="解法一：暴力移位法"></a>解法一：暴力移位法</h2><p>初看此题，可能最先想到的方法是按照题目所要求的，把需要移动的字符一个一个地移动到字符串的尾部，如此我们可以实现一个函数LeftShiftOne(char[] chars, int n) ，以完成移动一个字符到字符串尾部的功能，代码如下所示：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> <span class="function"><span class="keyword">void</span> <span class="title">leftRotateString</span><span class="params">(<span class="keyword">char</span>[] chars, <span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> ((m--)!=<span class="number">0</span>)&#123;</div><div class="line">        leftShiftOne(chars,n);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">void</span> <span class="title">leftShiftOne</span><span class="params">(<span class="keyword">char</span>[] chars, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">char</span> t = chars[<span class="number">0</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</div><div class="line">        chars[i - <span class="number">1</span>] = chars[i];</div><div class="line">    &#125;</div><div class="line">    chars[n - <span class="number">1</span>] = t;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>下面，我们来分析一下这种方法的时间复杂度和空间复杂度。</p>
-<p>针对长度为n的字符串来说，假设需要移动m个字符到字符串的尾部，那么总共需要 m<em>n 次操作，同时设立一个变量保存第一个字符，如此，时间复杂度为O(m </em> n)，空间复杂度为O(1)，空间复杂度符合题目要求，但时间复杂度不符合，所以，我们得需要寻找其他更好的办法来降低时间复杂度。</p>
-<h2 id="解法二：三步反转法"><a href="#解法二：三步反转法" class="headerlink" title="解法二：三步反转法"></a>解法二：三步反转法</h2><p>对于这个问题，换一个角度思考一下。</p>
-<p>将一个字符串分成X和Y两个部分，在每部分字符串上定义反转操作，如X^T，即把X的所有字符反转（如，X=”abc”，那么X^T=”cba”），那么就得到下面的结论：(X^TY^T)^T=YX，显然就解决了字符串的反转问题。</p>
-<p>例如，字符串 abcdef ，若要让def翻转到abc的前头，只要按照下述3个步骤操作即可：</p>
-<p>首先将原字符串分为两个部分，即X:abc，Y:def；<br>将X反转，X-&gt;X^T，即得：abc-&gt;cba；将Y反转，Y-&gt;Y^T，即得：def-&gt;fed。<br>反转上述步骤得到的结果字符串X^TY^T，即反转字符串cbafed的两部分（cba和fed）给予反转，cbafed得到defabc，形式化表示为(X^TY^T)^T=YX，这就实现了整个反转。<br>如下图所示：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/3054656-aa22aec968215599.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
-<p>代码则可以这么写：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 将长度为n的字符串s的前m个字符移动到字符串尾部</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">leftRotateString</span><span class="params">(<span class="keyword">char</span>[] chars, <span class="keyword">int</span> n, <span class="keyword">int</span> m)</span> </span>&#123;</div><div class="line"><span class="comment">//        若要左移动大于n位，那么和%n 是等价的</span></div><div class="line">    m %= n;</div><div class="line">    reverseString(chars, <span class="number">0</span>, m - <span class="number">1</span>);</div><div class="line">    reverseString(chars, m, n - <span class="number">1</span>);</div><div class="line">    reverseString(chars, <span class="number">0</span>, n - <span class="number">1</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 翻转字符数组from-to之间的字符串</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">reverseString</span><span class="params">(<span class="keyword">char</span>[] chars, <span class="keyword">int</span> from, <span class="keyword">int</span> to)</span> </span>&#123;</div><div class="line">    <span class="keyword">while</span> (from &lt; to) &#123;</div><div class="line">        <span class="keyword">char</span> c = chars[from];</div><div class="line">        chars[from++] = chars[to];</div><div class="line">        chars[to--] = c;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这就是把字符串分为两个部分，先各自反转再整体反转的方法，时间复杂度为O(n)，空间复杂度为O(1)，达到了题目的要求。</p>
-<h1 id="举一反三"><a href="#举一反三" class="headerlink" title="举一反三"></a>举一反三</h1><p>1、链表翻转。给出一个链表和一个数k，比如，链表为1→2→3→4→5→6，k=2，则翻转后2→1→6→5→4→3，若k=3，翻转后3→2→1→6→5→4，若k=4，翻转后4→3→2→1→6→5，用程序实现。</p>
-<p>2、编写程序，在原字符串中把字符串尾部的m个字符移动到字符串的头部，要求：长度为n的字符串操作时间复杂度为O(n)，空间复杂度为O(1)。 例如，原字符串为”Ilovebaofeng”，m=7，输出结果为：”baofengIlove”。</p>
-<p>3、单词翻转。输入一个英文句子，翻转句子中单词的顺序，但单词内字符的顺序不变，句子中单词以空格符隔开。为简单起见，标点符号和普通字母一样处理。例如，输入“I am a student.”，则输出“student. a am I”。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;题目描述&quot;&gt;&lt;a href=&quot;#题目描述&quot; class=&quot;headerlink&quot; title=&quot;题目描述&quot;&gt;&lt;/a&gt;题目描述&lt;/h1&gt;&lt;p&gt;给定一个字符串，要求把字符串前面的若干个字符移动到字符串的尾部，如把字符串“abcdef”前面的2个字符’a’和’b’移动到
-    
-    </summary>
-    
-      <category term="算法练习" scheme="http://yoursite.com/categories/%E7%AE%97%E6%B3%95%E7%BB%83%E4%B9%A0/"/>
-    
-    
-      <category term="基础练习" scheme="http://yoursite.com/tags/%E5%9F%BA%E7%A1%80%E7%BB%83%E4%B9%A0/"/>
+      <category term="响应式编程" scheme="http://yoursite.com/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title>了解注解</title>
-    <link href="http://yoursite.com/2017/07/12/%E4%BA%86%E8%A7%A3%E6%B3%A8%E8%A7%A3/"/>
-    <id>http://yoursite.com/2017/07/12/了解注解/</id>
-    <published>2017-07-12T05:33:33.154Z</published>
-    <updated>2017-07-12T05:33:33.155Z</updated>
+    <link href="http://yoursite.com/2017/05/14/%E4%BA%86%E8%A7%A3%E6%B3%A8%E8%A7%A3/"/>
+    <id>http://yoursite.com/2017/05/14/了解注解/</id>
+    <published>2017-05-14T12:16:34.700Z</published>
+    <updated>2017-05-14T12:20:54.533Z</updated>
     
     <content type="html"><![CDATA[<h1 id="什么是注解"><a href="#什么是注解" class="headerlink" title="什么是注解"></a>什么是注解</h1><p><strong>注解</strong>（也被称为元数据）为我们在代码中添加信息提供了一种形式化的方法，使我们可以在稍后某个时刻方便地使用这些数据。<br>注解可以提供用来完整地描述程序所需的信息，而这些信息是无法用Java来表达的。</p>
 <h2 id="注解的作用及好处"><a href="#注解的作用及好处" class="headerlink" title="注解的作用及好处"></a>注解的作用及好处</h2><ul>
@@ -273,55 +275,11 @@
   </entry>
   
   <entry>
-    <title>aidl 浅析</title>
-    <link href="http://yoursite.com/2017/04/19/aidl%20%E6%B5%85%E6%9E%90/"/>
-    <id>http://yoursite.com/2017/04/19/aidl 浅析/</id>
-    <published>2017-04-19T01:22:05.577Z</published>
-    <updated>2017-04-19T01:22:05.577Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Demo-地址"><a href="#Demo-地址" class="headerlink" title="Demo 地址"></a>Demo 地址</h1><p><a href="https://github.com/jutao/aidl" title="AIDL服务端" target="_blank" rel="external">https://github.com/jutao/aidl</a><br><a href="https://github.com/jutao/aidlclient" target="_blank" rel="external">AIDL客户端</a></p>
-<h1 id="什么是AIDL"><a href="#什么是AIDL" class="headerlink" title="什么是AIDL"></a>什么是AIDL</h1><p>在 Android中，每一个应用程序独自拥有一个虚拟机，这样做虽然保证了进程之内数据的安全性，保证一个应用程序的数据不受其他应用程序的影响，也保证了一个应用程序挂掉了不至于影响其他应用程序。但是这样也造成了一个应用程序和另外一个应用程序没办法直接进行通讯。AIDL 的作用就是使来自不同应用的客户端跨进程通信访问你的 Service。<br>AIDL 是 Android Interface Definition Language 的缩写，就是安卓内部通信接口描述语言。关于 AIDL的描述和用法我主要参考了Google 的官方API，找到一个中文的，链接：<a href="http://www.android-doc.com/guide/components/aidl.html" title="AIDL" target="_blank" rel="external">http://www.android-doc.com/guide/components/aidl.html</a>。需要补充的是，API里描述AIDL支持Java语言中的所有基本数据类型，但是经过查证和实验，实际上 AIDL 是不支持Short类型的。</p>
-<h1 id="AIDL用法"><a href="#AIDL用法" class="headerlink" title="AIDL用法"></a>AIDL用法</h1><h2 id="创建-AIDL-接口"><a href="#创建-AIDL-接口" class="headerlink" title="创建 AIDL 接口"></a>创建 AIDL 接口</h2><p><img src="http://i.imgur.com/hIeNjic.png" alt=""><br>如果是 Eclipse 的话需要创建 File 并且不要忘记自己打上后缀 .aidl。</p>
-<h2 id="写-AIDL-接口"><a href="#写-AIDL-接口" class="headerlink" title="写 AIDL 接口"></a>写 AIDL 接口</h2><p>AIDL 的用法基本和写普通 Java 接口相同，需要注意的是包名一定要自己检查一下，还有导包也要自己写一下。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.jutao.aidl;</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IServiceAidl</span> </span>&#123;</div><div class="line"><span class="comment">//计算两个数的和</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> num1,<span class="keyword">int</span> num2)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>写完之后需要注意，如果你写的 AIDL 接口正确，那么 Ecipse 是会自动编译的，而 Android Studio 需要手动编译，编译按钮如下图所示：</p>
-<p><img src="http://i.imgur.com/NnSnU2a.png" alt=""></p>
-<p>编译通过后，Android Studio 所生成的文件在这里：</p>
-<p><img src="http://i.imgur.com/VTAkxIR.png" alt=""></p>
-<h2 id="写-Service"><a href="#写-Service" class="headerlink" title="写 Service"></a>写 Service</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//当客户端绑定到该服务的时候</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">  <span class="comment">//当别人绑定服务的时候，就会得到AIDL接口</span></div><div class="line">  <span class="keyword">return</span> iBinder;</div><div class="line">&#125;</div><div class="line">IBinder iBinder = <span class="keyword">new</span> IServiceAidl.Stub() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> num1, <span class="keyword">int</span> num2)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">  Log.d(<span class="string">"TAG"</span>, <span class="string">"收到服务端请求,求出"</span> + num1 + <span class="string">"和"</span> + num2 + <span class="string">"的和"</span>);</div><div class="line">  <span class="keyword">return</span> num1 + num2;</div><div class="line">&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- exported 是否支持其它应用调用当前组件 --&gt;</span></div><div class="line"><span class="comment">&lt;!-- enabled 这个属性用于指示该服务是否能够被实例化。如果设置为true，则能够被实例化，否则不能被实例化。默认值是true --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">service</span></span></div><div class="line">      <span class="attr">android:name</span>=<span class="string">"com.example.aidl_service.RemoteService"</span></div><div class="line">      <span class="attr">android:enabled</span>=<span class="string">"true"</span></div><div class="line">      <span class="attr">android:exported</span>=<span class="string">"true"</span> &gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure>
-<h2 id="写客户端"><a href="#写客户端" class="headerlink" title="写客户端"></a>写客户端</h2><p>客户端的主要功能是用户通过界面输入两个数字，点击远程计算按钮后通过服务端代码计算出结果返回给客户端并显示。</p>
-<p><img src="http://i.imgur.com/zoqkeKX.png" alt=""></p>
-<p>点击按钮后</p>
-<p><img src="http://i.imgur.com/JAs8dhp.png" alt=""></p>
-<p>需要注意的是，客户端也需要有一模一样的 AIDL 包，连包名都要一模一样！！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1、获取服务端</span></div><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line"><span class="comment">//Android 5.0之后不支持隐式意图，必须是显式意图来启动绑定服务</span></div><div class="line">intent.setComponent(</div><div class="line"><span class="keyword">new</span> ComponentName(<span class="string">"com.example.jutao.aidl"</span>, <span class="string">"com.example.jutao.aidl.RemoteService"</span>));</div><div class="line"><span class="comment">//第三个参数是一个flag，绑定时自动启动</span></div><div class="line">bindService(intent, conn, Context.BIND_AUTO_CREATE);</div></pre></td></tr></table></figure>
-<p>conn的定义:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">ServiceConnection conn = <span class="keyword">new</span> ServiceConnection() &#123;</div><div class="line">  <span class="comment">//绑定服务时</span></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</div><div class="line">    <span class="comment">//拿到了远程的服务</span></div><div class="line">    iServiceAidl = IServiceAidl.Stub.asInterface(service);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//当服务断开时</span></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</div><div class="line">    <span class="comment">//回收资源</span></div><div class="line">    iServiceAidl = <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
-<h1 id="AIDL-自定义类型"><a href="#AIDL-自定义类型" class="headerlink" title="AIDL 自定义类型"></a>AIDL 自定义类型</h1><p><img src="http://i.imgur.com/xnkwiMg.png" alt=""><br>AIDL 默认支持的数据类型如上图所示，虽然支持List类型，但是需要 在List前注明输入List还是输出List，下面的例子会讲到。<br>首先 person 类要实现 Parcelable 接口，详细代码可以在我开头贴的Demo里看。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.example.jutao.aidl.Person;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PersonAidl</span> </span>&#123;</div><div class="line">   <span class="function">List&lt;Person&gt; <span class="title">add</span><span class="params">(in Person person)</span></span>;</div><div class="line">&#125;</div><div class="line">parcelable Person;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> ArrayList&lt;Person&gt; persons;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">PersonService</span><span class="params">()</span> </span>&#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">persons = <span class="keyword">new</span> ArrayList&lt;Person&gt;();</div><div class="line"></div><div class="line"><span class="keyword">return</span> iBinder;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> IBinder iBinder = <span class="keyword">new</span> PersonAidl.Stub() &#123;</div><div class="line"></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> List&lt;Person&gt; <span class="title">add</span><span class="params">(Person person)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">  persons.add(person);</div><div class="line">  <span class="keyword">return</span> persons;</div><div class="line">&#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/78H8w2N.png" alt=""><br>可以看到，我每次输出的都是 persons 这一List，这是通过服务端返回的，说明我传输过去的值已经被服务端接收并存储。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;Demo-地址&quot;&gt;&lt;a href=&quot;#Demo-地址&quot; class=&quot;headerlink&quot; title=&quot;Demo 地址&quot;&gt;&lt;/a&gt;Demo 地址&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/jutao/aidl&quot; title=&quot;AID
-    
-    </summary>
-    
-      <category term="Android" scheme="http://yoursite.com/categories/Android/"/>
-    
-    
-      <category term="Android 知识点" scheme="http://yoursite.com/tags/Android-%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Hanler 原理梳理</title>
-    <link href="http://yoursite.com/2017/04/19/Handler%E5%8E%9F%E7%90%86%E6%A2%B3%E7%90%86/"/>
-    <id>http://yoursite.com/2017/04/19/Handler原理梳理/</id>
-    <published>2017-04-19T01:22:05.576Z</published>
-    <updated>2017-04-19T01:22:05.576Z</updated>
+    <link href="http://yoursite.com/2017/04/17/Handler%E5%8E%9F%E7%90%86%E6%A2%B3%E7%90%86/"/>
+    <id>http://yoursite.com/2017/04/17/Handler原理梳理/</id>
+    <published>2017-04-17T15:03:19.203Z</published>
+    <updated>2017-04-17T15:11:19.705Z</updated>
     
     <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Handler 在 Android 开发中非常常见，它的常见用法相信只要稍微学过一些 Android 基础的朋友都已经烂熟于心，但是他背后的原理对于初学者来说比较复杂，这篇文章梳理了 Handler 的调用流程，通过源码观察 Hanler 背后的原理。</p>
 <h1 id="子线程创建-Handler"><a href="#子线程创建-Handler" class="headerlink" title="子线程创建 Handler"></a>子线程创建 Handler</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">    handler1 = <span class="keyword">new</span> Handler();</div><div class="line">  &#125;</div><div class="line">&#125;).start();</div></pre></td></tr></table></figure>
@@ -371,11 +329,55 @@
   </entry>
   
   <entry>
+    <title>aidl 浅析</title>
+    <link href="http://yoursite.com/2017/04/17/aidl%20%E6%B5%85%E6%9E%90/"/>
+    <id>http://yoursite.com/2017/04/17/aidl 浅析/</id>
+    <published>2017-04-17T14:44:45.256Z</published>
+    <updated>2017-04-17T14:56:51.146Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Demo-地址"><a href="#Demo-地址" class="headerlink" title="Demo 地址"></a>Demo 地址</h1><p><a href="https://github.com/jutao/aidl" title="AIDL服务端" target="_blank" rel="external">https://github.com/jutao/aidl</a><br><a href="https://github.com/jutao/aidlclient" target="_blank" rel="external">AIDL客户端</a></p>
+<h1 id="什么是AIDL"><a href="#什么是AIDL" class="headerlink" title="什么是AIDL"></a>什么是AIDL</h1><p>在 Android中，每一个应用程序独自拥有一个虚拟机，这样做虽然保证了进程之内数据的安全性，保证一个应用程序的数据不受其他应用程序的影响，也保证了一个应用程序挂掉了不至于影响其他应用程序。但是这样也造成了一个应用程序和另外一个应用程序没办法直接进行通讯。AIDL 的作用就是使来自不同应用的客户端跨进程通信访问你的 Service。<br>AIDL 是 Android Interface Definition Language 的缩写，就是安卓内部通信接口描述语言。关于 AIDL的描述和用法我主要参考了Google 的官方API，找到一个中文的，链接：<a href="http://www.android-doc.com/guide/components/aidl.html" title="AIDL" target="_blank" rel="external">http://www.android-doc.com/guide/components/aidl.html</a>。需要补充的是，API里描述AIDL支持Java语言中的所有基本数据类型，但是经过查证和实验，实际上 AIDL 是不支持Short类型的。</p>
+<h1 id="AIDL用法"><a href="#AIDL用法" class="headerlink" title="AIDL用法"></a>AIDL用法</h1><h2 id="创建-AIDL-接口"><a href="#创建-AIDL-接口" class="headerlink" title="创建 AIDL 接口"></a>创建 AIDL 接口</h2><p><img src="http://i.imgur.com/hIeNjic.png" alt=""><br>如果是 Eclipse 的话需要创建 File 并且不要忘记自己打上后缀 .aidl。</p>
+<h2 id="写-AIDL-接口"><a href="#写-AIDL-接口" class="headerlink" title="写 AIDL 接口"></a>写 AIDL 接口</h2><p>AIDL 的用法基本和写普通 Java 接口相同，需要注意的是包名一定要自己检查一下，还有导包也要自己写一下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.jutao.aidl;</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">IServiceAidl</span> </span>&#123;</div><div class="line"><span class="comment">//计算两个数的和</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> num1,<span class="keyword">int</span> num2)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>写完之后需要注意，如果你写的 AIDL 接口正确，那么 Ecipse 是会自动编译的，而 Android Studio 需要手动编译，编译按钮如下图所示：</p>
+<p><img src="http://i.imgur.com/NnSnU2a.png" alt=""></p>
+<p>编译通过后，Android Studio 所生成的文件在这里：</p>
+<p><img src="http://i.imgur.com/VTAkxIR.png" alt=""></p>
+<h2 id="写-Service"><a href="#写-Service" class="headerlink" title="写 Service"></a>写 Service</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//当客户端绑定到该服务的时候</span></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">  <span class="comment">//当别人绑定服务的时候，就会得到AIDL接口</span></div><div class="line">  <span class="keyword">return</span> iBinder;</div><div class="line">&#125;</div><div class="line">IBinder iBinder = <span class="keyword">new</span> IServiceAidl.Stub() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> num1, <span class="keyword">int</span> num2)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">  Log.d(<span class="string">"TAG"</span>, <span class="string">"收到服务端请求,求出"</span> + num1 + <span class="string">"和"</span> + num2 + <span class="string">"的和"</span>);</div><div class="line">  <span class="keyword">return</span> num1 + num2;</div><div class="line">&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- exported 是否支持其它应用调用当前组件 --&gt;</span></div><div class="line"><span class="comment">&lt;!-- enabled 这个属性用于指示该服务是否能够被实例化。如果设置为true，则能够被实例化，否则不能被实例化。默认值是true --&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">service</span></span></div><div class="line">      <span class="attr">android:name</span>=<span class="string">"com.example.aidl_service.RemoteService"</span></div><div class="line">      <span class="attr">android:enabled</span>=<span class="string">"true"</span></div><div class="line">      <span class="attr">android:exported</span>=<span class="string">"true"</span> &gt;</div><div class="line">  <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="写客户端"><a href="#写客户端" class="headerlink" title="写客户端"></a>写客户端</h2><p>客户端的主要功能是用户通过界面输入两个数字，点击远程计算按钮后通过服务端代码计算出结果返回给客户端并显示。</p>
+<p><img src="http://i.imgur.com/zoqkeKX.png" alt=""></p>
+<p>点击按钮后</p>
+<p><img src="http://i.imgur.com/JAs8dhp.png" alt=""></p>
+<p>需要注意的是，客户端也需要有一模一样的 AIDL 包，连包名都要一模一样！！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1、获取服务端</span></div><div class="line">Intent intent = <span class="keyword">new</span> Intent();</div><div class="line"><span class="comment">//Android 5.0之后不支持隐式意图，必须是显式意图来启动绑定服务</span></div><div class="line">intent.setComponent(</div><div class="line"><span class="keyword">new</span> ComponentName(<span class="string">"com.example.jutao.aidl"</span>, <span class="string">"com.example.jutao.aidl.RemoteService"</span>));</div><div class="line"><span class="comment">//第三个参数是一个flag，绑定时自动启动</span></div><div class="line">bindService(intent, conn, Context.BIND_AUTO_CREATE);</div></pre></td></tr></table></figure>
+<p>conn的定义:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">ServiceConnection conn = <span class="keyword">new</span> ServiceConnection() &#123;</div><div class="line">  <span class="comment">//绑定服务时</span></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceConnected</span><span class="params">(ComponentName name, IBinder service)</span> </span>&#123;</div><div class="line">    <span class="comment">//拿到了远程的服务</span></div><div class="line">    iServiceAidl = IServiceAidl.Stub.asInterface(service);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//当服务断开时</span></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onServiceDisconnected</span><span class="params">(ComponentName name)</span> </span>&#123;</div><div class="line">    <span class="comment">//回收资源</span></div><div class="line">    iServiceAidl = <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
+<h1 id="AIDL-自定义类型"><a href="#AIDL-自定义类型" class="headerlink" title="AIDL 自定义类型"></a>AIDL 自定义类型</h1><p><img src="http://i.imgur.com/xnkwiMg.png" alt=""><br>AIDL 默认支持的数据类型如上图所示，虽然支持List类型，但是需要 在List前注明输入List还是输出List，下面的例子会讲到。<br>首先 person 类要实现 Parcelable 接口，详细代码可以在我开头贴的Demo里看。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.example.jutao.aidl.Person;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">PersonAidl</span> </span>&#123;</div><div class="line">   <span class="function">List&lt;Person&gt; <span class="title">add</span><span class="params">(in Person person)</span></span>;</div><div class="line">&#125;</div><div class="line">parcelable Person;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</div><div class="line">  <span class="keyword">private</span> ArrayList&lt;Person&gt; persons;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="title">PersonService</span><span class="params">()</span> </span>&#123;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> IBinder <span class="title">onBind</span><span class="params">(Intent intent)</span> </span>&#123;</div><div class="line">persons = <span class="keyword">new</span> ArrayList&lt;Person&gt;();</div><div class="line"></div><div class="line"><span class="keyword">return</span> iBinder;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> IBinder iBinder = <span class="keyword">new</span> PersonAidl.Stub() &#123;</div><div class="line"></div><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> List&lt;Person&gt; <span class="title">add</span><span class="params">(Person person)</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">  persons.add(person);</div><div class="line">  <span class="keyword">return</span> persons;</div><div class="line">&#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/78H8w2N.png" alt=""><br>可以看到，我每次输出的都是 persons 这一List，这是通过服务端返回的，说明我传输过去的值已经被服务端接收并存储。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Demo-地址&quot;&gt;&lt;a href=&quot;#Demo-地址&quot; class=&quot;headerlink&quot; title=&quot;Demo 地址&quot;&gt;&lt;/a&gt;Demo 地址&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/jutao/aidl&quot; title=&quot;AID
+    
+    </summary>
+    
+      <category term="Android" scheme="http://yoursite.com/categories/Android/"/>
+    
+    
+      <category term="Android 知识点" scheme="http://yoursite.com/tags/Android-%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Path 学习笔记之基本操作</title>
-    <link href="http://yoursite.com/2017/04/17/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
-    <id>http://yoursite.com/2017/04/17/Path学习笔记之基本操作/</id>
-    <published>2017-04-17T09:19:40.605Z</published>
-    <updated>2017-04-21T08:26:43.516Z</updated>
+    <link href="http://yoursite.com/2017/04/16/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/"/>
+    <id>http://yoursite.com/2017/04/16/Path学习笔记之基本操作/</id>
+    <published>2017-04-16T03:29:27.955Z</published>
+    <updated>2017-05-14T12:36:54.333Z</updated>
     
     <content type="html"><![CDATA[<h1 id="path-常用方法一览"><a href="#path-常用方法一览" class="headerlink" title="path 常用方法一览"></a>path 常用方法一览</h1><blockquote>
 <p>为了兼容性(<em>偷懒</em>) 本表格中去除了部分API21(即安卓版本5.0)以上才添加的方法。</p>
@@ -605,10 +607,10 @@
   
   <entry>
     <title>Path学习笔记之Bezier</title>
-    <link href="http://yoursite.com/2017/04/17/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBezier/"/>
-    <id>http://yoursite.com/2017/04/17/Path学习笔记之Bezier/</id>
-    <published>2017-04-17T09:19:40.603Z</published>
-    <updated>2017-04-21T08:27:36.258Z</updated>
+    <link href="http://yoursite.com/2017/04/16/Path%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8BBezier/"/>
+    <id>http://yoursite.com/2017/04/16/Path学习笔记之Bezier/</id>
+    <published>2017-04-16T03:28:56.397Z</published>
+    <updated>2017-05-14T12:36:54.360Z</updated>
     
     <content type="html"><![CDATA[<h1 id="贝塞尔曲线能干什么？"><a href="#贝塞尔曲线能干什么？" class="headerlink" title="贝塞尔曲线能干什么？"></a>贝塞尔曲线能干什么？</h1><p>贝塞尔曲线的运用是十分广泛的，可以说<strong>贝塞尔曲线奠定了计算机绘图的基础(<em>因为它可以将任何复杂的图形用精确的数学语言进行描述</em>)</strong>，在你不经意间就已经使用过它了。</p>
 <p>你会使用Photoshop的话，你可能会注意到里面有一个<strong>钢笔工具</strong>，这个钢笔工具核心就是贝塞尔曲线。</p>
@@ -771,10 +773,10 @@
   
   <entry>
     <title>设计模式-策略模式</title>
-    <link href="http://yoursite.com/2017/04/14/%5BAndroid%5D%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
-    <id>http://yoursite.com/2017/04/14/[Android] 设计模式-策略模式/</id>
-    <published>2017-04-14T03:48:01.514Z</published>
-    <updated>2017-07-12T05:33:33.153Z</updated>
+    <link href="http://yoursite.com/2017/04/16/%5BAndroid%5D%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2017/04/16/[Android] 设计模式-策略模式/</id>
+    <published>2017-04-15T16:12:16.087Z</published>
+    <updated>2017-04-19T14:35:41.044Z</updated>
     
     <content type="html"><![CDATA[<h1 id="最简单的商场收银软件"><a href="#最简单的商场收银软件" class="headerlink" title="最简单的商场收银软件"></a>最简单的商场收银软件</h1><p>如果要做一款收银软件，营业员根据客户所购买商品单价和数量向客户收费，这非常容易。</p>
 <p>Demo 如下：</p>
@@ -835,10 +837,10 @@
   
   <entry>
     <title>Path 实战</title>
-    <link href="http://yoursite.com/2017/04/10/Path%E5%AE%9E%E6%88%98%E4%B9%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE/"/>
-    <id>http://yoursite.com/2017/04/10/Path实战之雷达图/</id>
-    <published>2017-04-10T07:31:25.208Z</published>
-    <updated>2017-04-21T08:27:14.660Z</updated>
+    <link href="http://yoursite.com/2017/04/15/Path%E5%AE%9E%E6%88%98%E4%B9%8B%E9%9B%B7%E8%BE%BE%E5%9B%BE/"/>
+    <id>http://yoursite.com/2017/04/15/Path实战之雷达图/</id>
+    <published>2017-04-15T03:39:13.886Z</published>
+    <updated>2017-05-14T12:36:54.333Z</updated>
     
     <content type="html"><![CDATA[<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>我们将从0到1一步一步来画一个 web 页面很常见的雷达图<br><a id="more"></a></p>
 <h1 id="第一步：绘制蜘蛛网络"><a href="#第一步：绘制蜘蛛网络" class="headerlink" title="第一步：绘制蜘蛛网络"></a>第一步：绘制蜘蛛网络</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">    mainPaint=<span class="keyword">new</span> Paint();</div><div class="line">    mainPaint.setColor(Color.BLACK);</div><div class="line">    mainPaint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">    mainPaint.setStrokeWidth(<span class="number">1</span>);</div><div class="line">    mainPaint.setStyle(Paint.Style.STROKE);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onSizeChanged</span><span class="params">(<span class="keyword">int</span> w, <span class="keyword">int</span> h, <span class="keyword">int</span> oldw, <span class="keyword">int</span> oldh)</span> </span>&#123;</div><div class="line">    radius=Math.min(w,h)/<span class="number">2</span>*<span class="number">0.9f</span>;</div><div class="line">    centerX=w/<span class="number">2</span>;</div><div class="line">    centerY=h/<span class="number">2</span>;</div><div class="line">    <span class="comment">//一旦size发生改变，重新绘制</span></div><div class="line">    postInvalidate();</div><div class="line">    <span class="keyword">super</span>.onSizeChanged(w, h, oldw, oldh);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    drawPolygon(canvas);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 绘制多边形</div><div class="line"> * <span class="doctag">@param</span> canvas</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">drawPolygon</span><span class="params">(Canvas canvas)</span></span>&#123;</div><div class="line">    Path path=<span class="keyword">new</span> Path();</div><div class="line">    <span class="comment">//1度=1*PI/180   360度=2*PI   那么我们每旋转一次的角度为2*PI/内角个数</span></div><div class="line">    <span class="comment">//中心与相邻两个内角相连的夹角角度</span></div><div class="line">    angle= (<span class="keyword">float</span>) (<span class="number">2</span>*Math.PI/count);</div><div class="line">    <span class="comment">//每个蛛丝之间的间距</span></div><div class="line">    <span class="keyword">float</span> r= radius/(count-<span class="number">1</span>);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="comment">//当前半径</span></div><div class="line">        <span class="keyword">float</span> curR=r*i;</div><div class="line">        path.reset();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; count; j++) &#123;</div><div class="line">            <span class="keyword">if</span>(j==<span class="number">0</span>)&#123;</div><div class="line">                path.moveTo(centerX+curR,centerY);</div><div class="line">            &#125;<span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">//对于直角三角形sin(x)是对边比斜边，cos(x)是底边比斜边，tan(x)是对边比底边</span></div><div class="line">                <span class="comment">//因此可以推导出:底边(x坐标)=斜边(半径)*cos(夹角角度)</span></div><div class="line">                <span class="comment">//               对边(y坐标)=斜边(半径)*sin(夹角角度)</span></div><div class="line">                <span class="keyword">float</span> x = (<span class="keyword">float</span>) (centerX+curR*Math.cos(angle*j));</div><div class="line">                <span class="keyword">float</span> y = (<span class="keyword">float</span>) (centerY+curR*Math.sin(angle*j));</div><div class="line">                path.lineTo(x,y);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        path.close();</div><div class="line">        canvas.drawPath(path,mainPaint);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
