@@ -1,0 +1,1245 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="学习笔记,响应式编程," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="jutao's Note" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="与RxJava 1.x 的差异以前用过 RxJava 1.x ,出了 2 之后一直没有系统的看过，今天花点时间仔细看看。RxJava 2.x 是按照 Reactive-Streams specification 规范完全的重写的，是完全独立于RxJava 1.x 而存在，它改变了以往RxJava的用法。所以还是有必要重新看一下的。先看一下 RxJava 1.x 和 2.x 的差异吧。 Nulls">
+<meta name="keywords" content="学习笔记,响应式编程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava2 入门">
+<meta property="og:url" content="http://yoursite.com/2017/07/08/RxJava2入门/index.html">
+<meta property="og:site_name" content="jutao's Note">
+<meta property="og:description" content="与RxJava 1.x 的差异以前用过 RxJava 1.x ,出了 2 之后一直没有系统的看过，今天花点时间仔细看看。RxJava 2.x 是按照 Reactive-Streams specification 规范完全的重写的，是完全独立于RxJava 1.x 而存在，它改变了以往RxJava的用法。所以还是有必要重新看一下的。先看一下 RxJava 1.x 和 2.x 的差异吧。 Nulls">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-878015bf0fa366db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-c84517b52ab42264.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-23c76b89e93bbc35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-bccaf6389b237167.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-59b0822514a6a7dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-ad1c2d9a5e6b2ce5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-6982fd3ca1e72b1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-fe1359915847ffcd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-a86a3f5821c6903d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-af661d4e8941edd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-71d90c9dc828d993.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-bf1ca8bd32eaca94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-09bf4a298016102b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-82fd843082be4a9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-d69a8097faa1a2d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-202133fdc36de8d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-555c3596647bc849.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-6c778402192b29ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-603f6a74c62adf9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-8c29428bb8596c77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-1cdf87a3d2fec9f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-e703531b0ffab1d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-e62e3d397d3ff006.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-a92e17644ff9b27c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-64704ce2672ab371.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-09c61aba056997f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-328c41fa54733455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-3a7d8393623657e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-0bdea9318a398922.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-56dda9065be1311e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3054656-ab51266eb1c2bfe1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-07-15T15:42:02.540Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava2 入门">
+<meta name="twitter:description" content="与RxJava 1.x 的差异以前用过 RxJava 1.x ,出了 2 之后一直没有系统的看过，今天花点时间仔细看看。RxJava 2.x 是按照 Reactive-Streams specification 规范完全的重写的，是完全独立于RxJava 1.x 而存在，它改变了以往RxJava的用法。所以还是有必要重新看一下的。先看一下 RxJava 1.x 和 2.x 的差异吧。 Nulls">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3054656-878015bf0fa366db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/08/RxJava2入门/"/>
+
+
+
+
+
+  <title> RxJava2 入门 | jutao's Note </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d63d54d82fdbd26bc0f05a91355caea3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">jutao's Note</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">带三个表贯彻持续学习思想</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/08/RxJava2入门/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="琚涛">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://7xthjd.com2.z0.glb.clouddn.com/20150512_235412_142.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jutao's Note">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                RxJava2 入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T18:56:40+08:00">
+                2017-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java 基础</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-基础/Android-第三方/" itemprop="url" rel="index">
+                    <span itemprop="name">Android 第三方</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/07/08/RxJava2入门/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/07/08/RxJava2入门/" class="leancloud_visitors" data-flag-title="RxJava2 入门">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="与RxJava-1-x-的差异"><a href="#与RxJava-1-x-的差异" class="headerlink" title="与RxJava 1.x 的差异"></a>与RxJava 1.x 的差异</h1><p>以前用过 RxJava 1.x ,出了 2 之后一直没有系统的看过，今天花点时间仔细看看。RxJava 2.x 是按照 Reactive-Streams specification 规范完全的重写的，是完全独立于RxJava 1.x 而存在，它改变了以往RxJava的用法。所以还是有必要重新看一下的。先看一下 RxJava 1.x 和 2.x 的差异吧。</p>
+<h2 id="Nulls"><a href="#Nulls" class="headerlink" title="Nulls"></a>Nulls</h2><p> 这是一个很大的变化，熟悉RxJava 1.x 的童鞋一定都知道，1.x 是允许我们在发射事件的时候传入 null 值的，但现在我们的 2.x 不支持了，不信你试试？ 大大的 NullPointerException 教你做人。这意味着 Observable<void> 不再发射任何值，而是正常结束或者抛出空指针。</void></p>
+<h2 id="Flowable"><a href="#Flowable" class="headerlink" title="Flowable"></a>Flowable</h2><p>  在 RxJava 1.x 中关于介绍 backpressure 部分有一个小小的遗憾，那就是没有用一个单独的类，而是使用 Observable 。而在 2.x 中 Observable 不支持背压了，将用一个全新的 Flowable 来支持背压。<br>  <img src="http://upload-images.jianshu.io/upload_images/3054656-878015bf0fa366db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"><br>    或许对于背压，有些小伙伴们还不是特别理解，这里简单说一下。大概就是指在异步场景中，被观察者发送事件的速度远快于观察者的处理速度的情况下，一种告诉上游的被观察者降低发送速度的策略。感兴趣的小伙伴可以模拟这种情况，在差距太大的时候，我们的内存会猛增，直到OOM。而我们的 Flowable 一定意义上可以解决这样的问题。</p>
+<h2 id="Single-Completable-Maybe"><a href="#Single-Completable-Maybe" class="headerlink" title="Single/Completable/Maybe"></a>Single/Completable/Maybe</h2><p>  其实这三者都差不多，Single 顾名思义，只能发送一个事件，和 Observable 接受可变参数完全不同。而Completable 侧重于观察结果，而Maybe 是上面两种的结合体。也就是说，当你只想要某个事件的结果（true or false）的时候，你可以使用这种观察者模式。</p>
+<h2 id="线程调度相关"><a href="#线程调度相关" class="headerlink" title="线程调度相关"></a>线程调度相关</h2><p>这一块基本没什么改动，但细心的小伙伴一定会发现，RxJava 2.x 中已经没有了Schedulers.immediate() 这个线程环境，还有Schedulers.test()。</p>
+<h2 id="Function-相关"><a href="#Function-相关" class="headerlink" title="Function 相关"></a>Function 相关</h2><p>熟悉 1.x 的小伙伴一定都知道，我们在1.x 中是有Func1，Func2…..FuncN的，但2.x 中将它们移除，而采用Function 替换了Func1，采用BiFunction 替换了Func 2..N。并且，它们都增加了throws Exception，也就是说，妈妈再也不用担心我们做某些操作还需要try-catch了。</p>
+<h2 id="其他操作符相关"><a href="#其他操作符相关" class="headerlink" title="其他操作符相关"></a>其他操作符相关</h2><p>  如Func1…N 的变化，现在同样用Consumer和BiConsumer对Action1 和Action2进行了替换。后面的Action都被替换了，只保留了ActionN。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-c84517b52ab42264.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h1 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h1><h2 id="create-操作符"><a href="#create-操作符" class="headerlink" title="create 操作符"></a>create 操作符</h2><p>create操作符应该是最常见的操作符了，主要用于产生一个Obserable被观察者对象，为了方便大家的认知，接下来中统一把被观察者Observable称为发射器（上游事件），观察者Observer称为接收器（下游事件）。<br><img src="http://upload-images.jianshu.io/upload_images/3054656-23c76b89e93bbc35.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"Observable emit 1"</span> + <span class="string">"\n"</span>);</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    Log.e(TAG, <span class="string">"Observable emit 2"</span> + <span class="string">"\n"</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    Log.e(TAG, <span class="string">"Observable emit 3"</span> + <span class="string">"\n"</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">    Log.e(TAG, <span class="string">"Observable emit 4"</span> + <span class="string">"\n"</span>);</div><div class="line">    e.onNext(<span class="number">4</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).subscribe(<span class="keyword">new</span> Observer&lt;Integer&gt;() &#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">int</span> i;</div><div class="line">  <span class="keyword">private</span> Disposable mDisposable;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(@NonNull Disposable d)</span> </span>&#123;</div><div class="line">    mDisposable = d;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(@NonNull Integer integer)</span> </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"onNext : value : "</span> + integer + <span class="string">"\n"</span> );</div><div class="line">    i++;</div><div class="line">    <span class="keyword">if</span>(i==<span class="number">2</span>)&#123;</div><div class="line">      mDisposable.dispose();</div><div class="line">      Log.e(TAG, <span class="string">"onNext : isDisposable : "</span> + mDisposable.isDisposed() + <span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(@NonNull Throwable e)</span> </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"onError : value : "</span> + e.getMessage() + <span class="string">"\n"</span> );</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"onComplete"</span> + <span class="string">"\n"</span> );</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-bccaf6389b237167.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>可以看到 2.x 中有一个Disposable概念，这个东西可以直接调用切断，可以看到，当它的isDisposed()返回为false的时候，接收器能正常接收事件，但当其为true的时候，接收器停止了接收。所以可以通过此参数动态控制接收事件了。</p>
+<p>如果发射时间这么调用的话：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">  Log.e(TAG, <span class="string">"Observable emit 1"</span> + <span class="string">"\n"</span>);</div><div class="line">  e.onNext(<span class="number">1</span>);</div><div class="line">  Log.e(TAG, <span class="string">"Observable emit 2"</span> + <span class="string">"\n"</span>);</div><div class="line">  e.onNext(<span class="number">2</span>);</div><div class="line">  e.onComplete();</div><div class="line">  Log.e(TAG, <span class="string">"Observable emit 3"</span> + <span class="string">"\n"</span>);</div><div class="line">  e.onNext(<span class="number">3</span>);</div><div class="line">  Log.e(TAG, <span class="string">"Observable emit 4"</span> + <span class="string">"\n"</span>);</div><div class="line">  e.onNext(<span class="number">4</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>运行结果如下：<br><img src="http://upload-images.jianshu.io/upload_images/3054656-59b0822514a6a7dd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"><br>可以看到：在发射事件中，我们在发射了数值2之后，直接调用了 e.onComlete()，虽然无法接收事件，但发送事件还是继续的.</p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><p>Map基本算是RxJava中一个最简单的操作符了，熟悉RxJava 1.x的知道，它的作用是对发射时间发送的每一个事件应用一个函数，是的每一个事件都按照指定的函数去变化，而在 2.x 中它的作用几乎一致。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-ad1c2d9a5e6b2ce5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>示例代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="keyword">int</span>[] a=&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i : a) &#123;</div><div class="line">      e.onNext(i);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;).map(<span class="keyword">new</span> Function&lt;Integer, String&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="keyword">return</span> integer+<span class="string">"被转换成字符串了"</span>;</div><div class="line">  &#125;</div><div class="line">&#125;).subscribe(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull String s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, s);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-6982fd3ca1e72b1a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"><br>是的，map基本作用就是将一个Observable通过某种函数关系，转换为另一种Observable，上面例子中就是把我们的Integer数据变成了String类型。从Log日志显而易见。</p>
+<h2 id="Zip"><a href="#Zip" class="headerlink" title="Zip"></a>Zip</h2><p>zip专用于合并事件，该合并不是连接（连接操作符后面会说），而是两两配对，也就意味着，最终配对出的Observable发射事件数目只和少的那个相同。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-fe1359915847ffcd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">Observable.zip(getStringObservable(), getIntegerObservable(), <span class="keyword">new</span> BiFunction&lt;String, Integer, String&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> String <span class="title">apply</span><span class="params">(@NonNull String s, @NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="keyword">return</span> s+integer;</div><div class="line">  &#125;</div><div class="line">&#125;).subscribe(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull String s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"zip : accept : "</span> + s + <span class="string">"\n"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">private</span> Observable&lt;String&gt; <span class="title">getStringObservable</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;String&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;String&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">      <span class="keyword">if</span>(!e.isDisposed())&#123;</div><div class="line">        e.onNext(<span class="string">"A"</span>);</div><div class="line">        Log.e(TAG, <span class="string">"String emit : A \n"</span>);</div><div class="line">        e.onNext(<span class="string">"B"</span>);</div><div class="line">        Log.e(TAG, <span class="string">"String emit : B \n"</span>);</div><div class="line">        e.onNext(<span class="string">"C"</span>);</div><div class="line">        Log.e(TAG, <span class="string">"String emit : C \n"</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">private</span> Observable&lt;Integer&gt; <span class="title">getIntegerObservable</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">      <span class="keyword">if</span>(!e.isDisposed())&#123;</div><div class="line">        e.onNext(<span class="number">1</span>);</div><div class="line">        Log.e(TAG, <span class="string">"Integer emit : 1 \n"</span>);</div><div class="line">        e.onNext(<span class="number">2</span>);</div><div class="line">        Log.e(TAG, <span class="string">"Integer emit : 2 \n"</span>);</div><div class="line">        e.onNext(<span class="number">3</span>);</div><div class="line">        Log.e(TAG, <span class="string">"Integer emit : 3 \n"</span>);</div><div class="line">        e.onNext(<span class="number">4</span>);</div><div class="line">        Log.e(TAG, <span class="string">"Integer emit : 4 \n"</span>);</div><div class="line">        e.onNext(<span class="number">5</span>);</div><div class="line">        Log.e(TAG, <span class="string">"Integer emit : 5 \n"</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-a86a3f5821c6903d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>需要注意的是：</p>
+<ol>
+<li><p>zip 组合事件的过程就是分别从发射器A和发射器B各取出一个事件来组合，并且一个事件只能被使用一次，组合的顺序是严格按照事件发送的顺序来进行的，所以上面截图中，可以看到，1永远是和A 结合的，2永远是和B结合的。</p>
+</li>
+<li><p>最终接收器收到的事件数量是和发送器发送事件最少的那个发送器的发送事件数目相同，所以如截图中，4和5很孤单，没有人愿意和它们交往，孤独终老的单身狗。</p>
+</li>
+</ol>
+<h2 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h2><p>对于单一的把两个发射器连接成一个发射器，虽然 zip 不能完成，但我们还是可以自力更生，官方提供的 concat 让我们的问题得到了完美解决。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-af661d4e8941edd6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Observable.concat(Observable.just(<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">78</span>), Observable.fromArray(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>))</div><div class="line">    .subscribe(<span class="keyword">new</span> Consumer&lt;Object&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Object o)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Log.e(TAG, <span class="string">"concat : "</span> + o + <span class="string">"\n"</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下:</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-71d90c9dc828d993.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>如图，可以看到。发射器B把自己的三个孩子送给了发射器A，让他们组合成了一个新的发射器，非常懂事的孩子，有条不紊的排序接收。</p>
+<h2 id="FlatMap"><a href="#FlatMap" class="headerlink" title="FlatMap"></a>FlatMap</h2><p>FlatMap 是一个很有趣的东西，我坚信你在实际开发中会经常用到。它可以把一个发射器Observable 通过某种方法转换为多个Observables，然后再把这些分散的Observables装进一个单一的发射器Observable。但有个需要注意的是，flatMap并不能保证事件的顺序，如果需要保证，需要用到我们下面要讲的ConcatMap。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-bf1ca8bd32eaca94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).flatMap(<span class="keyword">new</span> Function&lt;Integer, ObservableSource&lt;String&gt;&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> ObservableSource&lt;String&gt; <span class="title">apply</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    list.add(<span class="string">"value:"</span> + integer);</div><div class="line">    <span class="keyword">int</span> delayTime = (<span class="keyword">int</span>) (<span class="number">1</span> + Math.random() * <span class="number">10</span>);</div><div class="line">    <span class="keyword">return</span> Observable.fromIterable(list).delay(delayTime, TimeUnit.MILLISECONDS);</div><div class="line">  &#125;</div><div class="line">&#125;).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull String s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, s);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-09bf4a298016102b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>一切都如我们预期中的有意思，为了区分concatMap（下一个会讲），我在代码中特意动了一点小手脚，我采用一个随机数，生成一个时间，然后通过delay（后面会讲）操作符，做一个小延时操作，而查看Log日志也确认验证了我们上面的说法，它是无序的。</p>
+<h2 id="concatMap"><a href="#concatMap" class="headerlink" title="concatMap"></a>concatMap</h2><p>上面其实就说了，concatMap 与 FlatMap 的唯一区别就是 concatMap 保证了顺序，所以，我们就直接把 flatMap 替换为 concatMap 验证吧。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).concatMap(<span class="keyword">new</span> Function&lt;Integer, ObservableSource&lt;String&gt;&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> ObservableSource&lt;String&gt; <span class="title">apply</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    list.add(<span class="string">"value:"</span> + integer);</div><div class="line">    <span class="keyword">int</span> delayTime = (<span class="keyword">int</span>) (<span class="number">1</span> + Math.random() * <span class="number">10</span>);</div><div class="line">    <span class="keyword">return</span> Observable.fromIterable(list).delay(delayTime, TimeUnit.MILLISECONDS);</div><div class="line">  &#125;</div><div class="line">&#125;).subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(<span class="keyword">new</span> Consumer&lt;String&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull String s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, s);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-82fd843082be4a9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>结果的确和我们预想的一样，是按照顺序发送的。</p>
+<h2 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h2><p>这个操作符非常的简单、通俗、易懂，就是简单的去重。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-d69a8097faa1a2d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">    .subscribeOn(Schedulers.newThread())</div><div class="line">    .observeOn(AndroidSchedulers.mainThread())</div><div class="line">    .distinct()</div><div class="line">    .subscribe(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Integer s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Log.e(TAG, s + <span class="string">""</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下，重复的都去掉了，不解释：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-202133fdc36de8d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h2 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h2><p> 信我，Filter 你会很常用的，它的作用也很简单，过滤器嘛。可以接受一个参数，让其过滤掉不符合我们条件的值。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-555c3596647bc849.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">    e.onNext(<span class="number">4</span>);</div><div class="line">    e.onNext(<span class="number">5</span>);</div><div class="line">    e.onNext(<span class="number">6</span>);</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line">    .subscribeOn(Schedulers.newThread())</div><div class="line">    .observeOn(AndroidSchedulers.mainThread())</div><div class="line">    .filter(<span class="keyword">new</span> Predicate&lt;Integer&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">test</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">return</span> integer&gt;<span class="number">3</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;)</div><div class="line">    .subscribe(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Integer s)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Log.e(TAG, s + <span class="string">""</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下，不满足 test 函数的值都被过滤掉了：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-6c778402192b29ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h2 id="buffer"><a href="#buffer" class="headerlink" title="buffer"></a>buffer</h2><p> buffer 操作符接受两个参数，buffef(count,skip)，作用是将 Observable 中的数据按 skip (步长) 分成最大不超过 count 的 buffer ，然后生成一个 Observable 。也许你还不太理解，我们可以通过我们的示例图和示例代码来进一步深化它。</p>
+<p> <img src="http://upload-images.jianshu.io/upload_images/3054656-603f6a74c62adf9c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>).buffer(<span class="number">3</span>, <span class="number">2</span>).subscribe(<span class="keyword">new</span> Consumer&lt;List&lt;Integer&gt;&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull List&lt;Integer&gt; integers)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"buffer size : "</span> + integers.size() + <span class="string">"\n"</span>);</div><div class="line">    Log.e(TAG, <span class="string">"buffer value : "</span>);</div><div class="line">    <span class="keyword">for</span> (Integer integer : integers) &#123;</div><div class="line">      Log.e(TAG, integer + <span class="string">""</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-8c29428bb8596c77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>如图，我们把1,2,3,4,5依次发射出来，经过buffer 操作符，其中参数 skip 为3， count 为2，而我们的输出 依次是 123，345，5。显而易见，我们 buffer 的第一个参数是count，代表最大取值，在事件足够的时候，一般都是取count个值，然后每天跳过skip个事件。其实看 Log 日志，我相信大家都明白了。</p>
+<h2 id="timer"><a href="#timer" class="headerlink" title="timer"></a>timer</h2><p>timer 很有意思，相当于一个定时任务。在1.x 中它还可以执行间隔逻辑，但在2.x中此功能被交给了 interval，下一个会介绍。但需要注意的是，timer 和 interval 均默认在新线程。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-1cdf87a3d2fec9f5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="keyword">long</span> now=System.currentTimeMillis();</div><div class="line">Log.e(TAG,</div><div class="line">    <span class="string">"nowTime:"</span> + now);</div><div class="line">Observable.timer(<span class="number">2</span>, TimeUnit.SECONDS)</div><div class="line">    .subscribeOn(Schedulers.io())</div><div class="line">    <span class="comment">//timer 默认在新线程，所以需要切换回主线程</span></div><div class="line">    .observeOn(AndroidSchedulers.mainThread())</div><div class="line">    .subscribe(<span class="keyword">new</span> Consumer&lt;Long&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Long aLong)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Log.e(TAG,</div><div class="line">            <span class="string">"after:"</span> + (System.currentTimeMillis()-now)+<span class="string">"ms"</span>);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-e703531b0ffab1d4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>可以看到，大约延时了两秒执行接收。</p>
+<h2 id="interval"><a href="#interval" class="headerlink" title="interval"></a>interval</h2><p>如同我们上面可说，interval 操作符用于间隔时间执行某个操作，其接受三个参数，分别是第一次发送延迟，间隔时间，时间单位。<br><img src="http://upload-images.jianshu.io/upload_images/3054656-e62e3d397d3ff006.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">mDisposable = Observable.interval(<span class="number">0</span>, <span class="number">1000</span>, TimeUnit.MILLISECONDS)</div><div class="line">    .subscribeOn(Schedulers.io())</div><div class="line">    .observeOn(AndroidSchedulers.mainThread())</div><div class="line">    .subscribe(<span class="keyword">new</span> Consumer&lt;Long&gt;() &#123;</div><div class="line">      <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Long aLong)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Log.e(TAG, <span class="string">"NowTime:"</span> + getNowStrTime());</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">getNowStrTime</span><span class="params">()</span></span>&#123;</div><div class="line">      <span class="keyword">long</span> time = System.currentTimeMillis();</div><div class="line">      <span class="meta">@SuppressLint</span>(<span class="string">"SimpleDateFormat"</span>) SimpleDateFormat sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</div><div class="line">      <span class="keyword">return</span> sdf.format(<span class="keyword">new</span> Date(time));</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>输出结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-a92e17644ff9b27c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p>的确如我们所想是一秒执行一次，然而，心细的小伙伴可能会发现，由于我们这个是间隔执行，所以当我们的Activity都销毁的时候，实际上这个操作还依然在进行，所以，我们得花点小心思让我们在不需要它的时候干掉它。查看源码发现，我们subscribe(Cousumer&lt;? super T&gt; onNext)返回的是Disposable，我们可以在这上面做文章。</p>
+<p>加上下面的代码可以保证不会内存泄漏：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span> <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">super</span>.onDestroy();</div><div class="line">  <span class="keyword">if</span> (mDisposable != <span class="keyword">null</span> &amp;&amp; !mDisposable.isDisposed()) &#123;</div><div class="line">    mDisposable.dispose();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="doOnNext"><a href="#doOnNext" class="headerlink" title="doOnNext"></a>doOnNext</h2><p>其实觉得 doOnNext 应该不算一个操作符，但考虑到其常用性，我们还是咬咬牙将它放在了这里。它的作用是让订阅者在接收到数据之前干点有意思的事情。假如我们在获取到数据之前想先保存一下它，无疑我们可以这样实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">    e.onNext(<span class="number">4</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).doOnNext(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"doOnNext 保存 "</span> + integer + <span class="string">"成功"</span> + <span class="string">"\n"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).subscribe(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"doOnNext :"</span> + integer + <span class="string">"\n"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-64704ce2672ab371.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h2 id="skip"><a href="#skip" class="headerlink" title="skip"></a>skip</h2><p>skip 很有意思，其实作用就和字面意思一样，接受一个 long 型参数 count ，代表跳过 count 个数目开始接收。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-09c61aba056997f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">    e.onNext(<span class="number">4</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).skip(<span class="number">1</span>).subscribe(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"doOnNext :"</span> + integer + <span class="string">"\n"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-328c41fa54733455.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h2 id="take"><a href="#take" class="headerlink" title="take"></a>take</h2><p>take，接受一个 long 型参数 count ，代表至多接收 count 个数据。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-3a7d8393623657e8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Integer&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    e.onNext(<span class="number">1</span>);</div><div class="line">    e.onNext(<span class="number">2</span>);</div><div class="line">    e.onNext(<span class="number">3</span>);</div><div class="line">    e.onNext(<span class="number">4</span>);</div><div class="line">  &#125;</div><div class="line">&#125;).take(<span class="number">3</span>).subscribe(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG, <span class="string">"doOnNext :"</span> + integer + <span class="string">"\n"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-0bdea9318a398922.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h2 id="just"><a href="#just" class="headerlink" title="just"></a>just</h2><p>   just，没什么好说的，其实在前面各种例子都说明了，就是一个简单的发射器依次调用onNext()方法。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-56dda9065be1311e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Observable.just(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>).subscribe(<span class="keyword">new</span> Consumer&lt;Integer&gt;() &#123;</div><div class="line">  <span class="meta">@Override</span> <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Integer integer)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    Log.e(TAG,<span class="string">"accept : onNext : "</span> + integer + <span class="string">"\n"</span> );</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3054656-ab51266eb1c2bfe1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<h1 id="最佳实战"><a href="#最佳实战" class="headerlink" title="最佳实战"></a>最佳实战</h1><h2 id="采用-map-操作符进行网络数据解析"><a href="#采用-map-操作符进行网络数据解析" class="headerlink" title="采用 map 操作符进行网络数据解析"></a>采用 map 操作符进行网络数据解析</h2><p>想必大家都知道，很多时候我们在使用 RxJava 的时候总是和 Retrofit 进行结合使用，而为了方便演示，这里我们就暂且采用 OkHttp3 进行演示，配合 map，doOnNext ，线程切换进行简单的网络请求:</p>
+<ol>
+<li>通过 Observable.create() 方法，调用 OkHttp 网络请求;</li>
+<li>通过 map 操作符集合 gson，将 Response 转换为 bean 类;</li>
+<li>通过 doOnNext() 方法，解析 bean 中的数据，并进行数据库存储等操作;</li>
+<li>调度线程，在子线程中进行耗时操作任务,在主线程中更新 UI ;</li>
+<li>通过 subscribe(),根据请求成功或者失败来更新 UI<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Response&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Response&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Request.Builder builder = <span class="keyword">new</span> Request.Builder().url(</div><div class="line">                <span class="string">"http://api.avatardata"</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span> + <span class="string">""</span></div><div class="line">                        + <span class="string">".cn/MobilePlace/LookUp?key=ec47b85086be4dc8b5d941f5abd37a4e&amp;mobileNumber"</span> +</div><div class="line">                        <span class="string">"=13021671512"</span>)</div><div class="line">                                                       .get();</div><div class="line">        Request request = builder.build();</div><div class="line">        Call call = <span class="keyword">new</span> OkHttpClient().newCall(request);</div><div class="line">        Response response = call.execute();</div><div class="line">        e.onNext(response);</div><div class="line">    &#125;</div><div class="line">&#125;)</div><div class="line">                 .map(<span class="keyword">new</span> Function&lt;Response, MobileAddress&gt;() &#123;</div><div class="line">                     <span class="meta">@Override</span></div><div class="line">                     <span class="function"><span class="keyword">public</span> MobileAddress <span class="title">apply</span><span class="params">(@NonNull Response response)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                         <span class="keyword">if</span> (response.isSuccessful()) &#123;</div><div class="line">                             ResponseBody body = response.body();</div><div class="line">                             <span class="keyword">if</span> (body != <span class="keyword">null</span>) &#123;</div><div class="line">                                 <span class="keyword">return</span> <span class="keyword">new</span> Gson().fromJson(body.string(), MobileAddress.class);</div><div class="line">                             &#125;</div><div class="line">                         &#125;</div><div class="line">                         <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">                     &#125;</div><div class="line">                 &#125;)</div><div class="line">                 .observeOn(AndroidSchedulers.mainThread())</div><div class="line">                 .doOnNext(<span class="keyword">new</span> Consumer&lt;MobileAddress&gt;() &#123;</div><div class="line">                     <span class="meta">@Override</span></div><div class="line">                     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull MobileAddress mobileAddress)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                         Log.e(TAG, <span class="string">"save successful:"</span> + mobileAddress.toString() + <span class="string">"\n"</span>);</div><div class="line">                     &#125;</div><div class="line">                 &#125;)</div><div class="line">                 .subscribeOn(Schedulers.io())</div><div class="line">                 .observeOn(AndroidSchedulers.mainThread())</div><div class="line">                 .subscribe(<span class="keyword">new</span> Consumer&lt;MobileAddress&gt;() &#123;</div><div class="line">                     <span class="meta">@Override</span></div><div class="line">                     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull MobileAddress mobileAddress)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                         Log.e(TAG, <span class="string">"成功:"</span> + mobileAddress.toString() + <span class="string">"\n"</span>);</div><div class="line">                     &#125;</div><div class="line">                 &#125;, <span class="keyword">new</span> Consumer&lt;Throwable&gt;() &#123;</div><div class="line">                     <span class="meta">@Override</span></div><div class="line">                     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Throwable throwable)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                         Log.e(TAG, <span class="string">"失败："</span> + throwable.getMessage() + <span class="string">"\n"</span>);</div><div class="line">                     &#125;</div><div class="line">               &#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="concat请求网络"><a href="#concat请求网络" class="headerlink" title="concat请求网络"></a>concat请求网络</h2><p>concat 可以做到不交错的发射两个甚至多个 Observable 的发射事件，并且只有前一个 Observable 终止(onComplete) 后才会订阅下一个 Observable。<br>采用 concat 操作符先读取缓存再通过网络请求获取数据<br>想必在实际应用中，很多时候（对数据操作不敏感时）都需要我们先读取缓存的数据，如果缓存没有数据，再通过网络请求获取，随后在主线程更新我们的UI。<br>concat 操作符简直就是为我们这种需求量身定做。<br>利用 concat 的必须调用 onComplete 后才能订阅下一个 Observable 的特性，我们就可以先读取缓存数据，倘若获取到的缓存数据不是我们想要的，再调用 onComplete() 以执行获取网络数据的Observable，如果缓存数据能应我们所需，则直接调用 onNext()，防止过度的网络请求，浪费用户的流量。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">Observable.concat(cacheObservable(), netObservable()).subscribe(<span class="keyword">new</span> Consumer&lt;Food&gt;() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Food o)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        Log.e(TAG, <span class="string">"subscribe 成功:"</span> + Thread.currentThread().getName());</div><div class="line">        <span class="keyword">if</span> (isFromNet) &#123;</div><div class="line">            SPUtils.getInstance().put(CACHE_KEY, <span class="keyword">new</span> Gson().toJson(o));</div><div class="line">            Log.e(TAG, <span class="string">"accept : 网络获取数据设置缓存: \n"</span> + o.getTngou().size());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        Log.e(TAG, <span class="string">"accept: 读取数据成功:"</span> + o.getTotal());</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="function"><span class="keyword">private</span> Observable <span class="title">cacheObservable</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">return</span> Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Food&gt;() &#123;</div><div class="line">         <span class="meta">@Override</span></div><div class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Food&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">             String data = SPUtils.getInstance().getString(CACHE_KEY);</div><div class="line">             <span class="keyword">if</span> (TextUtils.isEmpty(data)) &#123;</div><div class="line">                 isFromNet = <span class="keyword">true</span>;</div><div class="line">                 e.onComplete();</div><div class="line">             &#125; <span class="keyword">else</span> &#123;</div><div class="line">                 <span class="comment">//如果有缓存，就直接将缓存转化成对应的bean，并且去执行onnext</span></div><div class="line">                 isFromNet = <span class="keyword">false</span>;</div><div class="line">                 Food food = <span class="keyword">new</span> Gson().fromJson(data, Food.class);</div><div class="line">                 e.onNext(food);</div><div class="line">             &#125;</div><div class="line">         &#125;</div><div class="line">     &#125;);</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">private</span> Observable <span class="title">netObservable</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">return</span> Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Food&gt;() &#123;</div><div class="line">         <span class="meta">@Override</span></div><div class="line">         <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull <span class="keyword">final</span> ObservableEmitter&lt;Food&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">             Request.Builder builder = <span class="keyword">new</span> Request.Builder().url(<span class="string">"http://www.tngou.net/api/food/list"</span>).get();</div><div class="line">             Request request = builder.build();</div><div class="line">             <span class="keyword">new</span> OkHttpClient().newCall(request).enqueue(<span class="keyword">new</span> Callback() &#123;</div><div class="line">                 <span class="meta">@Override</span></div><div class="line">                 <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call call, IOException e)</span> </span>&#123;</div><div class="line"></div><div class="line">                 &#125;</div><div class="line"></div><div class="line">                 <span class="meta">@Override</span></div><div class="line">                 <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call call, Response response)</span> <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">                     Food food = <span class="keyword">new</span> Gson().fromJson(response.body().string(), Food.class);</div><div class="line">                     e.onNext(food);</div><div class="line">                 &#125;</div><div class="line">             &#125;);</div><div class="line"></div><div class="line">         &#125;</div><div class="line">     &#125;);</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>有时候我们的缓存可能还会分为 memory 和 disk ，实际上都差不多，无非是多写点 Observable ，然后通过 concat 合并即可。</p>
+<h2 id="flatMap-实现多个网络请求依次依赖"><a href="#flatMap-实现多个网络请求依次依赖" class="headerlink" title="flatMap 实现多个网络请求依次依赖"></a>flatMap 实现多个网络请求依次依赖</h2><p>想必这种情况也在实际情况中比比皆是，例如用户注册成功后需要自动登录，我们只需要先通过注册接口注册用户信息，注册成功后马上调用登录接口进行自动登录即可。<br>我们的 flatMap 恰好解决了这种应用场景，flatMap 操作符可以将一个发射数据的 Observable 变换为多个 Observables ，然后将它们发射的数据合并后放到一个单独的 Observable，利用这个特性，我们很轻松地达到了我们的需求。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">flatMap</span><span class="params">()</span> </span>&#123;</div><div class="line">    Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;Response&gt;() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;Response&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            Request.Builder builder = <span class="keyword">new</span> Request.Builder().url(<span class="string">"http://www.tngou.net/api/food/list"</span>).get();</div><div class="line">            Request request = builder.build();</div><div class="line">            Call call = <span class="keyword">new</span> OkHttpClient().newCall(request);</div><div class="line">            Response response = call.execute();</div><div class="line">            e.onNext(response);</div><div class="line">        &#125;</div><div class="line">    &#125;)</div><div class="line">              .subscribeOn(Schedulers.io())</div><div class="line">              .flatMap(<span class="keyword">new</span> Function&lt;Response, ObservableSource&lt;Food.TngouBean&gt;&gt;() &#123;</div><div class="line"></div><div class="line">                  <span class="meta">@Override</span></div><div class="line">                  <span class="keyword">public</span> ObservableSource&lt;Food.TngouBean&gt; apply(<span class="meta">@NonNull</span> Response response) <span class="keyword">throws</span> Exception &#123;</div><div class="line">                      Food food = <span class="keyword">new</span> Gson().fromJson(response.body().string(), Food.class);</div><div class="line">                      <span class="keyword">return</span> Observable.fromIterable(food.getTngou());</div><div class="line">                  &#125;</div><div class="line">              &#125;)</div><div class="line">              .subscribeOn(Schedulers.io())</div><div class="line">              .observeOn(AndroidSchedulers.mainThread())</div><div class="line">              .subscribe(<span class="keyword">new</span> Consumer&lt;Food.TngouBean&gt;() &#123;</div><div class="line"></div><div class="line">                  <span class="meta">@Override</span></div><div class="line">                  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(@NonNull Food.TngouBean tngouBean)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                      Log.e(TAG, tngouBean.getDescription());</div><div class="line">                  &#125;</div><div class="line">              &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xthjd.com2.z0.glb.clouddn.com/%E5%BE%AE%E4%BF%A1.png" alt="琚涛 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xthjd.com2.z0.glb.clouddn.com/%E6%94%AF%E4%BB%98%E5%AE%9D.png" alt="琚涛 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
+          
+            <a href="/tags/响应式编程/" rel="tag"># 响应式编程</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/12/旋转字符串/" rel="next" title="旋转字符串">
+                <i class="fa fa-chevron-left"></i> 旋转字符串
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/14/了解注解/" rel="prev" title="了解注解">
+                了解注解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xthjd.com2.z0.glb.clouddn.com/20150512_235412_142.jpg"
+               alt="琚涛" />
+          <p class="site-author-name" itemprop="name">琚涛</p>
+           
+              <p class="site-description motion-element" itemprop="description">我觉得自己会永远生猛下去，什么也锤不了我</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/jutao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/jutaoshigedahaoren" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/42701793/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-star"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/jutao" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-flag"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/d251eadadd37" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-heartbeat"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#与RxJava-1-x-的差异"><span class="nav-number">1.</span> <span class="nav-text">与RxJava 1.x 的差异</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nulls"><span class="nav-number">1.1.</span> <span class="nav-text">Nulls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flowable"><span class="nav-number">1.2.</span> <span class="nav-text">Flowable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Single-Completable-Maybe"><span class="nav-number">1.3.</span> <span class="nav-text">Single/Completable/Maybe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程调度相关"><span class="nav-number">1.4.</span> <span class="nav-text">线程调度相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-相关"><span class="nav-number">1.5.</span> <span class="nav-text">Function 相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他操作符相关"><span class="nav-number">1.6.</span> <span class="nav-text">其他操作符相关</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本操作"><span class="nav-number">2.</span> <span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#create-操作符"><span class="nav-number">2.1.</span> <span class="nav-text">create 操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map"><span class="nav-number">2.2.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Zip"><span class="nav-number">2.3.</span> <span class="nav-text">Zip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Concat"><span class="nav-number">2.4.</span> <span class="nav-text">Concat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FlatMap"><span class="nav-number">2.5.</span> <span class="nav-text">FlatMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#concatMap"><span class="nav-number">2.6.</span> <span class="nav-text">concatMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#distinct"><span class="nav-number">2.7.</span> <span class="nav-text">distinct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter"><span class="nav-number">2.8.</span> <span class="nav-text">Filter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buffer"><span class="nav-number">2.9.</span> <span class="nav-text">buffer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#timer"><span class="nav-number">2.10.</span> <span class="nav-text">timer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interval"><span class="nav-number">2.11.</span> <span class="nav-text">interval</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#doOnNext"><span class="nav-number">2.12.</span> <span class="nav-text">doOnNext</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#skip"><span class="nav-number">2.13.</span> <span class="nav-text">skip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#take"><span class="nav-number">2.14.</span> <span class="nav-text">take</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#just"><span class="nav-number">2.15.</span> <span class="nav-text">just</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最佳实战"><span class="nav-number">3.</span> <span class="nav-text">最佳实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#采用-map-操作符进行网络数据解析"><span class="nav-number">3.1.</span> <span class="nav-text">采用 map 操作符进行网络数据解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#concat请求网络"><span class="nav-number">3.2.</span> <span class="nav-text">concat请求网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flatMap-实现多个网络请求依次依赖"><span class="nav-number">3.3.</span> <span class="nav-text">flatMap 实现多个网络请求依次依赖</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">琚涛</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "d08c52b322f54fbe81f6373c3015986a",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("c1gNJkeAaPTVbWAH1nzxru17-gzGzoHsz", "hRJNS0I8sj1BsSmaK71MG2xE");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
